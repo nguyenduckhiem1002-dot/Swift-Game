@@ -24,8 +24,6 @@ final class Monster: SKNode {
     /// Live swing or contact hitbox; the stage hits the player once per `attackSerial`.
     private(set) var attackBox: CGRect?
     private(set) var attackSerial = 0
-    /// The player's attack serial that last hit this monster, so one swing lands once.
-    var lastHitSerial = -1
     /// Set by the stage once the kill has been counted.
     var rewarded = false
     private let body: SKSpriteNode

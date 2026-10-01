@@ -86,6 +86,17 @@ Arena damage is unblockable, counts as being hit for awakening, and stops when a
 - **Floor:** drawn across the whole arena in the world. An optional `<mapId>_ground.png` (42 points high, tileable) replaces the procedural floor.
 - **Minimap:** wide maps show a strip between the touch controls with both fighters and the current camera view.
 
+## Combat code
+
+1v1 (`FightScene`) and stage mode (`StageScene`) share one combat layer; the scenes keep only their own rules (rounds and AI, or zones, waves and monster attacks).
+
+- `Core/CombatSystem.swift`: move effects (projectile fans, SK3 buffs, ULT and awakened ULT, SK2 teleports), melee hits (once per swing per target), projectiles with reflect/vanish, delayed hits (ULT volleys, clone echoes, phantom strikes), and the damage pipeline (awakening/tier II/frenzy/empower scaling, energy, awakening gains, on-hit effects, drain and lifesteal). It also runs terrain damage, the combo counter, ULT darkening, callouts and the hitbox overlay.
+- `CombatTarget`: anything that can be hit. `Fighter` and `Monster` both conform. `CombatHost` is implemented by each scene: it supplies the targets, the ULT targets (the opponent, or every on-screen monster) and the camera center, and reacts to landed hits (hit-stop, shake) and awakenings.
+- `Input/PlayerInputRouter.swift`: touch and keyboard routing with per-finger ownership, pause suspension and the post-round input lock.
+- `Core/CombatHUD.swift`: `FighterHUD` (name, HP, energy and awakening bars, tier, portrait) and `PausePanel`.
+
+A combat rule changed in `CombatSystem` applies to both modes. `--test-ui` checks the pipeline against a fighter and a monster.
+
 ## Stage mode
 
 Choose **VƯỢT ẢI** on the title screen, pick a fighter and a stage, then START. One player crosses the stage left to right against monsters. Stages live in `SwordDuel/Data/Stages.json` and monsters in `SwordDuel/Data/Monsters.json`; the code is `Scenes/StageScene.swift` and `Entities/Monster.swift`.
