@@ -30,7 +30,7 @@ final class SpriteSheet {
         if let cached = cache[key] { return cached }
         let count = character.animations[animation]?.frames ?? 1
         let path = "Assets/Characters/\(character.id)/\(key)"
-        if let strip = loadStrip(path: path, count: count, frameSize: CGSize(width: 64, height: 64)) {
+        if let strip = loadStrip(path: path, count: count, frameSize: CGSize(width: character.spriteSize, height: character.spriteSize)) {
             cache[key] = strip
             return strip
         }
@@ -56,7 +56,7 @@ final class SpriteSheet {
             sprite.size = layout.size
             sprite.anchorPoint = layout.anchor
         } else {
-            sprite.size = CGSize(width: 64, height: 64)
+            sprite.size = CGSize(width: character.spriteSize, height: character.spriteSize)
             sprite.anchorPoint = CGPoint(x: 0.5, y: 0)
         }
     }
@@ -91,6 +91,12 @@ final class SpriteSheet {
                                             anchor: CGPoint(x: frame.pivot[0] / rect.width, y: 1 - frame.pivot[1] / rect.height)))
         }
         return textures.isEmpty ? nil : (textures, frameLayouts)
+    }
+
+    /// A character-specific strip (`<id>_<kind>.png`) wins over the shared element strip (`<kind>_<color>.png`).
+    func effectName(_ kind: String, character: CharacterData) -> String {
+        let own = "\(character.id)_\(kind)"
+        return Bundle.main.url(forResource: own, withExtension: "png", subdirectory: "Assets/VFX") != nil ? own : "\(kind)_\(character.color)"
     }
 
     func effect(named name: String, count: Int, size: Int = 96, color: SKColor) -> [SKTexture] {

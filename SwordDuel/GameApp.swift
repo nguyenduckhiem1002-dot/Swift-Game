@@ -34,7 +34,15 @@ final class GameViewController: UIViewController {
         if arguments.contains("--preview-select") {
             gameView.presentScene(SelectScene(size: size))
         } else if arguments.contains("--preview-fight") || arguments.contains("--preview-ui-states") || arguments.contains("--test-ui") || arguments.contains("--preview-paused") {
-            gameView.presentScene(FightScene(size: size, config: MatchConfig(playerIndex: arguments.contains("--flame") ? 1 : 0, difficulty: .easy)))
+            // `--character <id>`, `--opponent <id>` and `--map <id>` preview newly imported art.
+            func value(after flag: String) -> String? {
+                guard let index = arguments.firstIndex(of: flag), index + 1 < arguments.count else { return nil }
+                return arguments[index + 1]
+            }
+            let player = value(after: "--character").flatMap(CharacterLibrary.index(of:)) ?? (arguments.contains("--flame") ? 1 : 0)
+            let opponent = value(after: "--opponent").flatMap(CharacterLibrary.index(of:)) ?? (player == 0 ? 1 : 0)
+            let mapID = value(after: "--map") ?? MapLibrary.all[0].id
+            gameView.presentScene(FightScene(size: size, config: MatchConfig(playerIndex: player, opponentIndex: opponent, difficulty: .easy, mapID: mapID)))
         } else {
             gameView.presentScene(TitleScene(size: size))
         }

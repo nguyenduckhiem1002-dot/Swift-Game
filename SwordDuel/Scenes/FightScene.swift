@@ -6,7 +6,8 @@ final class FightScene: GameScene {
     private var player: Fighter!
     private var opponent: Fighter!
     private var ai: AIController!
-    private var arena = ArenaBackground()
+    private let map: MapData
+    private let arena: ArenaBackground
     private var controls = TouchControls()
     private var projectiles: [Projectile] = []
     private var touchMap: [ObjectIdentifier: Control] = [:]
@@ -41,14 +42,20 @@ final class FightScene: GameScene {
     private let announcementPanel = SKSpriteNode()
     private let roundLabel = Theme.label("", size: 8, color: Theme.gold)
 
-    init(size: CGSize, config: MatchConfig) { self.config = config; super.init(size: size) }
+    init(size: CGSize, config: MatchConfig) {
+        self.config = config
+        map = MapLibrary.map(id: config.mapID)
+        arena = ArenaBackground(map: map)
+        super.init(size: size)
+    }
     required init?(coder: NSCoder) { fatalError() }
     override func didMove(to view: SKView) {
         arena.zPosition = -10; addChild(arena)
         let playerData = CharacterLibrary.all[config.playerIndex]
-        let opponentData = CharacterLibrary.all[1 - config.playerIndex]
+        let opponentData = CharacterLibrary.all[config.opponentIndex]
         player = Fighter(data: playerData, isPlayer: true)
         opponent = Fighter(data: opponentData, isPlayer: false)
+        for fighter in [player!, opponent!] { fighter.gravityScale = map.gravityScale; fighter.moveScale = map.movementScale }
         player.zPosition = 15; opponent.zPosition = 15
         addChild(player); addChild(opponent)
         ai = AIController(fighter: opponent, target: player, difficulty: config.difficulty)
@@ -102,18 +109,24 @@ final class FightScene: GameScene {
         button.setPressed(true); precondition(button.xScale == 1, "Disabled button must not press")
         let fallback = UIAssets.shared.texture("deliberately_missing_ui_asset", size: CGSize(width: 24, height: 24))
         precondition(fallback.size() == CGSize(width: 24, height: 24) && fallback.filteringMode == .nearest)
-        for id in ["frost", "flame"] {
-            let frames = UIAssets.shared.frames("btn_\(id)_ult_ready", frameSize: CGSize(width: 44, height: 44), count: 4)
+        for character in CharacterLibrary.all {
+            let frames = UIAssets.shared.frames("btn_\(character.id)_ult_ready", frameSize: CGSize(width: 44, height: 44), count: 4)
             precondition(frames.count == 4 && frames.allSatisfy { $0.filteringMode == .nearest })
+            for (name, spec) in character.animations {
+                precondition(SpriteSheet.shared.frames(character: character, animation: name).count == spec.frames, "\(character.id) \(name) frame count")
+            }
+            for move in ["attack1", "attack2", "attack3", "skill1", "skill2", "ult"] { precondition(character.moves[move] != nil, "\(character.id) is missing \(move)") }
         }
-        print("PASS UI: shared touch ownership, independent inputs, pause/resume, frozen timer, disabled/pressed menu states, missing-file fallback, both ULT strips.")
+        precondition(Set(CharacterLibrary.all.map(\.id)).count == CharacterLibrary.all.count, "Character ids must be unique")
+        for map in MapLibrary.all { precondition(!ArenaBackground(map: map).children.isEmpty, "\(map.id) arena is empty") }
+        print("PASS UI: shared touch ownership, independent inputs, pause/resume, frozen timer, disabled/pressed menu states, missing-file fallback, \(CharacterLibrary.all.count) character rosters and ULT strips, \(MapLibrary.all.count) arenas.")
     }
     private func setupHUD() {
         let backing = SKSpriteNode(color: Theme.navy.withAlphaComponent(0.58), size: CGSize(width: 480, height: 57))
         backing.position = CGPoint(x: 240, y: 241.5); backing.zPosition = 48; addChild(backing)
         for (index, fighter) in [player!, opponent!].enumerated() {
             let left = index == 0
-            let name = Theme.label(fighter.data.name, size: 7, color: fighter.data.id == "frost" ? Theme.ice : Theme.fire)
+            let name = Theme.label(fighter.data.name, size: 7, color: fighter.data.accentColor)
             name.horizontalAlignmentMode = left ? .left : .right
             name.position = CGPoint(x: left ? 49 : 431, y: 262); name.zPosition = 50; addChild(name)
             let hp = UIResourceBar(frame: "hp_frame", fill: "hp_\(fighter.data.id)_fill", nativeFrame: CGSize(width: 128, height: 14), nativeFill: CGSize(width: 124, height: 10), displayWidth: 166, outsideIsLeft: left)
@@ -223,7 +236,7 @@ final class FightScene: GameScene {
             if !projectile.didHit && projectile.parent != nil && projectile.hitbox.intersects(target.hurtbox) {
                 projectile.didHit = true
                 registerHit(attacker: projectile.owner, target: target, damage: projectile.damage, knockback: projectile.direction * 48, unblockable: false)
-                showEffect("skill1_impact", at: projectile.position, color: projectile.owner.data.color == "ice" ? Theme.ice : Theme.fire)
+                showEffect("skill1_impact", at: projectile.position, color: projectile.owner.data.accentColor)
                 projectile.removeFromParent()
             }
         }
@@ -242,28 +255,33 @@ final class FightScene: GameScene {
     }
     private func handleMove(_ attacker: Fighter, target: Fighter) {
         guard let move = attacker.currentMove, let info = attacker.data.moves[move] else { return }
-        if move == "skill1", !attacker.emitted, attacker.currentFrame >= info.activeStart {
+        let shots = move == "skill1" ? max(0, info.projectiles ?? 1) : 0
+        if shots > 0, !attacker.emitted, attacker.currentFrame >= info.activeStart {
             attacker.markEmitted()
-            let projectile = Projectile(owner: attacker, damage: info.damage, direction: attacker.facing)
-            projectile.zPosition = 20; addChild(projectile); projectiles.append(projectile)
+            // A fan splits the move's total damage; each projectile can land once.
+            for index in 0..<shots {
+                let damage = info.damage / shots + (index < info.damage % shots ? 1 : 0)
+                let rise = (CGFloat(index) - CGFloat(shots - 1) / 2) * 42
+                let projectile = Projectile(owner: attacker, damage: max(1, damage), direction: attacker.facing, rise: rise)
+                projectile.zPosition = 20; addChild(projectile); projectiles.append(projectile)
+            }
         }
         if move == "ult", !attacker.emitted, attacker.currentFrame >= info.activeStart {
             attacker.markEmitted(); darkOverlay.alpha = 0.65
             darkOverlay.run(.sequence([.wait(forDuration: 0.5), .fadeOut(withDuration: 0.25)]))
-            let color = attacker.data.color == "ice" ? Theme.ice : Theme.fire
-            let effect = EffectNode(name: "ult_\(attacker.data.color)", frames: 8, color: color, size: CGSize(width: 250, height: 130), frameTime: 0.08)
+            let effect = EffectNode(name: SpriteSheet.shared.effectName("ult", character: attacker.data), frames: 8, color: attacker.data.accentColor, size: CGSize(width: 250, height: 130), frameTime: 0.08)
             effect.position = CGPoint(x: 240, y: 110); effect.zPosition = 45; addChild(effect)
             for (index, delay) in [CGFloat(0), 0.13, 0.26].enumerated() {
                 pendingUlt.append((time: delay, attacker: attacker, defender: target, damage: index == 2 ? 11 : 12, first: index == 0))
             }
         }
-        if move == "skill2", attacker.data.color == "fire", !attacker.emitted, attacker.currentFrame >= info.activeStart {
+        if info.teleport == true, !attacker.emitted, attacker.currentFrame >= info.activeStart {
             attacker.position.x = min(454, max(26, target.position.x + (attacker.position.x < target.position.x ? 27 : -27)))
             attacker.facing = attacker.position.x < target.position.x ? 1 : -1
             attacker.markEmitted()
-            showEffect("dash_trail", at: attacker.position, color: Theme.fire)
+            showEffect("dash_trail", at: attacker.position, color: attacker.data.accentColor)
         }
-        guard move != "skill1", move != "ult", let hitbox = attacker.hitbox(for: move), hitbox.intersects(target.hurtbox) else { return }
+        guard shots == 0, move != "ult", let hitbox = attacker.hitbox(for: move), hitbox.intersects(target.hurtbox) else { return }
         let key = ObjectIdentifier(attacker)
         guard landedSerial[key] != attacker.attackSerial else { return }
         landedSerial[key] = attacker.attackSerial
@@ -276,7 +294,7 @@ final class FightScene: GameScene {
         hitStop = 0.06; shakeTime = 0.18
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
         let position = CGPoint(x: (attacker.position.x + target.position.x) / 2, y: target.position.y + 32)
-        showEffect("hit_spark", at: position, color: attacker.data.color == "ice" ? Theme.ice : Theme.fire)
+        showEffect("hit_spark", at: position, color: attacker.data.accentColor)
         if attacker === player {
             comboHits = comboTimer > 0 ? comboHits + 1 : 1
             comboTimer = 1.1

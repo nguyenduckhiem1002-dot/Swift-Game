@@ -18,6 +18,9 @@ final class Fighter: SKNode {
     var invulnerable = false
     var stun: CGFloat = 0
     var cooldowns: [String: CGFloat] = [:]
+    /// Map modifiers: underwater and astral arenas lower gravity or slow movement.
+    var gravityScale: CGFloat = 1
+    var moveScale: CGFloat = 1
     private(set) var moveTime: CGFloat = 0
     private(set) var attackSerial = 0
     private(set) var emitted = false
@@ -30,7 +33,7 @@ final class Fighter: SKNode {
     init(data: CharacterData, isPlayer: Bool) {
         self.data = data; self.isPlayer = isPlayer
         super.init()
-        sprite.size = CGSize(width: 64, height: 64)
+        sprite.size = CGSize(width: data.spriteSize, height: data.spriteSize)
         sprite.anchorPoint = CGPoint(x: 0.5, y: 0)
         addChild(sprite)
         animation = AnimationController(sprite: sprite, character: data)
@@ -52,7 +55,7 @@ final class Fighter: SKNode {
     }
     func jump() {
         guard onGround, !state.locksMovement, !blockHeld else { return }
-        velocity.dy = 185; onGround = false; state = .jump; animation.set("jump")
+        velocity.dy = data.jumpVelocity ?? 185; onGround = false; state = .jump; animation.set("jump")
     }
     func attack() {
         if case .attacking(let move) = state, move.hasPrefix("attack") {
@@ -101,23 +104,25 @@ final class Fighter: SKNode {
         }
         if case .attacking(let move) = state {
             moveTime += dt
-            if move == "skill2" && moveTime < 0.32 {
-                invulnerable = true
-                velocity.dx = facing * 250
+            let info = data.moves[move]
+            let dashTime = info?.dashTime ?? (move == "skill2" ? 0.32 : 0)
+            if moveTime < dashTime {
+                invulnerable = info?.invulnerable ?? true
+                velocity.dx = facing * (info?.dashSpeed ?? 250)
             } else { invulnerable = false }
         }
         if !state.locksMovement {
             if blockHeld && onGround { state = .block; animation.set("crouch_block"); velocity.dx = 0 }
             else {
                 let axis: CGFloat = (rightHeld ? 1 : 0) - (leftHeld ? 1 : 0)
-                velocity.dx = axis * 83
+                velocity.dx = axis * (data.walkSpeed ?? 83) * moveScale
                 if !onGround { state = .jump; animation.set("jump") }
                 else if axis != 0 { state = .walk; animation.set("walk") }
                 else { state = .idle; animation.set("idle") }
             }
         }
         if !onGround {
-            velocity.dy -= 440 * dt
+            velocity.dy -= 440 * gravityScale * dt
             position.y += velocity.dy * dt
             if position.y <= 42 { position.y = 42; velocity.dy = 0; onGround = true }
         }

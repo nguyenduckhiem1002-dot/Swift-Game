@@ -22,7 +22,7 @@ The new Frost art is bundled as transparent atlases with per-frame foot pivots. 
 
 ## Add art
 
-Put horizontal PNG sprite strips in `SwordDuel/Resources/Assets/Characters/<charId>/<charId>_<animation>.png`. The character IDs are `frost` and `flame`. Each frame must be 64×64 pixels, and the strip width must be `64 × frame count`. All strips should face right; the game mirrors them for left-facing fighters. The runtime loader uses nearest-neighbor filtering. Transparent backgrounds are recommended. If a file is absent or too small, its labeled placeholder appears.
+Put horizontal PNG sprite strips in `SwordDuel/Resources/Assets/Characters/<charId>/<charId>_<animation>.png`. The character IDs are `frost`, `flame`, `umbrella`, `tang`, `monk`, `herder`, `elder`, `demon` and `beast` (see `Art/Design/characters-expansion.md`). Each frame must be 64×64 pixels (`beast` uses 96×96 via `frameSize`), and the strip width must be `frame size × frame count`. All strips should face right; the game mirrors them for left-facing fighters. The runtime loader uses nearest-neighbor filtering. Transparent backgrounds are recommended. If a file is absent or too small, its labeled placeholder appears.
 
 Animations and frame counts for each character:
 
@@ -42,11 +42,21 @@ Animations and frame counts for each character:
 | ko | 6 | 10 |
 | win | 6 | 8 |
 
-Optional VFX strips go in `SwordDuel/Resources/Assets/VFX/`: `projectile_ice.png` and `projectile_fire.png` (4 frames), `hit_spark.png` and `skill1_impact.png` (5 frames), `dash_trail.png` (4 frames), and `ult_ice.png` and `ult_fire.png` (8 frames). Each frame is 96×96 pixels. Missing VFX use simple generated rectangles.
+Optional VFX strips go in `SwordDuel/Resources/Assets/VFX/`: `projectile_<color>.png` (4 frames), `hit_spark.png` and `skill1_impact.png` (5 frames), `dash_trail.png` (4 frames), and `ult_<color>.png` (8 frames), where `<color>` is the character's `color` key (`ice`, `fire`, `wind`, `poison`, `holy`, `spirit`, `earth`, `shadow`, `wild`). A character-specific `<charId>_projectile.png` or `<charId>_ult.png` takes precedence. Each frame is 96×96 pixels. Missing VFX use simple generated rectangles in the character's accent color.
 
 The bundled painting is `xianxia_moon_dragon.png`, with `xianxia_mist.png` as its transparent moving overlay. See `Art/Background-prompt.md` for prompts and rendering details. Replace those files to change the current arena. If the painting is removed, the legacy layered background loader becomes active.
 
 Optional 480×270 background PNGs for that legacy loader go in `SwordDuel/Resources/Assets/Backgrounds/` as `far.png`, `mid.png`, and `near.png`. Far can be opaque; mid and near should be transparent. Near tiles horizontally. The procedural layers remain as fallbacks.
+
+## Maps
+
+Arenas are listed in `SwordDuel/Data/Maps.json` and chosen with the `<` / `>` selector on the select screen. `classic` is the illustrated arena above. `cloudpeak`, `lavahell`, `greatruins`, `poisonforest`, `divinetemple`, `thunderplate`, `underwater`, `underworld` and `astralvoid` follow `Art/Design/maps-and-interactions.md`. To give a map real art, add 480×270 layers `<mapId>_far.png`, `<mapId>_mid.png` and `<mapId>_near.png` to `Assets/Backgrounds/`; place the walkable ledge at y = 42 from the bottom. Without them, each map draws a procedural scene from its palette (`sky`, `horizon`, `mountain`, `ground`, `accent`, `structure`, `orb`) and its `ambient` particles. `gravity` and `moveScale` change jump arcs and walking speed, which is how `underwater` and `astralvoid` are implemented. Terrain interactions, timed events and wide scrolling arenas from the spec are not implemented yet; the `summary` text only describes them.
+
+## Roster data
+
+Each character entry in `Characters.json` can also set `role`, `accent` (RGB 0–1), `frameSize`, `walkSpeed` and `jumpVelocity`. Moves accept `projectiles` (skill1 fan size; `0` turns skill1 into a melee hitbox), `dashSpeed`, `dashTime`, `invulnerable` and `teleport`. A negative `knockback` pulls the target. The new fighters reuse the shared SK1 / SK2 / ULT systems approximately; SK3, awakening, counters, traps, slows and summons from the expansion spec are not yet implemented. Missing button and HP-fill art falls back to generated textures in the character's accent color.
+
+The select screen picks a random CPU opponent. For art review, add `--preview-fight --character <id> --opponent <id> --map <mapId>` to the scheme's Run arguments; `--test-ui` now also checks every character's frame counts and builds every arena.
 
 After adding PNGs, ensure they appear under the blue `Assets` folder reference in Xcode. Xcode copies that folder into the app bundle.
 
