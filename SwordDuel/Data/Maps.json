@@ -81,18 +81,27 @@
       0.75
     ],
     "ambient": "petals",
+    "width": 960,
     "terrain": {
       "platforms": [
         {
-          "x": 240,
+          "x": 480,
           "y": 72,
           "w": 64,
           "kind": "cloud",
-          "moveX": 90,
-          "period": 9
+          "moveX": 120,
+          "period": 10
         },
         {
-          "x": 70,
+          "x": 200,
+          "y": 72,
+          "w": 48,
+          "kind": "cloud",
+          "moveY": 10,
+          "period": 5
+        },
+        {
+          "x": 760,
           "y": 72,
           "w": 48,
           "kind": "cloud",
@@ -103,7 +112,13 @@
       "zones": [
         {
           "kind": "waterfall",
-          "x": 395,
+          "x": 100,
+          "w": 34,
+          "h": 228
+        },
+        {
+          "kind": "waterfall",
+          "x": 826,
           "w": 34,
           "h": 228
         }
@@ -158,12 +173,27 @@
       0.2
     ],
     "ambient": "embers",
+    "width": 1200,
     "terrain": {
       "platforms": [
         {
-          "x": 240,
+          "x": 600,
           "y": 72,
           "w": 96,
+          "kind": "chain",
+          "crumble": true
+        },
+        {
+          "x": 250,
+          "y": 72,
+          "w": 110,
+          "kind": "chain",
+          "crumble": true
+        },
+        {
+          "x": 950,
+          "y": 72,
+          "w": 110,
           "kind": "chain",
           "crumble": true
         }
@@ -171,15 +201,25 @@
       "zones": [
         {
           "kind": "lava",
-          "x": 200,
+          "x": 560,
           "w": 80
+        },
+        {
+          "kind": "lava",
+          "x": 200,
+          "w": 100
+        },
+        {
+          "kind": "lava",
+          "x": 900,
+          "w": 100
         }
       ],
       "events": [
         {
           "kind": "geyser",
           "start": 8,
-          "interval": 9,
+          "interval": 7,
           "telegraph": 1.5
         }
       ]
@@ -225,15 +265,24 @@
       0.7
     ],
     "ambient": "sand",
+    "width": 1440,
     "terrain": {
       "objects": [
         {
           "kind": "pillar",
-          "x": 185
+          "x": 660
         },
         {
           "kind": "pillar",
-          "x": 295
+          "x": 780
+        },
+        {
+          "kind": "pillar",
+          "x": 400
+        },
+        {
+          "kind": "pillar",
+          "x": 1040
         },
         {
           "kind": "statue",
@@ -241,7 +290,7 @@
         },
         {
           "kind": "tablet",
-          "x": 444
+          "x": 1180
         }
       ],
       "events": [
@@ -301,36 +350,47 @@
       0.6
     ],
     "ambient": "spores",
+    "width": 960,
     "terrain": {
       "zones": [
         {
           "kind": "poison",
-          "x": 195,
+          "x": 435,
           "w": 90,
           "h": 60
         },
         {
           "kind": "poison",
-          "x": 412,
-          "w": 42,
+          "x": 150,
+          "w": 80,
+          "h": 60
+        },
+        {
+          "kind": "poison",
+          "x": 730,
+          "w": 80,
           "h": 60
         }
       ],
       "objects": [
         {
           "kind": "mushroom",
-          "x": 40
+          "x": 60
         },
         {
           "kind": "mushroom",
-          "x": 436
+          "x": 900
+        },
+        {
+          "kind": "mushroom",
+          "x": 190
         }
       ],
       "events": [
         {
           "kind": "roots",
           "start": 10,
-          "interval": 12,
+          "interval": 10,
           "telegraph": 1.2
         }
       ]
@@ -376,28 +436,55 @@
       0.8
     ],
     "ambient": "motes",
+    "width": 960,
     "terrain": {
       "platforms": [
         {
-          "x": 240,
+          "x": 480,
           "y": 72,
           "w": 110,
           "kind": "gold",
           "onTime": 8,
+          "offTime": 4
+        },
+        {
+          "x": 200,
+          "y": 72,
+          "w": 90,
+          "kind": "gold",
+          "onTime": 6,
+          "offTime": 4
+        },
+        {
+          "x": 760,
+          "y": 72,
+          "w": 90,
+          "kind": "gold",
+          "onTime": 6,
           "offTime": 4
         }
       ],
       "zones": [
         {
           "kind": "rune",
-          "x": 205,
+          "x": 445,
           "w": 70
+        },
+        {
+          "kind": "rune",
+          "x": 160,
+          "w": 60
+        },
+        {
+          "kind": "rune",
+          "x": 740,
+          "w": 60
         }
       ],
       "objects": [
         {
           "kind": "bell",
-          "x": 240,
+          "x": 480,
           "y": 108
         }
       ],
@@ -405,7 +492,7 @@
         {
           "kind": "lightning",
           "start": 18,
-          "interval": 18,
+          "interval": 14,
           "telegraph": 1.5
         }
       ]
@@ -446,30 +533,40 @@
       0.75
     ],
     "ambient": "rain",
+    "width": 960,
     "terrain": {
       "zones": [
         {
           "kind": "rune",
-          "x": 55,
+          "x": 455,
           "w": 50
         },
         {
           "kind": "rune",
-          "x": 375,
+          "x": 180,
+          "w": 50
+        },
+        {
+          "kind": "rune",
+          "x": 730,
           "w": 50
         }
       ],
       "objects": [
         {
           "kind": "rod",
-          "x": 240
+          "x": 290
+        },
+        {
+          "kind": "rod",
+          "x": 670
         }
       ],
       "events": [
         {
           "kind": "lightning",
           "start": 6,
-          "interval": 7,
+          "interval": 6,
           "telegraph": 1.5
         }
       ]
@@ -513,12 +610,25 @@
     "gravity": 0.6,
     "moveScale": 0.8,
     "animSpeed": 0.85,
+    "width": 960,
     "terrain": {
       "platforms": [
         {
-          "x": 240,
+          "x": 480,
           "y": 84,
           "w": 70,
+          "kind": "coral"
+        },
+        {
+          "x": 220,
+          "y": 84,
+          "w": 60,
+          "kind": "coral"
+        },
+        {
+          "x": 740,
+          "y": 84,
+          "w": 60,
           "kind": "coral"
         }
       ],
@@ -573,24 +683,29 @@
       0.95
     ],
     "ambient": "souls",
+    "width": 1200,
     "terrain": {
       "objects": [
         {
           "kind": "tombstone",
-          "x": 60
+          "x": 80
         },
         {
           "kind": "tombstone",
-          "x": 420
+          "x": 600
+        },
+        {
+          "kind": "tombstone",
+          "x": 1120
         },
         {
           "kind": "lantern",
-          "x": 175,
+          "x": 340,
           "y": 74
         },
         {
           "kind": "lantern",
-          "x": 305,
+          "x": 860,
           "y": 74
         }
       ],
@@ -598,7 +713,7 @@
         {
           "kind": "souls",
           "start": 6,
-          "interval": 9,
+          "interval": 8,
           "telegraph": 1
         },
         {
@@ -652,10 +767,11 @@
     ],
     "ambient": "stars",
     "gravity": 0.55,
+    "width": 1200,
     "terrain": {
       "platforms": [
         {
-          "x": 240,
+          "x": 600,
           "y": 84,
           "w": 70,
           "kind": "astral",
@@ -663,7 +779,23 @@
           "period": 6
         },
         {
-          "x": 95,
+          "x": 285,
+          "y": 84,
+          "w": 60,
+          "kind": "astral",
+          "moveX": 30,
+          "period": 5
+        },
+        {
+          "x": 915,
+          "y": 84,
+          "w": 60,
+          "kind": "astral",
+          "moveX": 30,
+          "period": 5
+        },
+        {
+          "x": 430,
           "y": 104,
           "w": 50,
           "kind": "astral",
@@ -671,7 +803,7 @@
           "offTime": 3
         },
         {
-          "x": 385,
+          "x": 770,
           "y": 104,
           "w": 50,
           "kind": "astral",
@@ -682,7 +814,17 @@
       "zones": [
         {
           "kind": "void",
-          "x": 205,
+          "x": 565,
+          "w": 70
+        },
+        {
+          "kind": "void",
+          "x": 250,
+          "w": 70
+        },
+        {
+          "kind": "void",
+          "x": 880,
           "w": 70
         }
       ],
@@ -690,7 +832,7 @@
         {
           "kind": "debris",
           "start": 8,
-          "interval": 10,
+          "interval": 9,
           "telegraph": 1
         }
       ]

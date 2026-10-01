@@ -22,6 +22,14 @@ final class FightScene: GameScene {
     private let map: MapData
     private let arena: ArenaBackground
     private let terrain: ArenaTerrain
+    /// Everything that lives in arena coordinates; the camera scrolls and zooms this node.
+    private let world = SKNode()
+    private var cameraX: CGFloat = 240
+    private var zoom: CGFloat = 1
+    private var shakeOffset = CGPoint.zero
+    private let minimap = SKNode()
+    private var minimapDots: [SKSpriteNode] = []
+    private let minimapView = SKSpriteNode(color: SKColor.white.withAlphaComponent(0.25), size: CGSize(width: 10, height: 7))
     private var controls = TouchControls()
     private var projectiles: [Projectile] = []
     private var touchMap: [ObjectIdentifier: Control] = [:]
@@ -61,14 +69,17 @@ final class FightScene: GameScene {
     init(size: CGSize, config: MatchConfig) {
         self.config = config
         map = MapLibrary.map(id: config.mapID)
-        arena = ArenaBackground(map: map)
+        arena = ArenaBackground(map: map, groundInWorld: true)
         terrain = ArenaTerrain(map: map)
         super.init(size: size)
     }
     required init?(coder: NSCoder) { fatalError() }
     override func didMove(to view: SKView) {
         arena.zPosition = -10; addChild(arena)
-        terrain.zPosition = 8; terrain.delegate = self; addChild(terrain)
+        addChild(world)
+        if let ground = arena.worldGround { ground.zPosition = -5; world.addChild(ground) }
+        terrain.zPosition = 8; terrain.delegate = self; world.addChild(terrain)
+        terrain.screenOverlay.zPosition = 30; addChild(terrain.screenOverlay)
         let playerData = CharacterLibrary.all[config.playerIndex]
         let opponentData = CharacterLibrary.all[config.opponentIndex]
         player = Fighter(data: playerData, isPlayer: true)
@@ -76,14 +87,16 @@ final class FightScene: GameScene {
         for fighter in [player!, opponent!] {
             fighter.gravityScale = map.gravityScale; fighter.moveScale = map.movementScale
             fighter.animationScale = map.animSpeed ?? 1; fighter.terrain = terrain
+            fighter.arenaMaxX = map.arenaWidth - 26
         }
         player.zPosition = 15; opponent.zPosition = 15
-        addChild(player); addChild(opponent)
+        world.addChild(player); world.addChild(opponent)
         ai = AIController(fighter: opponent, target: player, difficulty: config.difficulty)
         ai.terrain = terrain
         controls.configure(character: playerData)
         addChild(controls)
         setupHUD()
+        setupMinimap()
         setupPausePanel()
         darkOverlay.fillColor = .black; darkOverlay.strokeColor = .clear; darkOverlay.alpha = 0
         darkOverlay.zPosition = 40; addChild(darkOverlay)
@@ -154,8 +167,20 @@ final class FightScene: GameScene {
     /// Layout sanity plus a 40-second headless run of every map's events with two idle fighters.
     private func runTerrainChecks() {
         for map in MapLibrary.all {
+            let spawns = map.spawnPoints
             for zone in map.terrain?.zones ?? [] where ["lava", "poison", "void"].contains(zone.kind) {
-                precondition(!(zone.x...(zone.x + zone.w)).contains(122) && !(zone.x...(zone.x + zone.w)).contains(358), "\(map.id) hazard covers a spawn point")
+                precondition(!(zone.x...(zone.x + zone.w)).contains(spawns.left) && !(zone.x...(zone.x + zone.w)).contains(spawns.right), "\(map.id) hazard covers a spawn point")
+            }
+            if map.isWide {
+                // Both fighters stay on screen at the widest allowed gap, at either wall and at spawn.
+                let width = map.arenaWidth
+                for (left, right) in [(CGFloat(26), 26 + CameraFraming.maxGap), (width - 26 - CameraFraming.maxGap, width - 26), (spawns.left, spawns.right)] {
+                    let frame = CameraFraming.target(width: width, leftX: left, rightX: right)
+                    let half = 240 / frame.zoom
+                    precondition(frame.zoom >= CameraFraming.minZoom && frame.zoom <= 1, "\(map.id) zoom out of range")
+                    precondition(frame.x - half >= -0.5 && frame.x + half <= width + 0.5, "\(map.id) camera shows outside the arena")
+                    precondition(left >= frame.x - half && right <= frame.x + half, "\(map.id) camera loses a fighter")
+                }
             }
             for platform in map.terrain?.platforms ?? [] {
                 // A standard jump rises about 39 points; low-gravity maps reach higher.
@@ -163,14 +188,14 @@ final class FightScene: GameScene {
             }
             let field = ArenaTerrain(map: map)
             let a = Fighter(data: CharacterLibrary.all[0], isPlayer: true), b = Fighter(data: CharacterLibrary.all[1], isPlayer: false)
-            a.reset(at: 122, facing: 1); b.reset(at: 358, facing: -1)
-            for fighter in [a, b] { fighter.terrain = field; fighter.gravityScale = map.gravityScale }
+            a.reset(at: spawns.left, facing: 1); b.reset(at: spawns.right, facing: -1)
+            for fighter in [a, b] { fighter.terrain = field; fighter.gravityScale = map.gravityScale; fighter.arenaMaxX = map.arenaWidth - 26 }
             for _ in 0..<2400 {
                 a.updateFixed(1.0 / 60.0); b.updateFixed(1.0 / 60.0)
                 field.updateFixed(1.0 / 60.0, fighters: [a, b], projectiles: [])
             }
             field.reset()
-            precondition(a.position.x >= 26 && a.position.x <= 454 && b.position.y >= 42, "\(map.id) terrain moved a fighter out of bounds")
+            precondition(a.position.x >= 26 && a.position.x <= map.arenaWidth - 26 && b.position.y >= 42, "\(map.id) terrain moved a fighter out of bounds")
         }
     }
     private func runAwakeningChecks() {
@@ -232,6 +257,37 @@ final class FightScene: GameScene {
         timerFrame.position = CGPoint(x: 240, y: 244); timerFrame.zPosition = 49; addChild(timerFrame)
         timerLabel.fontSize = 14; timerLabel.position = CGPoint(x: 240, y: 244); timerLabel.zPosition = 50; addChild(timerLabel)
     }
+    /// Wide arenas show both fighters and the camera's view on a strip between the touch controls.
+    private func setupMinimap() {
+        guard map.isWide else { return }
+        minimap.position = CGPoint(x: 240, y: 9); minimap.zPosition = 50; addChild(minimap)
+        let strip = SKSpriteNode(color: Theme.navy.withAlphaComponent(0.7), size: CGSize(width: 124, height: 7))
+        minimap.addChild(strip)
+        minimapView.zPosition = 1; minimap.addChild(minimapView)
+        for fighter in [player!, opponent!] {
+            let dot = SKSpriteNode(color: fighter.data.accentColor, size: CGSize(width: 3, height: 5))
+            dot.zPosition = 2; minimap.addChild(dot); minimapDots.append(dot)
+        }
+    }
+    private func updateMinimap() {
+        guard map.isWide else { return }
+        let scale = 120 / map.arenaWidth
+        for (dot, fighter) in zip(minimapDots, [player!, opponent!]) { dot.position.x = (fighter.position.x - map.arenaWidth / 2) * scale }
+        minimapView.size.width = 480 / zoom * scale
+        minimapView.position.x = (cameraX - map.arenaWidth / 2) * scale
+    }
+    /// Eases toward the framing target; `snap` jumps there at round start.
+    private func updateCamera(_ dt: CGFloat, snap: Bool = false) {
+        let target = CameraFraming.target(width: map.arenaWidth, leftX: min(player.position.x, opponent.position.x), rightX: max(player.position.x, opponent.position.x))
+        let t: CGFloat = snap ? 1 : min(1, dt * 5)
+        zoom += (target.zoom - zoom) * t
+        cameraX = CameraFraming.clampedX(cameraX + (target.x - cameraX) * t, width: map.arenaWidth, zoom: zoom)
+        // The floor stays at screen y = 42 while zooming, so the HUD and touch controls never cover more ground.
+        world.setScale(zoom)
+        world.position = CGPoint(x: 240 - cameraX * zoom + shakeOffset.x, y: 42 * (1 - zoom) + shakeOffset.y)
+        arena.setCamera(x: cameraX)
+        updateMinimap()
+    }
     private func setupPausePanel() {
         pausePanel.zPosition = 110; pausePanel.isHidden = true
         let backing = SKSpriteNode(color: Theme.navy.withAlphaComponent(0.83), size: CGSize(width: 204, height: 78))
@@ -257,7 +313,7 @@ final class FightScene: GameScene {
         if player != nil { setFightPaused(true); touchMap.removeAll(); keyMap.removeAll(); controls.clearPressed() }
     }
     private func startRound() {
-        player.reset(at: 122, facing: 1); opponent.reset(at: 358, facing: -1)
+        player.reset(at: map.spawnPoints.left, facing: 1); opponent.reset(at: map.spawnPoints.right, facing: -1)
         roundSeconds = 60; roundResolved = false; roundDraw = false; roundEndDelay = -1
         projectiles.forEach { $0.removeFromParent() }; projectiles.removeAll()
         pendingHits.removeAll(); landedSerial.removeAll(); comboHits = 0; comboTimer = 0
@@ -271,6 +327,7 @@ final class FightScene: GameScene {
         }
         controls.update(energy: player.energy, cooldowns: player.cooldowns, awakeningTier: player.awakeningTier, dt: 0)
         updateHUD()
+        updateCamera(0, snap: true)
     }
     override func update(_ currentTime: TimeInterval) {
         if lastUpdate == 0 { lastUpdate = currentTime; return }
@@ -288,8 +345,9 @@ final class FightScene: GameScene {
         arena.updateFixed(dt)
         if shakeTime > 0 {
             shakeTime -= dt
-            arena.position = CGPoint(x: CGFloat.random(in: -2...2), y: CGFloat.random(in: -1...1))
-        } else { arena.position = .zero }
+            shakeOffset = CGPoint(x: CGFloat.random(in: -2...2), y: CGFloat.random(in: -1...1))
+        } else { shakeOffset = .zero }
+        arena.position = shakeOffset
         if comboTimer > 0 { comboTimer -= dt; if comboTimer <= 0 { comboHits = 0; comboLabel.text = "" } }
         if roundEndDelay >= 0 {
             roundEndDelay -= dt
@@ -308,6 +366,12 @@ final class FightScene: GameScene {
             else { player.position.x = middle + 11; opponent.position.x = middle - 11 }
         }
         terrain.updateFixed(dt, fighters: [player!, opponent!], projectiles: projectiles)
+        if map.isWide && abs(player.position.x - opponent.position.x) > CameraFraming.maxGap {
+            // Neither fighter may leave the widest camera view.
+            let middle = (player.position.x + opponent.position.x) / 2, half = CameraFraming.maxGap / 2
+            let playerLeft = player.position.x < opponent.position.x
+            player.position.x = middle + (playerLeft ? -half : half); opponent.position.x = middle + (playerLeft ? half : -half)
+        }
         handleMove(player, target: opponent)
         handleMove(opponent, target: player)
         for projectile in projectiles {
@@ -330,6 +394,7 @@ final class FightScene: GameScene {
         resolvePendingHits(dt)
         controls.update(energy: player.energy, cooldowns: player.cooldowns, awakeningTier: player.awakeningTier, dt: dt)
         updateHUD()
+        updateCamera(dt)
         if player.hp == 0 || opponent.hp == 0 || roundSeconds <= 0 { resolveRound() }
         if debugEnabled { drawDebug() }
     }
@@ -345,7 +410,8 @@ final class FightScene: GameScene {
                 let rise = (CGFloat(index) - CGFloat(shots - 1) / 2) * 42
                 let projectile = Projectile(owner: attacker, damage: max(1, damage), direction: attacker.facing, rise: rise,
                                             effect: hitEffect(info, enhanced: enhanced), enhanced: enhanced)
-                projectile.zPosition = 20; addChild(projectile); projectiles.append(projectile)
+                projectile.arenaWidth = map.arenaWidth
+                projectile.zPosition = 20; world.addChild(projectile); projectiles.append(projectile)
             }
         }
         if let name = info.buff, move != "ult", !attacker.emitted, attacker.currentFrame >= info.activeStart {
@@ -358,7 +424,7 @@ final class FightScene: GameScene {
             let awakened = attacker.consumeAwakenedUlt() ? attacker.data.moves["ultAwakened"] : nil
             let size = awakened == nil ? CGSize(width: 250, height: 130) : CGSize(width: 320, height: 170)
             let effect = EffectNode(name: SpriteSheet.shared.effectName("ult", character: attacker.data), frames: 8, color: attacker.data.accentColor, size: size, frameTime: 0.08)
-            effect.position = CGPoint(x: 240, y: 110); effect.zPosition = 45; addChild(effect)
+            effect.position = CGPoint(x: cameraX, y: 110); effect.zPosition = 45; world.addChild(effect)
             if let awakened { castAwakenedUlt(awakened, caster: attacker, target: target) }
             else {
                 for (index, delay) in [CGFloat(0), 0.13, 0.26].enumerated() {
@@ -368,7 +434,7 @@ final class FightScene: GameScene {
             }
         }
         if info.teleport == true, !attacker.emitted, attacker.currentFrame >= info.activeStart {
-            attacker.position.x = min(454, max(26, target.position.x + (attacker.position.x < target.position.x ? 27 : -27)))
+            attacker.position.x = min(map.arenaWidth - 26, max(26, target.position.x + (attacker.position.x < target.position.x ? 27 : -27)))
             attacker.facing = attacker.position.x < target.position.x ? 1 : -1
             attacker.markEmitted()
             showEffect("dash_trail", at: attacker.position, color: attacker.data.accentColor)
@@ -406,7 +472,7 @@ final class FightScene: GameScene {
         if let name = spec.buff, let buff = Buff(rawValue: name) { caster.apply(buff, for: spec.buffTime ?? 3) }
         if let heal = spec.heal { caster.heal(heal) }
         if spec.pull == true {
-            target.position.x = min(454, max(26, caster.position.x + caster.facing * 40)); target.velocity = .zero
+            target.position.x = min(map.arenaWidth - 26, max(26, caster.position.x + caster.facing * 40)); target.velocity = .zero
             for projectile in projectiles where projectile.owner === target { projectile.removeFromParent() }
         }
         let hits = max(1, spec.hits ?? 4)
@@ -445,8 +511,8 @@ final class FightScene: GameScene {
     private func callout(_ text: String?, over fighter: Fighter, color: SKColor? = nil, size: CGFloat = 8) {
         guard let text, !text.isEmpty else { return }
         let label = Theme.label(text, size: size, color: color ?? fighter.data.accentColor)
-        label.position = CGPoint(x: min(400, max(80, fighter.position.x)), y: min(200, fighter.position.y + 84)); label.zPosition = 61
-        addChild(label)
+        label.position = CGPoint(x: min(map.arenaWidth - 80, max(80, fighter.position.x)), y: min(200, fighter.position.y + 84)); label.zPosition = 61
+        world.addChild(label)
         label.run(.sequence([.group([.moveBy(x: 0, y: 14, duration: 1.1), .sequence([.wait(forDuration: 0.7), .fadeOut(withDuration: 0.4)])]), .removeFromParent()]))
     }
     /// Awakening gains: the fighter with less HP charges 50% faster.
@@ -492,7 +558,7 @@ final class FightScene: GameScene {
     }
     private func showEffect(_ name: String, at point: CGPoint, color: SKColor) {
         let effect = EffectNode(name: name, frames: name == "dash_trail" ? 4 : 5, color: color, size: CGSize(width: 58, height: 58))
-        effect.position = point; effect.zPosition = 35; addChild(effect)
+        effect.position = point; effect.zPosition = 35; world.addChild(effect)
     }
     private func resolveRound() {
         guard !roundResolved else { return }
@@ -529,12 +595,12 @@ final class FightScene: GameScene {
     private func drawDebug() {
         debugNodes.forEach { $0.removeFromParent() }; debugNodes.removeAll()
         for fighter in [player!, opponent!] {
-            let hurt = HitboxSystem.debugRect(fighter.hurtbox, color: .green); addChild(hurt); debugNodes.append(hurt)
+            let hurt = HitboxSystem.debugRect(fighter.hurtbox, color: .green); world.addChild(hurt); debugNodes.append(hurt)
             if let move = fighter.currentMove, let box = fighter.hitbox(for: move) {
-                let hit = HitboxSystem.debugRect(box, color: .red); addChild(hit); debugNodes.append(hit)
+                let hit = HitboxSystem.debugRect(box, color: .red); world.addChild(hit); debugNodes.append(hit)
             }
         }
-        for projectile in projectiles { let box = HitboxSystem.debugRect(projectile.hitbox, color: .yellow); addChild(box); debugNodes.append(box) }
+        for projectile in projectiles { let box = HitboxSystem.debugRect(projectile.hitbox, color: .yellow); world.addChild(box); debugNodes.append(box) }
     }
     private func applyInput() {
         guard !fightPaused else { return }
@@ -608,10 +674,14 @@ extension FightScene: TerrainDelegate {
     func terrainAwakening(_ fighter: Fighter, amount: CGFloat) {
         gainAwakening(fighter, amount, versus: fighter === player ? opponent! : player!)
     }
-    func terrainCallout(_ text: String, at point: CGPoint, color: SKColor) {
+    func terrainCallout(_ text: String, at point: CGPoint?, color: SKColor) {
         let label = Theme.label(text, size: 8, color: color)
-        label.position = CGPoint(x: min(420, max(60, point.x)), y: min(200, point.y)); label.zPosition = 61
-        addChild(label)
+        label.zPosition = 61
+        if let point {
+            label.position = CGPoint(x: min(map.arenaWidth - 60, max(60, point.x)), y: min(200, point.y)); world.addChild(label)
+        } else {
+            label.position = CGPoint(x: 240, y: 180); addChild(label)
+        }
         label.run(.sequence([.group([.moveBy(x: 0, y: 12, duration: 1), .sequence([.wait(forDuration: 0.6), .fadeOut(withDuration: 0.4)])]), .removeFromParent()]))
     }
 }

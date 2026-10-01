@@ -12,6 +12,7 @@ final class Projectile: SKNode {
     /// Set each step by the arena: tailwind 1.3, headwind and sandstorm slower.
     var speedScale: CGFloat = 1
     var pushScale: CGFloat = 1
+    var arenaWidth: CGFloat = 480
     var didHit = false
     let visual: SKSpriteNode
     init(owner: Fighter, damage: Int, direction: CGFloat, rise: CGFloat = 0, effect: HitEffect? = nil, enhanced: Bool = false) {
@@ -38,6 +39,6 @@ final class Projectile: SKNode {
         position.x += direction * 180 * speedScale * dt
         position.y += rise * dt
         life -= dt
-        if life <= 0 || position.x < -25 || position.x > 505 || position.y < 36 || position.y > 280 { removeFromParent() }
+        if life <= 0 || position.x < -25 || position.x > arenaWidth + 25 || position.y < 36 || position.y > 280 { removeFromParent() }
     }
 }

@@ -90,7 +90,7 @@ final class SelectScene: GameScene {
         let preview = ArenaBackground(map: map); preview.zPosition = -10; preview.alpha = 0.62
         addChild(preview); arena = preview
         mapName.text = map.name
-        mapSummary.text = map.summary ?? ""
+        mapSummary.text = (map.isWide ? "MAP RỘNG \(Int(map.arenaWidth)) · " : "") + (map.summary ?? "")
     }
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if endMenuTouches(touches) { return }

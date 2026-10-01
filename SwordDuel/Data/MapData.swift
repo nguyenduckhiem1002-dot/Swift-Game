@@ -24,10 +24,33 @@ struct MapData: Codable {
     let mist: String?
     /// Animation speed multiplier, e.g. slower attacks underwater.
     let animSpeed: CGFloat?
+    /// Arena width in points; wider than 480 enables the following, zooming camera.
+    let width: CGFloat?
     let terrain: TerrainData?
 
     var gravityScale: CGFloat { gravity ?? 1 }
     var movementScale: CGFloat { moveScale ?? 1 }
+    var arenaWidth: CGFloat { max(480, width ?? 480) }
+    var isWide: Bool { arenaWidth > 480 }
+    /// Fighters start 236 points apart around the arena center.
+    var spawnPoints: (left: CGFloat, right: CGFloat) { (arenaWidth / 2 - 118, arenaWidth / 2 + 118) }
+}
+
+/// Camera framing for wide arenas: follow the fighters' midpoint and zoom out from 1.0x to 0.75x as they separate.
+enum CameraFraming {
+    static let minZoom: CGFloat = 0.75
+    /// Fighters may not separate beyond what the widest zoom can show.
+    static let maxGap: CGFloat = 480 / minZoom - 70
+    static func target(width: CGFloat, leftX: CGFloat, rightX: CGFloat) -> (x: CGFloat, zoom: CGFloat) {
+        guard width > 480 else { return (240, 1) }
+        let zoom = min(1, max(minZoom, 480 / (abs(rightX - leftX) + 170)))
+        return (clampedX((leftX + rightX) / 2, width: width, zoom: zoom), zoom)
+    }
+    /// Keeps the visible span inside the arena.
+    static func clampedX(_ x: CGFloat, width: CGFloat, zoom: CGFloat) -> CGFloat {
+        let half = 240 / zoom
+        return width <= half * 2 ? width / 2 : min(width - half, max(half, x))
+    }
 }
 
 /// Interactive arena layout. Coordinates are scene points; the floor is y = 42.

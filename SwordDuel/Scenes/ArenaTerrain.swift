@@ -11,7 +11,8 @@ protocol TerrainDelegate: AnyObject {
     /// Unattributed, unblockable arena damage. Returns whether it landed.
     func terrainHit(_ fighter: Fighter, damage: Int, knockback: CGFloat, launch: CGFloat, stun: CGFloat, color: SKColor) -> Bool
     func terrainAwakening(_ fighter: Fighter, amount: CGFloat)
-    func terrainCallout(_ text: String, at point: CGPoint, color: SKColor)
+    /// `point` is in arena coordinates; nil means an arena-wide announcement at screen center.
+    func terrainCallout(_ text: String, at point: CGPoint?, color: SKColor)
 }
 
 private let floorY: CGFloat = 42
@@ -66,11 +67,12 @@ private final class Zone {
         case "lava": height = 8; color = lavaColor
         case "poison": height = data.h ?? 60; color = poisonColor.withAlphaComponent(0.26)
         case "rune": height = 3; color = Theme.gold.withAlphaComponent(0.65)
-        case "void": height = floorY; color = SKColor(red: 0.02, green: 0.01, blue: 0.05, alpha: 1)
+        case "void": height = floorY + 90; color = SKColor(red: 0.02, green: 0.01, blue: 0.05, alpha: 1)
         case "waterfall": height = data.h ?? 228; color = iceColor.withAlphaComponent(0.28)
         default: height = data.h ?? 10; color = SKColor.white.withAlphaComponent(0.2)
         }
-        let bottom = data.kind == "void" ? 0 : (data.kind == "lava" ? floorY - 6 : floorY)
+        // The void reaches below the world floor, which extends under y = 0 when the camera zooms out.
+        let bottom = data.kind == "void" ? -90 : (data.kind == "lava" ? floorY - 6 : floorY)
         rect = CGRect(x: data.x, y: bottom, width: data.w, height: height)
         node = SKSpriteNode(color: color, size: rect.size)
         node.anchorPoint = .zero; node.position = rect.origin
@@ -176,6 +178,9 @@ private struct Strike {
 final class ArenaTerrain: SKNode, TerrainSurface {
     weak var delegate: TerrainDelegate?
     let map: MapData
+    let width: CGFloat
+    /// Screen-space weather and darkness layers; the fight scene adds this above the camera's world.
+    let screenOverlay = SKNode()
     private var platforms: [Platform] = []
     private var zones: [Zone] = []
     private var objects: [ArenaObject] = []
@@ -192,13 +197,13 @@ final class ArenaTerrain: SKNode, TerrainSurface {
     private var hazardCooldown: [ObjectIdentifier: CGFloat] = [:]
     private var tickClock: [ObjectIdentifier: CGFloat] = [:]
     private var energyCarry: [ObjectIdentifier: CGFloat] = [:]
-    private let overlay = SKNode()
     private let sandOverlay = SKSpriteNode(color: SKColor(red: 0.85, green: 0.68, blue: 0.4, alpha: 1), size: CGSize(width: 480, height: 270))
     private let darkOverlay = SKSpriteNode(color: .black, size: CGSize(width: 480, height: 270))
     private let indicator = Theme.label("", size: 7, color: .white)
 
     init(map: MapData) {
         self.map = map
+        width = map.arenaWidth
         super.init()
         let accent = SKColor(rgb: map.accent)
         let stone = SKColor(rgb: map.mountain).withAlphaComponent(1)
@@ -217,11 +222,10 @@ final class ArenaTerrain: SKNode, TerrainSurface {
             object.node.zPosition = 1; addChild(object.node); objects.append(object)
         }
         events = (terrain?.events ?? []).map(TimedEvent.init)
-        overlay.zPosition = 22; addChild(overlay)
         for layer in [sandOverlay, darkOverlay] {
-            layer.anchorPoint = .zero; layer.alpha = 0; overlay.addChild(layer)
+            layer.anchorPoint = .zero; layer.alpha = 0; screenOverlay.addChild(layer)
         }
-        indicator.position = CGPoint(x: 240, y: 190); indicator.zPosition = 1; overlay.addChild(indicator)
+        indicator.position = CGPoint(x: 240, y: 190); indicator.zPosition = 1; screenOverlay.addChild(indicator)
         reset()
     }
     required init?(coder: NSCoder) { fatalError() }
@@ -294,7 +298,7 @@ final class ArenaTerrain: SKNode, TerrainSurface {
     private func hit(_ fighter: Fighter, damage: Int, knockback: CGFloat = 0, launch: CGFloat = 0, stun: CGFloat = 0, color: SKColor) {
         _ = delegate?.terrainHit(fighter, damage: damage, knockback: knockback, launch: launch, stun: stun, color: color)
     }
-    private func callout(_ text: String, at point: CGPoint, color: SKColor = Theme.gold) {
+    private func callout(_ text: String, at point: CGPoint?, color: SKColor = Theme.gold) {
         delegate?.terrainCallout(text, at: point, color: color)
     }
     private func onGround(_ fighter: Fighter) -> Bool { fighter.onGround && fighter.position.y <= floorY + 0.5 }
@@ -320,7 +324,7 @@ final class ArenaTerrain: SKNode, TerrainSurface {
             if platform.solid {
                 // Moving platforms carry whoever stands on them.
                 for rider in riders {
-                    rider.position.x = min(454, max(26, rider.position.x + platform.top.x - previous.x))
+                    rider.position.x = min(width - 26, max(26, rider.position.x + platform.top.x - previous.x))
                     rider.position.y = platform.top.y
                 }
             }
@@ -526,7 +530,7 @@ final class ArenaTerrain: SKNode, TerrainSurface {
         case "wind", "current":
             refreshIndicator(blinking: true)
         case "statueBeam":
-            let line = SKSpriteNode(color: SKColor(red: 1, green: 0.3, blue: 0.2, alpha: 0.7), size: CGSize(width: 480, height: 2))
+            let line = SKSpriteNode(color: SKColor(red: 1, green: 0.3, blue: 0.2, alpha: 0.7), size: CGSize(width: width, height: 2))
             line.anchorPoint = CGPoint(x: 0, y: 0.5); line.position = CGPoint(x: 0, y: floorY + 11); line.zPosition = 3
             line.run(.repeatForever(.sequence([.fadeAlpha(to: 0.15, duration: 0.12), .fadeAlpha(to: 0.8, duration: 0.12)])))
             addChild(line); event.marker = line
@@ -538,8 +542,9 @@ final class ArenaTerrain: SKNode, TerrainSurface {
         case "debris":
             debrisFromLeft = Bool.random()
             let mark = Theme.label("!", size: 14, color: Theme.fire)
+            // The warning sits on the screen edge the rock will enter from, even when that arena edge is off-screen.
             mark.position = CGPoint(x: debrisFromLeft ? 12 : 468, y: 120); mark.zPosition = 3
-            addChild(mark); event.marker = mark
+            screenOverlay.addChild(mark); event.marker = mark
         default: break
         }
     }
@@ -548,22 +553,22 @@ final class ArenaTerrain: SKNode, TerrainSurface {
         case "wind":
             windDirection = -windDirection
             refreshIndicator(blinking: false)
-            callout("GIÓ ĐỔI CHIỀU", at: CGPoint(x: 240, y: 180), color: SKColor(rgb: map.accent))
+            callout("GIÓ ĐỔI CHIỀU", at: nil, color: SKColor(rgb: map.accent))
         case "current":
             currentDirection = Bool.random() ? 1 : -1; event.endsAt = clock + event.duration
             refreshIndicator(blinking: false)
-            callout("DÒNG CHẢY", at: CGPoint(x: 240, y: 180), color: SKColor(rgb: map.accent))
+            callout("DÒNG CHẢY", at: nil, color: SKColor(rgb: map.accent))
         case "sandstorm":
             sandstorm = true; event.endsAt = clock + event.duration
-            callout("BÃO CÁT", at: CGPoint(x: 240, y: 180), color: SKColor(rgb: map.accent))
+            callout("BÃO CÁT", at: nil, color: SKColor(rgb: map.accent))
         case "darkness":
             darkness = true; event.endsAt = clock + event.duration
-            callout("BÓNG TỐI", at: CGPoint(x: 240, y: 180), color: SKColor(rgb: map.accent))
+            callout("BÓNG TỐI", at: nil, color: SKColor(rgb: map.accent))
         case "statueBeam":
             objects.filter { $0.kind == "statue" }.forEach { $0.node.colorBlendFactor = 0 }
             let tablet = objects.first { $0.kind == "tablet" }
             let spared = tablet?.owner
-            let beam = SKSpriteNode(color: SKColor(red: 1, green: 0.85, blue: 0.5, alpha: 0.9), size: CGSize(width: 480, height: 12))
+            let beam = SKSpriteNode(color: SKColor(red: 1, green: 0.85, blue: 0.5, alpha: 0.9), size: CGSize(width: width, height: 12))
             beam.anchorPoint = CGPoint(x: 0, y: 0.5); beam.position = CGPoint(x: 0, y: floorY + 11); beam.zPosition = 3
             addChild(beam); beam.run(.sequence([.fadeOut(withDuration: 0.35), .removeFromParent()]))
             // Jumping or standing on a ledge clears the low beam.
@@ -583,8 +588,8 @@ final class ArenaTerrain: SKNode, TerrainSurface {
         case "debris":
             let fromLeft = debrisFromLeft
             let y = [CGFloat(66), 100, 130].randomElement() ?? 66
-            let rock = Mover(kind: "debris", at: CGPoint(x: fromLeft ? -10 : 490, y: y), velocity: CGVector(dx: fromLeft ? 70 : -70, dy: 0),
-                             size: CGSize(width: 18, height: 14), color: SKColor(rgb: map.structure ?? map.accent), life: 9, hp: 2, damage: 8)
+            let rock = Mover(kind: "debris", at: CGPoint(x: fromLeft ? -10 : width + 10, y: y), velocity: CGVector(dx: fromLeft ? 70 : -70, dy: 0),
+                             size: CGSize(width: 18, height: 14), color: SKColor(rgb: map.structure ?? map.accent), life: width / 70 + 2, hp: 2, damage: 8)
             rock.node.run(.repeatForever(.rotate(byAngle: fromLeft ? -.pi : .pi, duration: 1)))
             rock.node.zPosition = 4; addChild(rock.node); movers.append(rock)
         default: break
@@ -610,8 +615,8 @@ final class ArenaTerrain: SKNode, TerrainSurface {
     private func strikeTarget(_ kind: String) -> CGFloat {
         let alive = fighters.filter { $0.hp > 0 }
         if kind == "lightning", Bool.random(), let rune = zones.filter({ $0.kind == "rune" }).randomElement() { return rune.rect.midX }
-        if let fighter = alive.randomElement() { return min(440, max(40, fighter.position.x)) }
-        return CGFloat.random(in: 60...420)
+        if let fighter = alive.randomElement() { return min(width - 40, max(40, fighter.position.x)) }
+        return CGFloat.random(in: 60...(width - 60))
     }
 
     // MARK: Strikes
@@ -688,7 +693,7 @@ final class ArenaTerrain: SKNode, TerrainSurface {
                     mover.hp = 0
                 }
             }
-            if mover.life <= 0 || mover.node.position.x < -30 || mover.node.position.x > 510 { mover.hp = 0 }
+            if mover.life <= 0 || mover.node.position.x < -30 || mover.node.position.x > width + 30 { mover.hp = 0 }
             if mover.hp <= 0 { mover.node.removeFromParent() }
         }
         movers.removeAll { $0.hp <= 0 }
@@ -706,7 +711,7 @@ final class ArenaTerrain: SKNode, TerrainSurface {
         if sandstorm { push -= 40 }
         push += currentDirection * 50
         if push != 0 {
-            for fighter in fighters where fighter.hp > 0 { fighter.position.x = min(454, max(26, fighter.position.x + push * dt)) }
+            for fighter in fighters where fighter.hp > 0 { fighter.position.x = min(width - 26, max(26, fighter.position.x + push * dt)) }
         }
         let flow = events.contains(where: { $0.kind == "wind" }) ? windDirection : currentDirection
         for projectile in projectiles {
@@ -725,7 +730,7 @@ final class ArenaTerrain: SKNode, TerrainSurface {
         let x = fighter.position.x
         func away(from center: CGFloat) -> CGFloat {
             if x < 60 { return 1 }
-            if x > 420 { return -1 }
+            if x > width - 60 { return -1 }
             return x < center ? -1 : 1
         }
         if let strike = strikes.first(where: { abs($0.x - x) < 28 }) { return away(from: strike.x) }

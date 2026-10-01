@@ -74,13 +74,25 @@ Each map's `terrain` block in `Maps.json` drives `Scenes/ArenaTerrain.swift`. Th
 - **events** (`start`, `interval`, `telegraph`, `duration`): `wind` (flips direction; pushes fighters, and tailwind projectiles fly 30% faster and push 50% harder), `geyser`, `roots` and `lightning` (telegraphed strikes at a fighter or rune), `statueBeam` (low beam; jump or stand on a ledge), `sandstorm`, `current`, `darkness`, `souls` (homing wisps from tombstones) and `debris` (rocks crossing the arena). Every damaging event is telegraphed for 1–2 seconds.
 - **Element reactions** use the character's `color`. `ice` freezes lava for 5s, making it safe. `fire` melts frozen lava, dissipates clouds, and detonates poison mist (10 damage to anyone nearby, mist gone for 10s). Lightning activates runes.
 
-Arena damage is unblockable, counts as being hit for awakening, and stops when a round is decided. The AI sidesteps hazards and telegraphed strikes and hops over statue beams. Wide scrolling arenas and Tiled map loading from the spec are not implemented; every arena is still one 480×270 screen.
+Arena damage is unblockable, counts as being hit for awakening, and stops when a round is decided. The AI sidesteps hazards and telegraphed strikes and hops over statue beams. Tiled map loading from the spec is not implemented; layouts live in `Maps.json`.
+
+### Wide arenas and camera
+
+`width` in `Maps.json` sets the arena width (default 480). The themed maps are 960–1440 points wide (2–3 screens), while `classic` stays one screen because its painting does not scroll. Fighters spawn 118 points either side of the center.
+
+- **Camera:** follows the fighters' midpoint and zooms from 1.0× down to 0.75× as they separate (`CameraFraming` in `MapData.swift`). The floor stays at screen y = 42, and the view never shows past the arena edges. Fighters cannot separate by more than 570 points, so both always stay on screen.
+- **Screen vs. arena coordinates:** gameplay (fighters, terrain, projectiles, effects, hitbox overlay) lives in a `world` node that the camera moves and scales. The HUD, touch controls, pause panel and weather/darkness overlays stay in screen coordinates.
+- **Parallax:** the sky stays fixed, peaks and `<mapId>_mid.png` scroll at 0.5, clouds at 0.3 and `<mapId>_near.png` at 1.2. Mid and near art should tile horizontally.
+- **Floor:** drawn across the whole arena in the world. An optional `<mapId>_ground.png` (42 points high, tileable) replaces the procedural floor.
+- **Minimap:** wide maps show a strip between the touch controls with both fighters and the current camera view.
+
+The stage mode from the spec (4–6 screen zones with locked exits) is not implemented; arenas are 1v1 only.
 
 ## Roster data
 
 Each character entry in `Characters.json` can also set `role`, `accent` (RGB 0–1), `frameSize`, `walkSpeed` and `jumpVelocity`. Moves accept `projectiles` (skill1 fan size; `0` turns skill1 into a melee hitbox), `dashSpeed`, `dashTime`, `invulnerable`, `teleport`, `reflect`, `onHit` and `enhanced` (`slow`, `stun`, `burn`, `drain`). A negative `knockback` pulls the target. `skill3` and `ultAwakened` add `title`, `buff`, `buffTime`, `heal`, `hits`, `hitInterval`, `delay`, `unblockable` and `pull`. Trap placement and some spec details (exact counter timing, clone mirroring, black-hole projectile pull) are approximated with these shared systems. Missing button and HP-fill art falls back to generated textures in the character's accent color.
 
-The select screen picks a random CPU opponent. For art review, add `--preview-fight --character <id> --opponent <id> --map <mapId>` to the scheme's Run arguments; `--test-ui` now also checks every character's frame counts and SK3/awakened ULT data, runs awakening tier rules on a test fighter, builds every arena, checks that hazards avoid spawn points and platforms are within jump reach, and runs 40 seconds of each map's terrain events.
+The select screen picks a random CPU opponent. For art review, add `--preview-fight --character <id> --opponent <id> --map <mapId>` to the scheme's Run arguments; `--test-ui` now also checks every character's frame counts and SK3/awakened ULT data, runs awakening tier rules on a test fighter, builds every arena, checks that hazards avoid spawn points and platforms are within jump reach, checks camera framing at the walls, the maximum gap and the spawn points, and runs 40 seconds of each map's terrain events.
 
 After adding PNGs, ensure they appear under the blue `Assets` folder reference in Xcode. Xcode copies that folder into the app bundle.
 

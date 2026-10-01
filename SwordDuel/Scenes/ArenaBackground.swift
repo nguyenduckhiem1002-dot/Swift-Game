@@ -12,8 +12,14 @@ final class ArenaBackground: SKNode {
     private var particleVelocity = CGVector.zero
     private var ambientClock: CGFloat = 0
     private let flash = SKSpriteNode(color: .white, size: CGSize(width: 480, height: 270))
+    /// Parallax layers: peaks scroll at 0.5, clouds at 0.3 and near art at 1.2 of the camera; the sky stays put.
+    private let peaks = SKNode()
+    private let midArt = SKNode()
+    private var scroll: CGFloat = 0
+    /// Wide arenas draw their floor here; the fight scene adds it to the camera's world so it scrolls and zooms 1:1.
+    private(set) var worldGround: SKNode?
 
-    init(map: MapData = MapLibrary.all[0]) {
+    init(map: MapData = MapLibrary.all[0], groundInWorld: Bool = false) {
         self.map = map
         super.init()
         if let name = map.painting, let painting = backgroundTexture(name) {
@@ -29,9 +35,12 @@ final class ArenaBackground: SKNode {
         } else {
             buildProceduralSky()
         }
+        midArt.zPosition = 3.5; addChild(midArt)
         if let mid {
-            let sprite = SKSpriteNode(texture: mid, size: CGSize(width: 480, height: 270))
-            sprite.position = CGPoint(x: 240, y: 135); sprite.zPosition = 3.5; addChild(sprite)
+            for index in 0..<2 {
+                let sprite = SKSpriteNode(texture: mid, size: CGSize(width: 480, height: 270))
+                sprite.position = CGPoint(x: 240 + CGFloat(index) * 480, y: 135); midArt.addChild(sprite)
+            }
         }
         clouds.zPosition = 4; addChild(clouds)
         for i in 0..<12 {
@@ -48,7 +57,8 @@ final class ArenaBackground: SKNode {
                 nearArt.addChild(sprite)
             }
         }
-        if mid == nil { buildProceduralGround() }
+        if groundInWorld { worldGround = makeWorldGround() }
+        else if mid == nil { buildProceduralGround() }
         buildAmbient()
     }
     required init?(coder: NSCoder) { fatalError() }
@@ -78,13 +88,15 @@ final class ArenaBackground: SKNode {
             orb.strokeColor = SKColor(rgb: map.accent); orb.lineWidth = 2; orb.zPosition = 1; addChild(orb)
         }
         let structure = SKColor(rgb: map.structure ?? [1, 0.79, 0.38], alpha: 0.75)
-        for i in 0..<6 {
+        // The peak pattern repeats every three peaks (288 points), so the layer wraps seamlessly while scrolling.
+        peaks.zPosition = 2; addChild(peaks)
+        for i in 0..<10 {
             let x = CGFloat(i * 96 - 25)
             let peak = SKShapeNode(path: trianglePath(x: x, baseY: 56, width: 135, height: CGFloat(95 + i % 3 * 15)))
             peak.fillColor = SKColor(rgb: map.mountain)
-            peak.strokeColor = SKColor(rgb: map.accent, alpha: 0.35); peak.lineWidth = 1; peak.zPosition = 2; addChild(peak)
+            peak.strokeColor = SKColor(rgb: map.accent, alpha: 0.35); peak.lineWidth = 1; peaks.addChild(peak)
             let pagoda = SKSpriteNode(color: structure, size: CGSize(width: 13, height: 15))
-            pagoda.position = CGPoint(x: x + 67, y: CGFloat(151 + i % 3 * 15)); pagoda.zPosition = 3; addChild(pagoda)
+            pagoda.position = CGPoint(x: x + 67, y: CGFloat(151 + i % 3 * 15)); pagoda.zPosition = 1; peaks.addChild(pagoda)
         }
     }
 
@@ -98,6 +110,49 @@ final class ArenaBackground: SKNode {
             tile.position = CGPoint(x: CGFloat(i * 16 + 4), y: CGFloat(9 + (i % 3) * 8))
             tile.zPosition = 6; addChild(tile)
         }
+    }
+
+    /// The walkable floor across the whole arena, extended below y = 0 so zooming out never shows a gap.
+    /// An optional `<mapId>_ground.png` (any width, 42 high) tiles along it.
+    private func makeWorldGround() -> SKNode {
+        let node = SKNode()
+        let width = map.arenaWidth
+        let ground = SKShapeNode(rect: CGRect(x: -80, y: -90, width: width + 160, height: 132))
+        ground.fillColor = SKColor(rgb: map.ground)
+        ground.strokeColor = SKColor(rgb: map.accent); ground.lineWidth = 2; node.addChild(ground)
+        if let tile = backgroundTexture("\(map.id)_ground") {
+            let size = CGSize(width: tile.size().width * 42 / max(1, tile.size().height), height: 42)
+            var x: CGFloat = -80
+            while x < width + 80 {
+                let sprite = SKSpriteNode(texture: tile, size: size)
+                sprite.anchorPoint = .zero; sprite.position = CGPoint(x: x, y: 0); sprite.zPosition = 1; node.addChild(sprite)
+                x += max(16, size.width)
+            }
+        } else {
+            for i in 0..<Int((width + 160) / 16) {
+                let tile = SKSpriteNode(color: SKColor(rgb: map.accent, alpha: 0.16), size: CGSize(width: 13, height: 1))
+                tile.position = CGPoint(x: CGFloat(i * 16 - 76), y: CGFloat(9 + (i % 3) * 8))
+                tile.zPosition = 1; node.addChild(tile)
+            }
+        }
+        return node
+    }
+
+    /// Called by the fight scene's camera; `x` is the arena x at the screen center.
+    func setCamera(x: CGFloat) {
+        scroll = x - 240
+        layoutParallax()
+    }
+    private func layoutParallax() {
+        peaks.position.x = wrapped(-scroll * 0.5, period: 288)
+        midArt.position.x = wrapped(-scroll * 0.5, period: 480)
+        clouds.position.x = wrapped(cloudX - scroll * 0.3, period: usesIllustration ? 480 : 62)
+        nearArt.position.x = wrapped(nearX - scroll * 1.2, period: 480)
+    }
+    /// Maps any offset into (-period, 0] so repeating layers always cover the screen.
+    private func wrapped(_ value: CGFloat, period: CGFloat) -> CGFloat {
+        let remainder = value.truncatingRemainder(dividingBy: period)
+        return remainder > 0 ? remainder - period : remainder
     }
 
     private func buildAmbient() {
@@ -163,10 +218,9 @@ final class ArenaBackground: SKNode {
         let cloudWidth: CGFloat = usesIllustration ? 480 : 62
         cloudX -= (usesIllustration ? 1.25 : 4) * dt
         if cloudX < -cloudWidth { cloudX += cloudWidth }
-        clouds.position.x = cloudX
         nearX -= 3 * dt
         if nearX < -480 { nearX += 480 }
-        nearArt.position.x = nearX
+        layoutParallax()
         for dot in particles.children {
             var point = dot.position
             point.x += particleVelocity.dx * dt; point.y += particleVelocity.dy * dt
