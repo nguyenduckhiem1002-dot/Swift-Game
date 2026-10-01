@@ -9,13 +9,6 @@ final class SpriteSheet {
     private var sourceImages: [String: CGImage] = [:]
     private var portraits: [String: SKTexture] = [:]
     private var placeholderKeys: Set<String> = []
-    /// Until dedicated art exists, these animations reuse a drawn one with the same frame count.
-    private static let aliases: [String: String] = [
-        "skill3": "win",
-        "crouch_block": "guard",
-        "jump": "float",
-    ]
-
     private struct FrameLayout {
         let size: CGSize
         let anchor: CGPoint
@@ -43,24 +36,13 @@ final class SpriteSheet {
         if let cached = cache[key] { return cached }
         let count = character.animations[animation]?.frames ?? 1
         let path = "Assets/Characters/\(character.id)/\(key)"
-        if let atlas = atlas(for: character.id), let names = atlas.animations[animation], names.count == count,
-           let imported = atlasFrames(names, atlas: atlas, characterID: character.id) {
-            cache[key] = imported.textures
-            layouts[key] = imported.layouts
-            return imported.textures
+        if let master = loadMaster(character: character, animation: animation, count: count) {
+            cache[key] = master
+            return master
         }
         if let strip = loadStrip(path: path, count: count, frameSize: CGSize(width: character.spriteSize, height: character.spriteSize)) {
             cache[key] = strip
             return strip
-        }
-        if let alias = Self.aliases[animation], character.animations[alias]?.frames == count {
-            let borrowed = frames(character: character, animation: alias)
-            let aliasKey = "\(character.id)_\(alias)"
-            if !placeholderKeys.contains(aliasKey) {
-                cache[key] = borrowed
-                layouts[key] = layouts[aliasKey]
-                return borrowed
-            }
         }
         let fallback = (0..<count).map { placeholder(character: character, animation: animation, frame: $0) }
         cache[key] = fallback
@@ -126,6 +108,19 @@ final class SpriteSheet {
                                                 anchor: CGPoint(x: frame.pivot[0] / rect.width, y: 1 - frame.pivot[1] / rect.height)))
         }
         return textures.isEmpty ? nil : (textures, frameLayouts)
+    }
+
+    private func loadMaster(character: CharacterData, animation: String, count: Int) -> [SKTexture]? {
+        let order = ["idle","walk","jump","crouch_block","attack1","attack2","attack3","skill1","skill2","ult","hurt","ko","win","skill3"]
+        guard let row = order.firstIndex(of: animation),
+              let url = Bundle.main.url(forResource: "\(character.id)_master", withExtension: "png", subdirectory: "Assets/Characters/\(character.id)"),
+              let image = UIImage(contentsOfFile: url.path)?.cgImage else { return nil }
+        let cell = 32
+        guard image.width >= cell * count, image.height >= cell * (row + 1) else { return nil }
+        return (0..<count).compactMap { index in
+            guard let cut = image.cropping(to: CGRect(x: index * cell, y: row * cell, width: cell, height: cell)) else { return nil }
+            return nearest(SKTexture(cgImage: cut))
+        }
     }
 
     /// A character-specific strip (`<id>_<kind>.png`) wins over the shared element strip (`<kind>_<color>.png`).
