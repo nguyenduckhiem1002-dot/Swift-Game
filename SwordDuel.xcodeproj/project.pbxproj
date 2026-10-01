@@ -44,6 +44,28 @@
   000000000000000000000098 /* TitleScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000097 /* TitleScene.swift */; };
   00000000000000000000009A /* Characters.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "SwordDuel/Data/Characters.json"; sourceTree = "<group>"; };
   00000000000000000000009B /* Characters.json in Resources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000009A /* Characters.json */; };
+  B00000000000000000000003 /* MapData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwordDuel/Data/MapData.swift"; sourceTree = "<group>"; };
+  B00000000000000000000004 /* MapData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000003 /* MapData.swift */; };
+  B00000000000000000000007 /* ArenaTerrain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwordDuel/Scenes/ArenaTerrain.swift"; sourceTree = "<group>"; };
+  B00000000000000000000008 /* ArenaTerrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000007 /* ArenaTerrain.swift */; };
+  B00000000000000000000009 /* StageData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwordDuel/Data/StageData.swift"; sourceTree = "<group>"; };
+  B0000000000000000000000A /* StageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000009 /* StageData.swift */; };
+  B0000000000000000000000B /* Monster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwordDuel/Entities/Monster.swift"; sourceTree = "<group>"; };
+  B0000000000000000000000C /* Monster.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0000000000000000000000B /* Monster.swift */; };
+  B0000000000000000000000D /* StageScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwordDuel/Scenes/StageScene.swift"; sourceTree = "<group>"; };
+  B0000000000000000000000E /* StageScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0000000000000000000000D /* StageScene.swift */; };
+  B0000000000000000000000F /* Monsters.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "SwordDuel/Data/Monsters.json"; sourceTree = "<group>"; };
+  B00000000000000000000010 /* Monsters.json in Resources */ = {isa = PBXBuildFile; fileRef = B0000000000000000000000F /* Monsters.json */; };
+  B00000000000000000000011 /* Stages.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "SwordDuel/Data/Stages.json"; sourceTree = "<group>"; };
+  B00000000000000000000012 /* Stages.json in Resources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000011 /* Stages.json */; };
+  B00000000000000000000013 /* CombatSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwordDuel/Core/CombatSystem.swift"; sourceTree = "<group>"; };
+  B00000000000000000000014 /* CombatSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000013 /* CombatSystem.swift */; };
+  B00000000000000000000015 /* CombatHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwordDuel/Core/CombatHUD.swift"; sourceTree = "<group>"; };
+  B00000000000000000000016 /* CombatHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000015 /* CombatHUD.swift */; };
+  B00000000000000000000017 /* PlayerInputRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwordDuel/Input/PlayerInputRouter.swift"; sourceTree = "<group>"; };
+  B00000000000000000000018 /* PlayerInputRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000017 /* PlayerInputRouter.swift */; };
+  B00000000000000000000005 /* Maps.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "SwordDuel/Data/Maps.json"; sourceTree = "<group>"; };
+  B00000000000000000000006 /* Maps.json in Resources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000005 /* Maps.json */; };
   A0000000000000000000000F /* Assets in Resources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000010 /* Assets */; };
   A00000000000000000000010 /* Assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "SwordDuel/Resources/Assets"; sourceTree = "<group>"; };
   A00000000000000000000001 /* SwordDuel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwordDuel.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -56,6 +78,7 @@
     000000000000000000000070 /* SpriteSheet.swift */,
     000000000000000000000073 /* StateMachine.swift */,
     000000000000000000000076 /* CharacterData.swift */,
+    B00000000000000000000003 /* MapData.swift */,
     000000000000000000000079 /* EffectNode.swift */,
     00000000000000000000007C /* Fighter.swift */,
     00000000000000000000007F /* Projectile.swift */,
@@ -63,11 +86,21 @@
     000000000000000000000085 /* KeyboardInput.swift */,
     000000000000000000000088 /* TouchControls.swift */,
     00000000000000000000008B /* ArenaBackground.swift */,
+    B00000000000000000000007 /* ArenaTerrain.swift */,
     00000000000000000000008E /* FightScene.swift */,
     000000000000000000000091 /* ResultScene.swift */,
     000000000000000000000094 /* SelectScene.swift */,
     000000000000000000000097 /* TitleScene.swift */,
     00000000000000000000009A /* Characters.json */,
+    B00000000000000000000005 /* Maps.json */,
+    B00000000000000000000009 /* StageData.swift */,
+    B0000000000000000000000B /* Monster.swift */,
+    B0000000000000000000000D /* StageScene.swift */,
+    B0000000000000000000000F /* Monsters.json */,
+    B00000000000000000000011 /* Stages.json */,
+    B00000000000000000000013 /* CombatSystem.swift */,
+    B00000000000000000000015 /* CombatHUD.swift */,
+    B00000000000000000000017 /* PlayerInputRouter.swift */,
     A00000000000000000000010 /* Assets */,
     A00000000000000000000003 /* Products */, ); sourceTree = "<group>"; };
   A00000000000000000000003 /* Products */ = {isa = PBXGroup; children = (A00000000000000000000001 /* SwordDuel.app */,); name = Products; sourceTree = "<group>"; };
@@ -80,6 +113,13 @@
     000000000000000000000071 /* SpriteSheet.swift in Sources */,
     000000000000000000000074 /* StateMachine.swift in Sources */,
     000000000000000000000077 /* CharacterData.swift in Sources */,
+    B00000000000000000000004 /* MapData.swift in Sources */,
+    B00000000000000000000018 /* PlayerInputRouter.swift in Sources */,
+    B00000000000000000000016 /* CombatHUD.swift in Sources */,
+    B00000000000000000000014 /* CombatSystem.swift in Sources */,
+    B0000000000000000000000E /* StageScene.swift in Sources */,
+    B0000000000000000000000C /* Monster.swift in Sources */,
+    B0000000000000000000000A /* StageData.swift in Sources */,
     00000000000000000000007A /* EffectNode.swift in Sources */,
     00000000000000000000007D /* Fighter.swift in Sources */,
     000000000000000000000080 /* Projectile.swift in Sources */,
@@ -87,6 +127,7 @@
     000000000000000000000086 /* KeyboardInput.swift in Sources */,
     000000000000000000000089 /* TouchControls.swift in Sources */,
     00000000000000000000008C /* ArenaBackground.swift in Sources */,
+    B00000000000000000000008 /* ArenaTerrain.swift in Sources */,
     00000000000000000000008F /* FightScene.swift in Sources */,
     000000000000000000000092 /* ResultScene.swift in Sources */,
     000000000000000000000095 /* SelectScene.swift in Sources */,
@@ -95,6 +136,9 @@
   A00000000000000000000005 /* Resources */ = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (
     A0000000000000000000000F /* Assets in Resources */,
     00000000000000000000009B /* Characters.json in Resources */,
+    B00000000000000000000006 /* Maps.json in Resources */,
+    B00000000000000000000012 /* Stages.json in Resources */,
+    B00000000000000000000010 /* Monsters.json in Resources */,
   ); runOnlyForDeploymentPostprocessing = 0; };
   A00000000000000000000006 /* Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
   A00000000000000000000007 /* Target */ = {isa = PBXNativeTarget; buildConfigurationList = A00000000000000000000009; buildPhases = (A00000000000000000000004,A00000000000000000000006,A00000000000000000000005,); buildRules = (); dependencies = (); name = SwordDuel; productName = SwordDuel; productReference = A00000000000000000000001; productType = "com.apple.product-type.application"; };

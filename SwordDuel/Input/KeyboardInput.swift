@@ -1,5 +1,11 @@
 import Foundation
 
+/// Scenes that take hardware keys and pause when the app loses focus.
+protocol KeyboardControllable: AnyObject {
+    func keyChanged(_ key: String, down: Bool)
+    func pauseForInterruption()
+}
+
 enum KeyboardInput {
     static func control(for key: String) -> Control? {
         switch key {
@@ -10,6 +16,7 @@ enum KeyboardInput {
         case "j": return .attack
         case "k": return .skill1
         case "l": return .skill2
+        case "u": return .skill3
         case "i": return .ult
         case "b": return .debug
         case "p": return .pause

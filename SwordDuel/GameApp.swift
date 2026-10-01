@@ -17,7 +17,7 @@ final class GameSceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     func sceneWillResignActive(_ scene: UIScene) {
         guard let skView = window?.rootViewController?.view as? SKView else { return }
-        (skView.scene as? FightScene)?.pauseForInterruption()
+        (skView.scene as? KeyboardControllable)?.pauseForInterruption()
     }
 }
 
@@ -33,8 +33,22 @@ final class GameViewController: UIViewController {
         let arguments = ProcessInfo.processInfo.arguments
         if arguments.contains("--preview-select") {
             gameView.presentScene(SelectScene(size: size))
+        } else if let index = arguments.firstIndex(of: "--preview-stage") {
+            // `--preview-stage <stageId> [--character <id>]` jumps straight into stage mode.
+            let id = index + 1 < arguments.count ? arguments[index + 1] : ""
+            let stage = StageLibrary.all.first { $0.id == id } ?? StageLibrary.all[0]
+            let character = arguments.firstIndex(of: "--character").flatMap { $0 + 1 < arguments.count ? CharacterLibrary.index(of: arguments[$0 + 1]) : nil } ?? 0
+            gameView.presentScene(StageScene(size: size, stage: stage, playerIndex: character, difficulty: .normal))
         } else if arguments.contains("--preview-fight") || arguments.contains("--preview-ui-states") || arguments.contains("--test-ui") || arguments.contains("--preview-paused") {
-            gameView.presentScene(FightScene(size: size, config: MatchConfig(playerIndex: arguments.contains("--flame") ? 1 : 0, difficulty: .easy)))
+            // `--character <id>`, `--opponent <id>` and `--map <id>` preview newly imported art.
+            func value(after flag: String) -> String? {
+                guard let index = arguments.firstIndex(of: flag), index + 1 < arguments.count else { return nil }
+                return arguments[index + 1]
+            }
+            let player = value(after: "--character").flatMap(CharacterLibrary.index(of:)) ?? (arguments.contains("--flame") ? 1 : 0)
+            let opponent = value(after: "--opponent").flatMap(CharacterLibrary.index(of:)) ?? (player == 0 ? 1 : 0)
+            let mapID = value(after: "--map") ?? MapLibrary.all[0].id
+            gameView.presentScene(FightScene(size: size, config: MatchConfig(playerIndex: player, opponentIndex: opponent, difficulty: .easy, mapID: mapID)))
         } else {
             gameView.presentScene(TitleScene(size: size))
         }
@@ -44,11 +58,11 @@ final class GameViewController: UIViewController {
     override var canBecomeFirstResponder: Bool { true }
     override func viewDidAppear(_ animated: Bool) { super.viewDidAppear(animated); becomeFirstResponder() }
     override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
-        for press in presses { if let key = press.key { (gameView.scene as? FightScene)?.keyChanged(key.charactersIgnoringModifiers.lowercased(), down: true) } }
+        for press in presses { if let key = press.key { (gameView.scene as? KeyboardControllable)?.keyChanged(key.charactersIgnoringModifiers.lowercased(), down: true) } }
         super.pressesBegan(presses, with: event)
     }
     override func pressesEnded(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
-        for press in presses { if let key = press.key { (gameView.scene as? FightScene)?.keyChanged(key.charactersIgnoringModifiers.lowercased(), down: false) } }
+        for press in presses { if let key = press.key { (gameView.scene as? KeyboardControllable)?.keyChanged(key.charactersIgnoringModifiers.lowercased(), down: false) } }
         super.pressesEnded(presses, with: event)
     }
 }

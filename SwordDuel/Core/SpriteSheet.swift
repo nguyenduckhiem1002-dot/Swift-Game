@@ -7,6 +7,9 @@ final class SpriteSheet {
     private var layouts: [String: [FrameLayout]] = [:]
     private var atlases: [String: AtlasData] = [:]
     private var sourceImages: [String: CGImage] = [:]
+    private var placeholderKeys: Set<String> = []
+    /// Until dedicated art exists, these animations reuse a drawn one with the same frame count.
+    private static let aliases = ["skill3": "win"]
 
     private struct FrameLayout {
         let size: CGSize
@@ -30,7 +33,7 @@ final class SpriteSheet {
         if let cached = cache[key] { return cached }
         let count = character.animations[animation]?.frames ?? 1
         let path = "Assets/Characters/\(character.id)/\(key)"
-        if let strip = loadStrip(path: path, count: count, frameSize: CGSize(width: 64, height: 64)) {
+        if let strip = loadStrip(path: path, count: count, frameSize: CGSize(width: character.spriteSize, height: character.spriteSize)) {
             cache[key] = strip
             return strip
         }
@@ -40,8 +43,18 @@ final class SpriteSheet {
             layouts[key] = imported.layouts
             return imported.textures
         }
+        if let alias = Self.aliases[animation], character.animations[alias]?.frames == count {
+            let borrowed = frames(character: character, animation: alias)
+            let aliasKey = "\(character.id)_\(alias)"
+            if !placeholderKeys.contains(aliasKey) {
+                cache[key] = borrowed
+                layouts[key] = layouts[aliasKey]
+                return borrowed
+            }
+        }
         let fallback = (0..<count).map { placeholder(character: character, animation: animation, frame: $0) }
         cache[key] = fallback
+        placeholderKeys.insert(key)
         return fallback
     }
 
@@ -56,7 +69,7 @@ final class SpriteSheet {
             sprite.size = layout.size
             sprite.anchorPoint = layout.anchor
         } else {
-            sprite.size = CGSize(width: 64, height: 64)
+            sprite.size = CGSize(width: character.spriteSize, height: character.spriteSize)
             sprite.anchorPoint = CGPoint(x: 0.5, y: 0)
         }
     }
@@ -91,6 +104,12 @@ final class SpriteSheet {
                                             anchor: CGPoint(x: frame.pivot[0] / rect.width, y: 1 - frame.pivot[1] / rect.height)))
         }
         return textures.isEmpty ? nil : (textures, frameLayouts)
+    }
+
+    /// A character-specific strip (`<id>_<kind>.png`) wins over the shared element strip (`<kind>_<color>.png`).
+    func effectName(_ kind: String, character: CharacterData) -> String {
+        let own = "\(character.id)_\(kind)"
+        return Bundle.main.url(forResource: own, withExtension: "png", subdirectory: "Assets/VFX") != nil ? own : "\(kind)_\(character.color)"
     }
 
     func effect(named name: String, count: Int, size: Int = 96, color: SKColor) -> [SKTexture] {

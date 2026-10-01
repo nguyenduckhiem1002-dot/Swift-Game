@@ -9,10 +9,14 @@ final class TitleScene: GameScene {
         let subtitle = Theme.label("PIXEL SWORD DUEL", size: 8, color: Theme.ice)
         subtitle.position = CGPoint(x: 240, y: 158)
         addChild(subtitle)
-        addChild(Theme.button("START", at: CGPoint(x: 240, y: 105)) { [weak self] in
+        addChild(Theme.button("START", at: CGPoint(x: 240, y: 116)) { [weak self] in
             self?.transition(to: SelectScene(size: CGSize(width: 480, height: 270)))
         })
-        addChild(Theme.button("QUIT", at: CGPoint(x: 240, y: 67)) { [weak self] in
+        addChild(Theme.button("VƯỢT ẢI", at: CGPoint(x: 240, y: 82)) { [weak self] in
+            let select = SelectScene(size: CGSize(width: 480, height: 270)); select.stageMode = true
+            self?.transition(to: select)
+        })
+        addChild(Theme.button("QUIT", at: CGPoint(x: 240, y: 48)) { [weak self] in
             _ = self
             exit(0)
         })

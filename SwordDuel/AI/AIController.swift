@@ -7,6 +7,8 @@ final class AIController {
     private let target: Fighter
     private let difficulty: Difficulty
     private(set) var state: AIState = .approach
+    /// Map hazards to sidestep and statue beams to hop over.
+    weak var terrain: ArenaTerrain?
     private var decisionClock: CGFloat = 0
     private var stateClock: CGFloat = 0
     init(fighter: Fighter, target: Fighter, difficulty: Difficulty) {
@@ -22,6 +24,9 @@ final class AIController {
         guard decisionClock <= 0 else { movement(delta: delta, distance: distance); return }
         decisionClock = difficulty.reaction
         if fighter.energy == 100 && distance >= 65 && distance <= 190, fighter.use("ult") { state = .skill; stateClock = 0.9; return }
+        // SK3 buffs are worth casting from range or when hurt, once awakening tier I unlocks them.
+        if fighter.awakeningTier >= 1, distance > 90 || fighter.hp < 50, CGFloat.random(in: 0...1) < difficulty.skillChance * 0.5,
+           fighter.use("skill3") { state = .skill; stateClock = 0.5; return }
         if distance < 55 {
             if Int.random(in: 0..<100) < 25 { state = .defending; stateClock = 0.25 }
             else { state = .combo; fighter.attack(); stateClock = 0.6 }
@@ -33,6 +38,10 @@ final class AIController {
     }
     private func movement(delta: CGFloat, distance: CGFloat) {
         guard !fighter.state.locksMovement else { return }
+        if let terrain {
+            if terrain.shouldJump(fighter) { fighter.jump() }
+            if let direction = terrain.escapeDirection(for: fighter) { fighter.leftHeld = direction < 0; fighter.rightHeld = direction > 0; return }
+        }
         if state == .defending { fighter.blockHeld = true }
         else if state == .retreat { fighter.leftHeld = delta > 0; fighter.rightHeld = delta < 0 }
         else if state == .approach && distance > 46 { fighter.leftHeld = delta < 0; fighter.rightHeld = delta > 0 }

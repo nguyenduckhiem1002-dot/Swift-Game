@@ -3,6 +3,12 @@
     "id": "frost",
     "name": "Băng Kiếm Tiên",
     "color": "ice",
+    "role": "balanced / ice projectile",
+    "accent": [
+      0.42,
+      0.82,
+      1
+    ],
     "animations": {
       "idle": {
         "frames": 6,
@@ -68,6 +74,11 @@
         "frames": 6,
         "fps": 8,
         "loop": true
+      },
+      "skill3": {
+        "frames": 6,
+        "fps": 12,
+        "loop": false
       }
     },
     "moves": {
@@ -125,7 +136,10 @@
         },
         "knockback": 50,
         "energyCost": 25,
-        "cooldown": 3
+        "cooldown": 3,
+        "enhanced": {
+          "slow": 1.5
+        }
       },
       "skill2": {
         "damage": 15,
@@ -139,7 +153,10 @@
         },
         "knockback": 80,
         "energyCost": 35,
-        "cooldown": 5
+        "cooldown": 5,
+        "enhanced": {
+          "slow": 1.5
+        }
       },
       "ult": {
         "damage": 35,
@@ -154,6 +171,43 @@
         "knockback": 70,
         "energyCost": 100,
         "cooldown": 0
+      },
+      "skill3": {
+        "damage": 0,
+        "activeStart": 2,
+        "activeEnd": 2,
+        "hitbox": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "knockback": 0,
+        "energyCost": 20,
+        "cooldown": 8,
+        "title": "Băng Tâm Hộ Thể",
+        "buff": "guardian",
+        "buffTime": 3
+      },
+      "ultAwakened": {
+        "damage": 60,
+        "activeStart": 4,
+        "activeEnd": 7,
+        "hitbox": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "knockback": 30,
+        "energyCost": 100,
+        "cooldown": 0,
+        "title": "Vạn Băng Long Kích",
+        "hits": 4,
+        "hitInterval": 0.15,
+        "onHit": {
+          "slow": 2
+        }
       }
     }
   },
@@ -161,6 +215,12 @@
     "id": "flame",
     "name": "Hỏa Ma Kiếm",
     "color": "fire",
+    "role": "rushdown / fire teleport",
+    "accent": [
+      1,
+      0.36,
+      0.16
+    ],
     "animations": {
       "idle": {
         "frames": 6,
@@ -226,6 +286,11 @@
         "frames": 6,
         "fps": 8,
         "loop": true
+      },
+      "skill3": {
+        "frames": 6,
+        "fps": 12,
+        "loop": false
       }
     },
     "moves": {
@@ -283,7 +348,10 @@
         },
         "knockback": 50,
         "energyCost": 25,
-        "cooldown": 3
+        "cooldown": 3,
+        "enhanced": {
+          "burn": 6
+        }
       },
       "skill2": {
         "damage": 14,
@@ -297,7 +365,11 @@
         },
         "knockback": 80,
         "energyCost": 35,
-        "cooldown": 5
+        "cooldown": 5,
+        "teleport": true,
+        "enhanced": {
+          "burn": 6
+        }
       },
       "ult": {
         "damage": 35,
@@ -312,6 +384,1564 @@
         "knockback": 70,
         "energyCost": 100,
         "cooldown": 0
+      },
+      "skill3": {
+        "damage": 0,
+        "activeStart": 2,
+        "activeEnd": 2,
+        "hitbox": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "knockback": 0,
+        "energyCost": 20,
+        "cooldown": 8,
+        "title": "Hỏa Ma Cuồng Nộ",
+        "buff": "frenzy",
+        "buffTime": 4
+      },
+      "ultAwakened": {
+        "damage": 60,
+        "activeStart": 4,
+        "activeEnd": 7,
+        "hitbox": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "knockback": 30,
+        "energyCost": 100,
+        "cooldown": 0,
+        "title": "Hỏa Ma Diệt Thế",
+        "hits": 4,
+        "hitInterval": 0.15,
+        "onHit": {
+          "burn": 9
+        }
+      }
+    }
+  },
+  {
+    "id": "umbrella",
+    "name": "Vũ Tán Tiên Tử",
+    "color": "wind",
+    "role": "counter / projectile fan",
+    "accent": [
+      0.45,
+      0.88,
+      0.7
+    ],
+    "jumpVelocity": 195,
+    "animations": {
+      "idle": {
+        "frames": 6,
+        "fps": 8,
+        "loop": true
+      },
+      "walk": {
+        "frames": 8,
+        "fps": 12,
+        "loop": true
+      },
+      "jump": {
+        "frames": 4,
+        "fps": 12,
+        "loop": false
+      },
+      "crouch_block": {
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "attack1": {
+        "frames": 5,
+        "fps": 14,
+        "loop": false
+      },
+      "attack2": {
+        "frames": 5,
+        "fps": 14,
+        "loop": false
+      },
+      "attack3": {
+        "frames": 6,
+        "fps": 14,
+        "loop": false
+      },
+      "skill1": {
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "skill2": {
+        "frames": 6,
+        "fps": 10,
+        "loop": false
+      },
+      "ult": {
+        "frames": 10,
+        "fps": 12,
+        "loop": false
+      },
+      "hurt": {
+        "frames": 3,
+        "fps": 12,
+        "loop": false
+      },
+      "ko": {
+        "frames": 6,
+        "fps": 10,
+        "loop": false
+      },
+      "win": {
+        "frames": 6,
+        "fps": 8,
+        "loop": true
+      },
+      "skill3": {
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      }
+    },
+    "moves": {
+      "attack1": {
+        "damage": 5,
+        "activeStart": 2,
+        "activeEnd": 3,
+        "hitbox": {
+          "x": 9,
+          "y": 18,
+          "w": 37,
+          "h": 27
+        },
+        "knockback": 20,
+        "energyCost": 0,
+        "cooldown": 0
+      },
+      "attack2": {
+        "damage": 5,
+        "activeStart": 2,
+        "activeEnd": 3,
+        "hitbox": {
+          "x": 9,
+          "y": 18,
+          "w": 39,
+          "h": 30
+        },
+        "knockback": 20,
+        "energyCost": 0,
+        "cooldown": 0
+      },
+      "attack3": {
+        "damage": 8,
+        "activeStart": 3,
+        "activeEnd": 4,
+        "hitbox": {
+          "x": 8,
+          "y": 15,
+          "w": 47,
+          "h": 35
+        },
+        "knockback": 70,
+        "energyCost": 0,
+        "cooldown": 0
+      },
+      "skill1": {
+        "damage": 12,
+        "activeStart": 3,
+        "activeEnd": 4,
+        "hitbox": {
+          "x": 12,
+          "y": 20,
+          "w": 50,
+          "h": 25
+        },
+        "knockback": 40,
+        "energyCost": 25,
+        "cooldown": 3,
+        "projectiles": 3,
+        "enhanced": {
+          "drain": 0.3
+        }
+      },
+      "skill2": {
+        "damage": 15,
+        "activeStart": 4,
+        "activeEnd": 5,
+        "hitbox": {
+          "x": 6,
+          "y": 10,
+          "w": 44,
+          "h": 40
+        },
+        "knockback": 60,
+        "energyCost": 35,
+        "cooldown": 5,
+        "dashSpeed": 0,
+        "dashTime": 0.6,
+        "invulnerable": true,
+        "enhanced": {
+          "drain": 0.3
+        },
+        "reflect": true
+      },
+      "ult": {
+        "damage": 35,
+        "activeStart": 4,
+        "activeEnd": 7,
+        "hitbox": {
+          "x": 0,
+          "y": 0,
+          "w": 480,
+          "h": 200
+        },
+        "knockback": 70,
+        "energyCost": 100,
+        "cooldown": 0
+      },
+      "skill3": {
+        "damage": 0,
+        "activeStart": 2,
+        "activeEnd": 2,
+        "hitbox": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "knockback": 0,
+        "energyCost": 20,
+        "cooldown": 8,
+        "title": "Thu Tán Khinh Công",
+        "buff": "glide",
+        "buffTime": 1.5,
+        "heal": 5
+      },
+      "ultAwakened": {
+        "damage": 60,
+        "activeStart": 4,
+        "activeEnd": 7,
+        "hitbox": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "knockback": 30,
+        "energyCost": 100,
+        "cooldown": 0,
+        "title": "Thiên Vũ Tán Hoa Khai",
+        "hits": 4,
+        "hitInterval": 0.15,
+        "delay": 0.3,
+        "buff": "reflect",
+        "buffTime": 3
+      }
+    }
+  },
+  {
+    "id": "tang",
+    "name": "Đường Môn Ám Khí Sư",
+    "color": "poison",
+    "role": "ranged / traps",
+    "accent": [
+      0.7,
+      0.45,
+      0.95
+    ],
+    "animations": {
+      "idle": {
+        "frames": 6,
+        "fps": 8,
+        "loop": true
+      },
+      "walk": {
+        "frames": 8,
+        "fps": 12,
+        "loop": true
+      },
+      "jump": {
+        "frames": 4,
+        "fps": 12,
+        "loop": false
+      },
+      "crouch_block": {
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "attack1": {
+        "frames": 5,
+        "fps": 14,
+        "loop": false
+      },
+      "attack2": {
+        "frames": 5,
+        "fps": 14,
+        "loop": false
+      },
+      "attack3": {
+        "frames": 6,
+        "fps": 14,
+        "loop": false
+      },
+      "skill1": {
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "skill2": {
+        "frames": 6,
+        "fps": 14,
+        "loop": false
+      },
+      "ult": {
+        "frames": 10,
+        "fps": 12,
+        "loop": false
+      },
+      "hurt": {
+        "frames": 3,
+        "fps": 12,
+        "loop": false
+      },
+      "ko": {
+        "frames": 6,
+        "fps": 10,
+        "loop": false
+      },
+      "win": {
+        "frames": 6,
+        "fps": 8,
+        "loop": true
+      },
+      "skill3": {
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      }
+    },
+    "moves": {
+      "attack1": {
+        "damage": 5,
+        "activeStart": 2,
+        "activeEnd": 3,
+        "hitbox": {
+          "x": 9,
+          "y": 18,
+          "w": 37,
+          "h": 27
+        },
+        "knockback": 20,
+        "energyCost": 0,
+        "cooldown": 0
+      },
+      "attack2": {
+        "damage": 5,
+        "activeStart": 2,
+        "activeEnd": 3,
+        "hitbox": {
+          "x": 9,
+          "y": 18,
+          "w": 39,
+          "h": 30
+        },
+        "knockback": 20,
+        "energyCost": 0,
+        "cooldown": 0
+      },
+      "attack3": {
+        "damage": 8,
+        "activeStart": 3,
+        "activeEnd": 4,
+        "hitbox": {
+          "x": 8,
+          "y": 15,
+          "w": 47,
+          "h": 35
+        },
+        "knockback": 70,
+        "energyCost": 0,
+        "cooldown": 0
+      },
+      "skill1": {
+        "damage": 12,
+        "activeStart": 3,
+        "activeEnd": 4,
+        "hitbox": {
+          "x": 12,
+          "y": 20,
+          "w": 50,
+          "h": 25
+        },
+        "knockback": 30,
+        "energyCost": 25,
+        "cooldown": 3,
+        "projectiles": 5,
+        "enhanced": {
+          "burn": 6
+        }
+      },
+      "skill2": {
+        "damage": 15,
+        "activeStart": 3,
+        "activeEnd": 5,
+        "hitbox": {
+          "x": 88,
+          "y": 0,
+          "w": 28,
+          "h": 20
+        },
+        "knockback": 10,
+        "energyCost": 35,
+        "cooldown": 5,
+        "dashSpeed": 0,
+        "dashTime": 0,
+        "invulnerable": false,
+        "enhanced": {
+          "burn": 6
+        },
+        "onHit": {
+          "stun": 0.5
+        }
+      },
+      "ult": {
+        "damage": 35,
+        "activeStart": 4,
+        "activeEnd": 7,
+        "hitbox": {
+          "x": 0,
+          "y": 0,
+          "w": 480,
+          "h": 200
+        },
+        "knockback": 70,
+        "energyCost": 100,
+        "cooldown": 0
+      },
+      "skill3": {
+        "damage": 0,
+        "activeStart": 2,
+        "activeEnd": 2,
+        "hitbox": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "knockback": 0,
+        "energyCost": 20,
+        "cooldown": 8,
+        "title": "Ám Khí Tàng Tiêu",
+        "buff": "vanish",
+        "buffTime": 1.5
+      },
+      "ultAwakened": {
+        "damage": 60,
+        "activeStart": 4,
+        "activeEnd": 7,
+        "hitbox": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "knockback": 30,
+        "energyCost": 100,
+        "cooldown": 0,
+        "title": "Bạo Vũ Lê Hoa Tuyệt Mệnh",
+        "hits": 5,
+        "hitInterval": 0.12,
+        "onHit": {
+          "burn": 10
+        }
+      }
+    }
+  },
+  {
+    "id": "monk",
+    "name": "Đạo Tăng",
+    "color": "holy",
+    "role": "defense / control",
+    "accent": [
+      1,
+      0.7,
+      0.2
+    ],
+    "animations": {
+      "idle": {
+        "frames": 6,
+        "fps": 8,
+        "loop": true
+      },
+      "walk": {
+        "frames": 8,
+        "fps": 12,
+        "loop": true
+      },
+      "jump": {
+        "frames": 4,
+        "fps": 12,
+        "loop": false
+      },
+      "crouch_block": {
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "attack1": {
+        "frames": 5,
+        "fps": 14,
+        "loop": false
+      },
+      "attack2": {
+        "frames": 5,
+        "fps": 14,
+        "loop": false
+      },
+      "attack3": {
+        "frames": 6,
+        "fps": 14,
+        "loop": false
+      },
+      "skill1": {
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "skill2": {
+        "frames": 6,
+        "fps": 6,
+        "loop": false
+      },
+      "ult": {
+        "frames": 10,
+        "fps": 12,
+        "loop": false
+      },
+      "hurt": {
+        "frames": 3,
+        "fps": 12,
+        "loop": false
+      },
+      "ko": {
+        "frames": 6,
+        "fps": 10,
+        "loop": false
+      },
+      "win": {
+        "frames": 6,
+        "fps": 8,
+        "loop": true
+      },
+      "skill3": {
+        "frames": 6,
+        "fps": 3,
+        "loop": false
+      }
+    },
+    "moves": {
+      "attack1": {
+        "damage": 5,
+        "activeStart": 2,
+        "activeEnd": 3,
+        "hitbox": {
+          "x": 9,
+          "y": 18,
+          "w": 37,
+          "h": 27
+        },
+        "knockback": 20,
+        "energyCost": 0,
+        "cooldown": 0
+      },
+      "attack2": {
+        "damage": 5,
+        "activeStart": 2,
+        "activeEnd": 3,
+        "hitbox": {
+          "x": 9,
+          "y": 18,
+          "w": 39,
+          "h": 30
+        },
+        "knockback": 20,
+        "energyCost": 0,
+        "cooldown": 0
+      },
+      "attack3": {
+        "damage": 8,
+        "activeStart": 3,
+        "activeEnd": 4,
+        "hitbox": {
+          "x": 8,
+          "y": 15,
+          "w": 47,
+          "h": 35
+        },
+        "knockback": 70,
+        "energyCost": 0,
+        "cooldown": 0
+      },
+      "skill1": {
+        "damage": 12,
+        "activeStart": 3,
+        "activeEnd": 4,
+        "hitbox": {
+          "x": 12,
+          "y": 20,
+          "w": 50,
+          "h": 25
+        },
+        "knockback": 50,
+        "energyCost": 25,
+        "cooldown": 3,
+        "enhanced": {
+          "stun": 0.3
+        },
+        "onHit": {
+          "slow": 1.5
+        }
+      },
+      "skill2": {
+        "damage": 15,
+        "activeStart": 4,
+        "activeEnd": 5,
+        "hitbox": {
+          "x": -30,
+          "y": 0,
+          "w": 90,
+          "h": 50
+        },
+        "knockback": 110,
+        "energyCost": 35,
+        "cooldown": 5,
+        "dashSpeed": 0,
+        "dashTime": 1.0,
+        "invulnerable": true,
+        "enhanced": {
+          "stun": 0.3
+        }
+      },
+      "ult": {
+        "damage": 35,
+        "activeStart": 4,
+        "activeEnd": 7,
+        "hitbox": {
+          "x": 0,
+          "y": 0,
+          "w": 480,
+          "h": 200
+        },
+        "knockback": 70,
+        "energyCost": 100,
+        "cooldown": 0
+      },
+      "skill3": {
+        "damage": 0,
+        "activeStart": 0,
+        "activeEnd": 0,
+        "hitbox": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "knockback": 0,
+        "energyCost": 20,
+        "cooldown": 8,
+        "title": "Tâm Kinh Trấn Hồn",
+        "buff": "meditate",
+        "buffTime": 2,
+        "heal": 10
+      },
+      "ultAwakened": {
+        "damage": 60,
+        "activeStart": 4,
+        "activeEnd": 7,
+        "hitbox": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "knockback": 30,
+        "energyCost": 100,
+        "cooldown": 0,
+        "title": "Phật Quang Phổ Chiếu",
+        "hits": 4,
+        "hitInterval": 0.15,
+        "heal": 20
+      }
+    }
+  },
+  {
+    "id": "herder",
+    "name": "Mục Thần Đồng Tử",
+    "color": "spirit",
+    "role": "summon / pull",
+    "accent": [
+      0.98,
+      0.9,
+      0.68
+    ],
+    "animations": {
+      "idle": {
+        "frames": 6,
+        "fps": 8,
+        "loop": true
+      },
+      "walk": {
+        "frames": 8,
+        "fps": 12,
+        "loop": true
+      },
+      "jump": {
+        "frames": 4,
+        "fps": 12,
+        "loop": false
+      },
+      "crouch_block": {
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "attack1": {
+        "frames": 5,
+        "fps": 14,
+        "loop": false
+      },
+      "attack2": {
+        "frames": 5,
+        "fps": 14,
+        "loop": false
+      },
+      "attack3": {
+        "frames": 6,
+        "fps": 14,
+        "loop": false
+      },
+      "skill1": {
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "skill2": {
+        "frames": 6,
+        "fps": 14,
+        "loop": false
+      },
+      "ult": {
+        "frames": 10,
+        "fps": 12,
+        "loop": false
+      },
+      "hurt": {
+        "frames": 3,
+        "fps": 12,
+        "loop": false
+      },
+      "ko": {
+        "frames": 6,
+        "fps": 10,
+        "loop": false
+      },
+      "win": {
+        "frames": 6,
+        "fps": 8,
+        "loop": true
+      },
+      "skill3": {
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      }
+    },
+    "moves": {
+      "attack1": {
+        "damage": 5,
+        "activeStart": 2,
+        "activeEnd": 3,
+        "hitbox": {
+          "x": 9,
+          "y": 18,
+          "w": 37,
+          "h": 27
+        },
+        "knockback": 20,
+        "energyCost": 0,
+        "cooldown": 0
+      },
+      "attack2": {
+        "damage": 5,
+        "activeStart": 2,
+        "activeEnd": 3,
+        "hitbox": {
+          "x": 9,
+          "y": 18,
+          "w": 39,
+          "h": 30
+        },
+        "knockback": 20,
+        "energyCost": 0,
+        "cooldown": 0
+      },
+      "attack3": {
+        "damage": 8,
+        "activeStart": 3,
+        "activeEnd": 4,
+        "hitbox": {
+          "x": 8,
+          "y": 15,
+          "w": 47,
+          "h": 35
+        },
+        "knockback": 70,
+        "energyCost": 0,
+        "cooldown": 0
+      },
+      "skill1": {
+        "damage": 12,
+        "activeStart": 3,
+        "activeEnd": 4,
+        "hitbox": {
+          "x": 50,
+          "y": 10,
+          "w": 50,
+          "h": 45
+        },
+        "knockback": 60,
+        "energyCost": 25,
+        "cooldown": 3,
+        "projectiles": 0,
+        "enhanced": {
+          "stun": 0.3
+        }
+      },
+      "skill2": {
+        "damage": 8,
+        "activeStart": 2,
+        "activeEnd": 4,
+        "hitbox": {
+          "x": 10,
+          "y": 20,
+          "w": 95,
+          "h": 20
+        },
+        "knockback": -60,
+        "energyCost": 35,
+        "cooldown": 5,
+        "dashSpeed": 0,
+        "dashTime": 0,
+        "invulnerable": false,
+        "enhanced": {
+          "stun": 0.3
+        },
+        "onHit": {
+          "stun": 0.4
+        }
+      },
+      "ult": {
+        "damage": 35,
+        "activeStart": 4,
+        "activeEnd": 7,
+        "hitbox": {
+          "x": 0,
+          "y": 0,
+          "w": 480,
+          "h": 200
+        },
+        "knockback": 70,
+        "energyCost": 100,
+        "cooldown": 0
+      },
+      "skill3": {
+        "damage": 0,
+        "activeStart": 2,
+        "activeEnd": 2,
+        "hitbox": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "knockback": 0,
+        "energyCost": 20,
+        "cooldown": 8,
+        "title": "Triệu Hồi Tiểu Thần Ảnh",
+        "buff": "summon",
+        "buffTime": 6
+      },
+      "ultAwakened": {
+        "damage": 60,
+        "activeStart": 4,
+        "activeEnd": 7,
+        "hitbox": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "knockback": 30,
+        "energyCost": 100,
+        "cooldown": 0,
+        "title": "Mục Thần Chi Thủ",
+        "hits": 4,
+        "hitInterval": 0.18
+      }
+    }
+  },
+  {
+    "id": "elder",
+    "name": "Tàn Lão",
+    "color": "earth",
+    "role": "slow heavy melee",
+    "accent": [
+      0.78,
+      0.62,
+      0.42
+    ],
+    "walkSpeed": 70,
+    "jumpVelocity": 170,
+    "animations": {
+      "idle": {
+        "frames": 6,
+        "fps": 8,
+        "loop": true
+      },
+      "walk": {
+        "frames": 8,
+        "fps": 10,
+        "loop": true
+      },
+      "jump": {
+        "frames": 4,
+        "fps": 12,
+        "loop": false
+      },
+      "crouch_block": {
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "attack1": {
+        "frames": 5,
+        "fps": 12,
+        "loop": false
+      },
+      "attack2": {
+        "frames": 5,
+        "fps": 12,
+        "loop": false
+      },
+      "attack3": {
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "skill1": {
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "skill2": {
+        "frames": 6,
+        "fps": 14,
+        "loop": false
+      },
+      "ult": {
+        "frames": 10,
+        "fps": 11,
+        "loop": false
+      },
+      "hurt": {
+        "frames": 3,
+        "fps": 12,
+        "loop": false
+      },
+      "ko": {
+        "frames": 6,
+        "fps": 10,
+        "loop": false
+      },
+      "win": {
+        "frames": 6,
+        "fps": 8,
+        "loop": true
+      },
+      "skill3": {
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      }
+    },
+    "moves": {
+      "attack1": {
+        "damage": 6,
+        "activeStart": 2,
+        "activeEnd": 3,
+        "hitbox": {
+          "x": 9,
+          "y": 18,
+          "w": 37,
+          "h": 27
+        },
+        "knockback": 20,
+        "energyCost": 0,
+        "cooldown": 0
+      },
+      "attack2": {
+        "damage": 6,
+        "activeStart": 2,
+        "activeEnd": 3,
+        "hitbox": {
+          "x": 9,
+          "y": 18,
+          "w": 39,
+          "h": 30
+        },
+        "knockback": 20,
+        "energyCost": 0,
+        "cooldown": 0
+      },
+      "attack3": {
+        "damage": 10,
+        "activeStart": 3,
+        "activeEnd": 4,
+        "hitbox": {
+          "x": 8,
+          "y": 15,
+          "w": 47,
+          "h": 35
+        },
+        "knockback": 90,
+        "energyCost": 0,
+        "cooldown": 0
+      },
+      "skill1": {
+        "damage": 14,
+        "activeStart": 3,
+        "activeEnd": 4,
+        "hitbox": {
+          "x": 12,
+          "y": 20,
+          "w": 50,
+          "h": 25
+        },
+        "knockback": 60,
+        "energyCost": 25,
+        "cooldown": 3,
+        "enhanced": {
+          "stun": 0.4
+        }
+      },
+      "skill2": {
+        "damage": 15,
+        "activeStart": 2,
+        "activeEnd": 4,
+        "hitbox": {
+          "x": 9,
+          "y": 14,
+          "w": 40,
+          "h": 35
+        },
+        "knockback": 140,
+        "energyCost": 35,
+        "cooldown": 5,
+        "dashSpeed": 100,
+        "dashTime": 0.2,
+        "invulnerable": false,
+        "enhanced": {
+          "stun": 0.4
+        }
+      },
+      "ult": {
+        "damage": 35,
+        "activeStart": 4,
+        "activeEnd": 7,
+        "hitbox": {
+          "x": 0,
+          "y": 0,
+          "w": 480,
+          "h": 200
+        },
+        "knockback": 70,
+        "energyCost": 100,
+        "cooldown": 0
+      },
+      "skill3": {
+        "damage": 0,
+        "activeStart": 2,
+        "activeEnd": 2,
+        "hitbox": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "knockback": 0,
+        "energyCost": 20,
+        "cooldown": 8,
+        "title": "Tàn Tâm Bất Diệt",
+        "buff": "guardian",
+        "buffTime": 3
+      },
+      "ultAwakened": {
+        "damage": 60,
+        "activeStart": 4,
+        "activeEnd": 7,
+        "hitbox": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "knockback": 120,
+        "energyCost": 100,
+        "cooldown": 0,
+        "title": "Nhất Chưởng Phá Thiên",
+        "hits": 1,
+        "hitInterval": 0.15,
+        "delay": 1.5,
+        "unblockable": true,
+        "buff": "superArmor",
+        "buffTime": 1.5
+      }
+    }
+  },
+  {
+    "id": "demon",
+    "name": "Thiên Ma Nữ",
+    "color": "shadow",
+    "role": "speed / control",
+    "accent": [
+      0.92,
+      0.3,
+      0.78
+    ],
+    "walkSpeed": 98,
+    "animations": {
+      "idle": {
+        "frames": 6,
+        "fps": 8,
+        "loop": true
+      },
+      "walk": {
+        "frames": 8,
+        "fps": 14,
+        "loop": true
+      },
+      "jump": {
+        "frames": 4,
+        "fps": 12,
+        "loop": false
+      },
+      "crouch_block": {
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "attack1": {
+        "frames": 5,
+        "fps": 17,
+        "loop": false
+      },
+      "attack2": {
+        "frames": 5,
+        "fps": 17,
+        "loop": false
+      },
+      "attack3": {
+        "frames": 6,
+        "fps": 17,
+        "loop": false
+      },
+      "skill1": {
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "skill2": {
+        "frames": 6,
+        "fps": 14,
+        "loop": false
+      },
+      "ult": {
+        "frames": 10,
+        "fps": 12,
+        "loop": false
+      },
+      "hurt": {
+        "frames": 3,
+        "fps": 12,
+        "loop": false
+      },
+      "ko": {
+        "frames": 6,
+        "fps": 10,
+        "loop": false
+      },
+      "win": {
+        "frames": 6,
+        "fps": 8,
+        "loop": true
+      },
+      "skill3": {
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      }
+    },
+    "moves": {
+      "attack1": {
+        "damage": 4,
+        "activeStart": 2,
+        "activeEnd": 3,
+        "hitbox": {
+          "x": 9,
+          "y": 18,
+          "w": 37,
+          "h": 27
+        },
+        "knockback": 20,
+        "energyCost": 0,
+        "cooldown": 0
+      },
+      "attack2": {
+        "damage": 4,
+        "activeStart": 2,
+        "activeEnd": 3,
+        "hitbox": {
+          "x": 9,
+          "y": 18,
+          "w": 39,
+          "h": 30
+        },
+        "knockback": 20,
+        "energyCost": 0,
+        "cooldown": 0
+      },
+      "attack3": {
+        "damage": 7,
+        "activeStart": 3,
+        "activeEnd": 4,
+        "hitbox": {
+          "x": 8,
+          "y": 15,
+          "w": 47,
+          "h": 35
+        },
+        "knockback": 70,
+        "energyCost": 0,
+        "cooldown": 0
+      },
+      "skill1": {
+        "damage": 12,
+        "activeStart": 3,
+        "activeEnd": 4,
+        "hitbox": {
+          "x": 12,
+          "y": 20,
+          "w": 50,
+          "h": 25
+        },
+        "knockback": 40,
+        "energyCost": 25,
+        "cooldown": 3,
+        "projectiles": 2,
+        "enhanced": {
+          "drain": 0.3
+        }
+      },
+      "skill2": {
+        "damage": 14,
+        "activeStart": 2,
+        "activeEnd": 4,
+        "hitbox": {
+          "x": 9,
+          "y": 14,
+          "w": 48,
+          "h": 35
+        },
+        "knockback": 70,
+        "energyCost": 35,
+        "cooldown": 5,
+        "dashSpeed": 0,
+        "dashTime": 0.2,
+        "invulnerable": true,
+        "teleport": true,
+        "enhanced": {
+          "drain": 0.3
+        }
+      },
+      "ult": {
+        "damage": 35,
+        "activeStart": 4,
+        "activeEnd": 7,
+        "hitbox": {
+          "x": 0,
+          "y": 0,
+          "w": 480,
+          "h": 200
+        },
+        "knockback": 70,
+        "energyCost": 100,
+        "cooldown": 0
+      },
+      "skill3": {
+        "damage": 0,
+        "activeStart": 2,
+        "activeEnd": 2,
+        "hitbox": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "knockback": 0,
+        "energyCost": 20,
+        "cooldown": 8,
+        "title": "Ma Ảnh Phân Thân",
+        "buff": "clone",
+        "buffTime": 4
+      },
+      "ultAwakened": {
+        "damage": 60,
+        "activeStart": 4,
+        "activeEnd": 7,
+        "hitbox": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "knockback": 30,
+        "energyCost": 100,
+        "cooldown": 0,
+        "title": "Thiên Ma Vạn Tượng",
+        "hits": 5,
+        "hitInterval": 0.12,
+        "pull": true
+      }
+    }
+  },
+  {
+    "id": "beast",
+    "name": "Đại Khư Linh Thú",
+    "color": "wild",
+    "role": "rushdown",
+    "accent": [
+      0.4,
+      0.78,
+      0.35
+    ],
+    "frameSize": 96,
+    "walkSpeed": 90,
+    "animations": {
+      "idle": {
+        "frames": 6,
+        "fps": 8,
+        "loop": true
+      },
+      "walk": {
+        "frames": 8,
+        "fps": 12,
+        "loop": true
+      },
+      "jump": {
+        "frames": 4,
+        "fps": 12,
+        "loop": false
+      },
+      "crouch_block": {
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "attack1": {
+        "frames": 5,
+        "fps": 14,
+        "loop": false
+      },
+      "attack2": {
+        "frames": 5,
+        "fps": 14,
+        "loop": false
+      },
+      "attack3": {
+        "frames": 6,
+        "fps": 14,
+        "loop": false
+      },
+      "skill1": {
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "skill2": {
+        "frames": 6,
+        "fps": 14,
+        "loop": false
+      },
+      "ult": {
+        "frames": 10,
+        "fps": 12,
+        "loop": false
+      },
+      "hurt": {
+        "frames": 3,
+        "fps": 12,
+        "loop": false
+      },
+      "ko": {
+        "frames": 6,
+        "fps": 10,
+        "loop": false
+      },
+      "win": {
+        "frames": 6,
+        "fps": 8,
+        "loop": true
+      },
+      "skill3": {
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      }
+    },
+    "moves": {
+      "attack1": {
+        "damage": 5,
+        "activeStart": 2,
+        "activeEnd": 3,
+        "hitbox": {
+          "x": 9,
+          "y": 18,
+          "w": 37,
+          "h": 27
+        },
+        "knockback": 20,
+        "energyCost": 0,
+        "cooldown": 0
+      },
+      "attack2": {
+        "damage": 5,
+        "activeStart": 2,
+        "activeEnd": 3,
+        "hitbox": {
+          "x": 9,
+          "y": 18,
+          "w": 39,
+          "h": 30
+        },
+        "knockback": 20,
+        "energyCost": 0,
+        "cooldown": 0
+      },
+      "attack3": {
+        "damage": 8,
+        "activeStart": 3,
+        "activeEnd": 4,
+        "hitbox": {
+          "x": 8,
+          "y": 15,
+          "w": 47,
+          "h": 35
+        },
+        "knockback": 70,
+        "energyCost": 0,
+        "cooldown": 0
+      },
+      "skill1": {
+        "damage": 12,
+        "activeStart": 3,
+        "activeEnd": 4,
+        "hitbox": {
+          "x": 12,
+          "y": 20,
+          "w": 50,
+          "h": 25
+        },
+        "knockback": 50,
+        "energyCost": 25,
+        "cooldown": 3,
+        "enhanced": {
+          "burn": 6
+        }
+      },
+      "skill2": {
+        "damage": 15,
+        "activeStart": 2,
+        "activeEnd": 4,
+        "hitbox": {
+          "x": 9,
+          "y": 10,
+          "w": 52,
+          "h": 40
+        },
+        "knockback": 90,
+        "energyCost": 35,
+        "cooldown": 5,
+        "dashSpeed": 330,
+        "dashTime": 0.3,
+        "invulnerable": true,
+        "enhanced": {
+          "burn": 6
+        }
+      },
+      "ult": {
+        "damage": 35,
+        "activeStart": 4,
+        "activeEnd": 7,
+        "hitbox": {
+          "x": 0,
+          "y": 0,
+          "w": 480,
+          "h": 200
+        },
+        "knockback": 70,
+        "energyCost": 100,
+        "cooldown": 0
+      },
+      "skill3": {
+        "damage": 0,
+        "activeStart": 2,
+        "activeEnd": 2,
+        "hitbox": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "knockback": 0,
+        "energyCost": 20,
+        "cooldown": 8,
+        "title": "Cuồng Huyết",
+        "buff": "frenzy",
+        "buffTime": 4
+      },
+      "ultAwakened": {
+        "damage": 60,
+        "activeStart": 4,
+        "activeEnd": 7,
+        "hitbox": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "knockback": 30,
+        "energyCost": 100,
+        "cooldown": 0,
+        "title": "Khư Thú Chân Thân",
+        "hits": 3,
+        "hitInterval": 0.35,
+        "buff": "giant",
+        "buffTime": 10
       }
     }
   }
