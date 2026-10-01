@@ -115,8 +115,9 @@ final class SpriteSheet {
         guard let row = order.firstIndex(of: animation),
               let url = Bundle.main.url(forResource: "\(character.id)_master", withExtension: "png", subdirectory: "Assets/Characters/\(character.id)"),
               let image = UIImage(contentsOfFile: url.path)?.cgImage else { return nil }
-        let cell = 64
-        guard image.width >= cell * count, image.height >= cell * (row + 1) else { return nil }
+        let cell = Int(character.spriteSize)
+        guard image.width == cell * 10, image.height == cell * order.count,
+              image.width >= cell * count, image.height >= cell * (row + 1) else { return nil }
         return (0..<count).compactMap { index in
             guard let cut = image.cropping(to: CGRect(x: index * cell, y: row * cell, width: cell, height: cell)) else { return nil }
             return nearest(SKTexture(cgImage: cut))
