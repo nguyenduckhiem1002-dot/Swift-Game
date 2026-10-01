@@ -1,0 +1,318 @@
+[
+  {
+    "id": "frost",
+    "name": "Băng Kiếm Tiên",
+    "color": "ice",
+    "animations": {
+      "idle": {
+        "frames": 6,
+        "fps": 8,
+        "loop": true
+      },
+      "walk": {
+        "frames": 8,
+        "fps": 12,
+        "loop": true
+      },
+      "jump": {
+        "frames": 4,
+        "fps": 12,
+        "loop": false
+      },
+      "crouch_block": {
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "attack1": {
+        "frames": 5,
+        "fps": 14,
+        "loop": false
+      },
+      "attack2": {
+        "frames": 5,
+        "fps": 14,
+        "loop": false
+      },
+      "attack3": {
+        "frames": 6,
+        "fps": 14,
+        "loop": false
+      },
+      "skill1": {
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "skill2": {
+        "frames": 6,
+        "fps": 14,
+        "loop": false
+      },
+      "ult": {
+        "frames": 10,
+        "fps": 12,
+        "loop": false
+      },
+      "hurt": {
+        "frames": 3,
+        "fps": 12,
+        "loop": false
+      },
+      "ko": {
+        "frames": 6,
+        "fps": 10,
+        "loop": false
+      },
+      "win": {
+        "frames": 6,
+        "fps": 8,
+        "loop": true
+      }
+    },
+    "moves": {
+      "attack1": {
+        "damage": 5,
+        "activeStart": 2,
+        "activeEnd": 3,
+        "hitbox": {
+          "x": 9,
+          "y": 18,
+          "w": 37,
+          "h": 27
+        },
+        "knockback": 20,
+        "energyCost": 0,
+        "cooldown": 0
+      },
+      "attack2": {
+        "damage": 5,
+        "activeStart": 2,
+        "activeEnd": 3,
+        "hitbox": {
+          "x": 9,
+          "y": 18,
+          "w": 39,
+          "h": 30
+        },
+        "knockback": 20,
+        "energyCost": 0,
+        "cooldown": 0
+      },
+      "attack3": {
+        "damage": 8,
+        "activeStart": 3,
+        "activeEnd": 4,
+        "hitbox": {
+          "x": 8,
+          "y": 15,
+          "w": 47,
+          "h": 35
+        },
+        "knockback": 70,
+        "energyCost": 0,
+        "cooldown": 0
+      },
+      "skill1": {
+        "damage": 12,
+        "activeStart": 3,
+        "activeEnd": 4,
+        "hitbox": {
+          "x": 12,
+          "y": 20,
+          "w": 50,
+          "h": 25
+        },
+        "knockback": 50,
+        "energyCost": 25,
+        "cooldown": 3
+      },
+      "skill2": {
+        "damage": 15,
+        "activeStart": 2,
+        "activeEnd": 4,
+        "hitbox": {
+          "x": 9,
+          "y": 14,
+          "w": 48,
+          "h": 35
+        },
+        "knockback": 80,
+        "energyCost": 35,
+        "cooldown": 5
+      },
+      "ult": {
+        "damage": 35,
+        "activeStart": 4,
+        "activeEnd": 7,
+        "hitbox": {
+          "x": 0,
+          "y": 0,
+          "w": 480,
+          "h": 200
+        },
+        "knockback": 70,
+        "energyCost": 100,
+        "cooldown": 0
+      }
+    }
+  },
+  {
+    "id": "flame",
+    "name": "Hỏa Ma Kiếm",
+    "color": "fire",
+    "animations": {
+      "idle": {
+        "frames": 6,
+        "fps": 8,
+        "loop": true
+      },
+      "walk": {
+        "frames": 8,
+        "fps": 12,
+        "loop": true
+      },
+      "jump": {
+        "frames": 4,
+        "fps": 12,
+        "loop": false
+      },
+      "crouch_block": {
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "attack1": {
+        "frames": 5,
+        "fps": 14,
+        "loop": false
+      },
+      "attack2": {
+        "frames": 5,
+        "fps": 14,
+        "loop": false
+      },
+      "attack3": {
+        "frames": 6,
+        "fps": 14,
+        "loop": false
+      },
+      "skill1": {
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "skill2": {
+        "frames": 6,
+        "fps": 14,
+        "loop": false
+      },
+      "ult": {
+        "frames": 10,
+        "fps": 12,
+        "loop": false
+      },
+      "hurt": {
+        "frames": 3,
+        "fps": 12,
+        "loop": false
+      },
+      "ko": {
+        "frames": 6,
+        "fps": 10,
+        "loop": false
+      },
+      "win": {
+        "frames": 6,
+        "fps": 8,
+        "loop": true
+      }
+    },
+    "moves": {
+      "attack1": {
+        "damage": 5,
+        "activeStart": 2,
+        "activeEnd": 3,
+        "hitbox": {
+          "x": 9,
+          "y": 18,
+          "w": 37,
+          "h": 27
+        },
+        "knockback": 20,
+        "energyCost": 0,
+        "cooldown": 0
+      },
+      "attack2": {
+        "damage": 5,
+        "activeStart": 2,
+        "activeEnd": 3,
+        "hitbox": {
+          "x": 9,
+          "y": 18,
+          "w": 39,
+          "h": 30
+        },
+        "knockback": 20,
+        "energyCost": 0,
+        "cooldown": 0
+      },
+      "attack3": {
+        "damage": 8,
+        "activeStart": 3,
+        "activeEnd": 4,
+        "hitbox": {
+          "x": 8,
+          "y": 15,
+          "w": 47,
+          "h": 35
+        },
+        "knockback": 70,
+        "energyCost": 0,
+        "cooldown": 0
+      },
+      "skill1": {
+        "damage": 12,
+        "activeStart": 3,
+        "activeEnd": 4,
+        "hitbox": {
+          "x": 12,
+          "y": 20,
+          "w": 50,
+          "h": 25
+        },
+        "knockback": 50,
+        "energyCost": 25,
+        "cooldown": 3
+      },
+      "skill2": {
+        "damage": 14,
+        "activeStart": 2,
+        "activeEnd": 4,
+        "hitbox": {
+          "x": 9,
+          "y": 14,
+          "w": 48,
+          "h": 35
+        },
+        "knockback": 80,
+        "energyCost": 35,
+        "cooldown": 5
+      },
+      "ult": {
+        "damage": 35,
+        "activeStart": 4,
+        "activeEnd": 7,
+        "hitbox": {
+          "x": 0,
+          "y": 0,
+          "w": 480,
+          "h": 200
+        },
+        "knockback": 70,
+        "energyCost": 100,
+        "cooldown": 0
+      }
+    }
+  }
+]

@@ -1,0 +1,19 @@
+# Xianxia moon and spirit dragon arena
+
+Created with the built-in imagegen tool from the user's supplied landscape prompt. The composition was adapted to widescreen 16:9 for the 480×270 game. Both images are 1672×941. The scene preserves their proportions with aspect-fill; all loaded textures use nearest filtering.
+
+## Saved assets
+
+- `SwordDuel/Resources/Assets/Backgrounds/xianxia_moon_dragon.png`: opaque painting, without people or UI.
+- `SwordDuel/Resources/Assets/Backgrounds/xianxia_mist.png`: transparent cloud and petal overlay.
+- `Art/Preview-fight.png`: actual iPhone Simulator screenshot with the new background.
+
+The painting is the base layer. Two instances of the transparent wash drift at 1.25 and 3 logical pixels per second. The ledge aligns with the existing y=42 combat floor. Menus dim the background for readable titles; the fight HUD has a translucent backing. The procedural background remains the fallback when the painting is absent.
+
+## Painting prompt
+
+Asset type: illustrated background for a landscape 2D xianxia fighting game. Generate one finished 16:9 widescreen image, ideally 1536x864, NO human characters. Main visual prompt from user: Chinese xianxia fantasy landscape, no characters, vast sea of white clouds, towering jagged karst rock pillars with twisted ancient pine trees, floating pagodas and multi-tiered Chinese palaces perched on cliffs, glowing warm golden lanterns, arched stone bridges connecting the peaks, waterfalls cascading into the mist, a giant glowing full moon, deep starry night sky with golden sparkles, a huge translucent ice-blue spirit dragon swirling through the sky, flying white petals, rocky cliff foreground with small white flowers, ink-wash and watercolor illustration, hand-drawn sketchy outlines, detailed brush strokes, palette of white, ice blue, navy and black ink with small warm gold accents, ethereal misty atmosphere, epic wide composition, cinematic lighting, highly detailed. Reinforce sumi-e, ink wash painting, wet-on-wet watercolor, layered depth: foreground rocks, midground peaks, distant misty mountains. Gameplay composition: show a continuous nearly level rocky stone fighting ledge across the entire bottom 16 percent, with its TOP walking surface at 84 percent from top; sparse tiny flowers along its front edge, no obstacles projecting onto the walking surface. Keep the lower middle band behind the fighters quiet navy/blue mist so white clothing reads clearly. Place palaces predominantly on the left and right peaks, moon and translucent dragon across upper sky, leave top center relatively calm for a HUD. This is a background painting only; no UI, borders, labels, text. Negative prompt: people, character, 3D render, photorealistic, oversaturated colors, text, watermark, logo, blurry, low quality, modern buildings. Preserve the elegant restrained white/ice blue/navy/gold ink-wash style. Wide 16:9 composition.
+
+## Mist prompt
+
+Create a NEW transparent parallax overlay asset matching the supplied watercolor xianxia background painting. Output wide 16:9 canvas. Only airy pale ice-blue / white watercolor mist wisps and a very few tiny white flower petals; everything else genuinely transparent alpha. No landscape, buildings, moon, dragon, rocks, ground, people, text, borders, labels, or rectangular background. Composition: broad low-density horizontal wisps concentrated between 58% and 82% from the top; top half almost entirely transparent and bottom 15% entirely transparent so the fighting platform stays visible. Very faint dispersed brush-stroke clouds, sumi-e wet-on-wet wash, soft irregular transparent edges, horizontally tileable wisps at left and right borders. Preserve the restrained ink-wash and watercolor style from the reference. This will be layered over a detailed game painting at low opacity; keep it sparse enough for player silhouettes and scenery to remain readable.

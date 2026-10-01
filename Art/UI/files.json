@@ -1,0 +1,272 @@
+[
+  {
+    "file" : "dpad_left.png",
+    "frames" : 1,
+    "height" : 32,
+    "width" : 32
+  },
+  {
+    "file" : "dpad_left_pressed.png",
+    "frames" : 1,
+    "height" : 32,
+    "width" : 32
+  },
+  {
+    "file" : "dpad_right.png",
+    "frames" : 1,
+    "height" : 32,
+    "width" : 32
+  },
+  {
+    "file" : "dpad_right_pressed.png",
+    "frames" : 1,
+    "height" : 32,
+    "width" : 32
+  },
+  {
+    "file" : "dpad_up.png",
+    "frames" : 1,
+    "height" : 32,
+    "width" : 32
+  },
+  {
+    "file" : "dpad_up_pressed.png",
+    "frames" : 1,
+    "height" : 32,
+    "width" : 32
+  },
+  {
+    "file" : "dpad_down.png",
+    "frames" : 1,
+    "height" : 32,
+    "width" : 32
+  },
+  {
+    "file" : "dpad_down_pressed.png",
+    "frames" : 1,
+    "height" : 32,
+    "width" : 32
+  },
+  {
+    "file" : "btn_atk.png",
+    "frames" : 1,
+    "height" : 40,
+    "width" : 40
+  },
+  {
+    "file" : "btn_atk_pressed.png",
+    "frames" : 1,
+    "height" : 40,
+    "width" : 40
+  },
+  {
+    "file" : "btn_block.png",
+    "frames" : 1,
+    "height" : 36,
+    "width" : 36
+  },
+  {
+    "file" : "btn_block_pressed.png",
+    "frames" : 1,
+    "height" : 36,
+    "width" : 36
+  },
+  {
+    "file" : "btn_frost_sk1.png",
+    "frames" : 1,
+    "height" : 36,
+    "width" : 36
+  },
+  {
+    "file" : "btn_frost_sk1_pressed.png",
+    "frames" : 1,
+    "height" : 36,
+    "width" : 36
+  },
+  {
+    "file" : "btn_frost_sk2.png",
+    "frames" : 1,
+    "height" : 36,
+    "width" : 36
+  },
+  {
+    "file" : "btn_frost_sk2_pressed.png",
+    "frames" : 1,
+    "height" : 36,
+    "width" : 36
+  },
+  {
+    "file" : "btn_flame_sk1.png",
+    "frames" : 1,
+    "height" : 36,
+    "width" : 36
+  },
+  {
+    "file" : "btn_flame_sk1_pressed.png",
+    "frames" : 1,
+    "height" : 36,
+    "width" : 36
+  },
+  {
+    "file" : "btn_flame_sk2.png",
+    "frames" : 1,
+    "height" : 36,
+    "width" : 36
+  },
+  {
+    "file" : "btn_flame_sk2_pressed.png",
+    "frames" : 1,
+    "height" : 36,
+    "width" : 36
+  },
+  {
+    "file" : "btn_frost_ult_locked.png",
+    "frames" : 1,
+    "height" : 44,
+    "width" : 44
+  },
+  {
+    "file" : "btn_frost_ult_ready.png",
+    "frames" : 4,
+    "height" : 44,
+    "width" : 44
+  },
+  {
+    "file" : "btn_flame_ult_locked.png",
+    "frames" : 1,
+    "height" : 44,
+    "width" : 44
+  },
+  {
+    "file" : "btn_flame_ult_ready.png",
+    "frames" : 4,
+    "height" : 44,
+    "width" : 44
+  },
+  {
+    "file" : "btn_pause.png",
+    "frames" : 1,
+    "height" : 24,
+    "width" : 24
+  },
+  {
+    "file" : "btn_pause_pressed.png",
+    "frames" : 1,
+    "height" : 24,
+    "width" : 24
+  },
+  {
+    "file" : "btn_debug_off.png",
+    "frames" : 1,
+    "height" : 24,
+    "width" : 24
+  },
+  {
+    "file" : "btn_debug_on.png",
+    "frames" : 1,
+    "height" : 24,
+    "width" : 24
+  },
+  {
+    "file" : "portrait_frame.png",
+    "frames" : 1,
+    "height" : 32,
+    "width" : 32
+  },
+  {
+    "file" : "btn_menu_normal.png",
+    "frames" : 1,
+    "height" : 28,
+    "width" : 96
+  },
+  {
+    "file" : "btn_menu_pressed.png",
+    "frames" : 1,
+    "height" : 28,
+    "width" : 96
+  },
+  {
+    "file" : "btn_menu_disabled.png",
+    "frames" : 1,
+    "height" : 28,
+    "width" : 96
+  },
+  {
+    "file" : "hp_frame.png",
+    "frames" : 1,
+    "height" : 14,
+    "width" : 128
+  },
+  {
+    "file" : "hp_frost_fill.png",
+    "frames" : 1,
+    "height" : 10,
+    "width" : 124
+  },
+  {
+    "file" : "hp_flame_fill.png",
+    "frames" : 1,
+    "height" : 10,
+    "width" : 124
+  },
+  {
+    "file" : "energy_frame.png",
+    "frames" : 1,
+    "height" : 8,
+    "width" : 96
+  },
+  {
+    "file" : "energy_fill.png",
+    "frames" : 1,
+    "height" : 4,
+    "width" : 92
+  },
+  {
+    "file" : "timer_frame.png",
+    "frames" : 1,
+    "height" : 24,
+    "width" : 48
+  },
+  {
+    "file" : "round_empty.png",
+    "frames" : 1,
+    "height" : 16,
+    "width" : 16
+  },
+  {
+    "file" : "round_filled.png",
+    "frames" : 1,
+    "height" : 16,
+    "width" : 16
+  },
+  {
+    "file" : "btn_difficulty_unselected.png",
+    "frames" : 1,
+    "height" : 24,
+    "width" : 64
+  },
+  {
+    "file" : "btn_difficulty_selected.png",
+    "frames" : 1,
+    "height" : 24,
+    "width" : 64
+  },
+  {
+    "file" : "banner_fight.png",
+    "frames" : 1,
+    "height" : 40,
+    "width" : 160
+  },
+  {
+    "file" : "banner_ko.png",
+    "frames" : 1,
+    "height" : 40,
+    "width" : 160
+  },
+  {
+    "file" : "cooldown.png",
+    "frames" : 8,
+    "height" : 36,
+    "width" : 36
+  }
+]
