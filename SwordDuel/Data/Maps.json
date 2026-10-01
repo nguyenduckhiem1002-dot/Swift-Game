@@ -5,130 +5,695 @@
     "summary": "Arena gốc: trăng, linh long, cung điện và sương trôi",
     "painting": "xianxia_moon_dragon",
     "mist": "xianxia_mist",
-    "sky": [0.035, 0.065, 0.15],
-    "horizon": [0.035, 0.065, 0.15],
-    "mountain": [0.13, 0.22, 0.35],
-    "ground": [0.08, 0.12, 0.22],
-    "accent": [0.46, 0.84, 1],
-    "structure": [1, 0.79, 0.38],
-    "orb": [0.83, 0.93, 1]
+    "sky": [
+      0.035,
+      0.065,
+      0.15
+    ],
+    "horizon": [
+      0.035,
+      0.065,
+      0.15
+    ],
+    "mountain": [
+      0.13,
+      0.22,
+      0.35
+    ],
+    "ground": [
+      0.08,
+      0.12,
+      0.22
+    ],
+    "accent": [
+      0.46,
+      0.84,
+      1
+    ],
+    "structure": [
+      1,
+      0.79,
+      0.38
+    ],
+    "orb": [
+      0.83,
+      0.93,
+      1
+    ]
   },
   {
     "id": "cloudpeak",
     "name": "Vân Hải Tiên Sơn",
-    "summary": "Gió đổi chiều mỗi 15s · bệ mây di động · thác nước làm chậm",
-    "sky": [0.42, 0.62, 0.85],
-    "horizon": [0.85, 0.78, 0.70],
-    "mountain": [0.30, 0.42, 0.55],
-    "ground": [0.30, 0.36, 0.42],
-    "accent": [0.92, 0.96, 1],
-    "structure": [0.86, 0.32, 0.26],
-    "orb": [1, 0.93, 0.75],
-    "ambient": "petals"
+    "summary": "Gió đổi chiều mỗi 15s · mây trôi (lửa làm tan) · thác nước làm chậm",
+    "sky": [
+      0.42,
+      0.62,
+      0.85
+    ],
+    "horizon": [
+      0.85,
+      0.78,
+      0.7
+    ],
+    "mountain": [
+      0.3,
+      0.42,
+      0.55
+    ],
+    "ground": [
+      0.3,
+      0.36,
+      0.42
+    ],
+    "accent": [
+      0.92,
+      0.96,
+      1
+    ],
+    "structure": [
+      0.86,
+      0.32,
+      0.26
+    ],
+    "orb": [
+      1,
+      0.93,
+      0.75
+    ],
+    "ambient": "petals",
+    "terrain": {
+      "platforms": [
+        {
+          "x": 240,
+          "y": 72,
+          "w": 64,
+          "kind": "cloud",
+          "moveX": 90,
+          "period": 9
+        },
+        {
+          "x": 70,
+          "y": 72,
+          "w": 48,
+          "kind": "cloud",
+          "moveY": 10,
+          "period": 5
+        }
+      ],
+      "zones": [
+        {
+          "kind": "waterfall",
+          "x": 395,
+          "w": 34,
+          "h": 228
+        }
+      ],
+      "events": [
+        {
+          "kind": "wind",
+          "start": 15,
+          "interval": 15,
+          "telegraph": 2
+        }
+      ]
+    }
   },
   {
     "id": "lavahell",
     "name": "Ma Giới Hỏa Sơn",
-    "summary": "Hố dung nham · mạch phun định kỳ · băng đóng dung nham 5s",
-    "sky": [0.16, 0.03, 0.04],
-    "horizon": [0.55, 0.12, 0.05],
-    "mountain": [0.22, 0.08, 0.07],
-    "ground": [0.18, 0.07, 0.05],
-    "accent": [1, 0.45, 0.12],
-    "structure": [0.40, 0.12, 0.10],
-    "orb": [0.95, 0.35, 0.20],
-    "ambient": "embers"
+    "summary": "Hố dung nham · mạch phun · băng đóng dung nham 5s · cầu xích sập",
+    "sky": [
+      0.16,
+      0.03,
+      0.04
+    ],
+    "horizon": [
+      0.55,
+      0.12,
+      0.05
+    ],
+    "mountain": [
+      0.22,
+      0.08,
+      0.07
+    ],
+    "ground": [
+      0.18,
+      0.07,
+      0.05
+    ],
+    "accent": [
+      1,
+      0.45,
+      0.12
+    ],
+    "structure": [
+      0.4,
+      0.12,
+      0.1
+    ],
+    "orb": [
+      0.95,
+      0.35,
+      0.2
+    ],
+    "ambient": "embers",
+    "terrain": {
+      "platforms": [
+        {
+          "x": 240,
+          "y": 72,
+          "w": 96,
+          "kind": "chain",
+          "crumble": true
+        }
+      ],
+      "zones": [
+        {
+          "kind": "lava",
+          "x": 200,
+          "w": 80
+        }
+      ],
+      "events": [
+        {
+          "kind": "geyser",
+          "start": 8,
+          "interval": 9,
+          "telegraph": 1.5
+        }
+      ]
+    }
   },
   {
     "id": "greatruins",
     "name": "Đại Khư Hoang Địa",
-    "summary": "Cột đá vỡ được · bão cát · tượng cổ bắn tia · bia phù văn",
-    "sky": [0.62, 0.48, 0.32],
-    "horizon": [0.85, 0.68, 0.42],
-    "mountain": [0.45, 0.33, 0.22],
-    "ground": [0.40, 0.30, 0.20],
-    "accent": [0.95, 0.80, 0.50],
-    "structure": [0.55, 0.45, 0.35],
-    "orb": [1, 0.90, 0.70],
-    "ambient": "sand"
+    "summary": "Cột đá chắn đạn, vỡ thành bệ · bão cát · tượng cổ bắn tia (đánh bia để né)",
+    "sky": [
+      0.62,
+      0.48,
+      0.32
+    ],
+    "horizon": [
+      0.85,
+      0.68,
+      0.42
+    ],
+    "mountain": [
+      0.45,
+      0.33,
+      0.22
+    ],
+    "ground": [
+      0.4,
+      0.3,
+      0.2
+    ],
+    "accent": [
+      0.95,
+      0.8,
+      0.5
+    ],
+    "structure": [
+      0.55,
+      0.45,
+      0.35
+    ],
+    "orb": [
+      1,
+      0.9,
+      0.7
+    ],
+    "ambient": "sand",
+    "terrain": {
+      "objects": [
+        {
+          "kind": "pillar",
+          "x": 185
+        },
+        {
+          "kind": "pillar",
+          "x": 295
+        },
+        {
+          "kind": "statue",
+          "x": 14
+        },
+        {
+          "kind": "tablet",
+          "x": 444
+        }
+      ],
+      "events": [
+        {
+          "kind": "statueBeam",
+          "start": 12,
+          "interval": 16,
+          "telegraph": 1.5
+        },
+        {
+          "kind": "sandstorm",
+          "start": 20,
+          "interval": 20,
+          "telegraph": 1.5,
+          "duration": 5
+        }
+      ]
+    }
   },
   {
     "id": "poisonforest",
     "name": "U Minh Độc Lâm",
-    "summary": "Sương độc làm chậm · lửa kích nổ sương · nấm hồi máu",
-    "sky": [0.06, 0.10, 0.08],
-    "horizon": [0.20, 0.30, 0.18],
-    "mountain": [0.10, 0.20, 0.12],
-    "ground": [0.10, 0.16, 0.10],
-    "accent": [0.62, 0.95, 0.35],
-    "structure": [0.45, 0.30, 0.55],
-    "orb": [0.75, 0.90, 0.60],
-    "ambient": "spores"
+    "summary": "Sương độc làm chậm + rút máu · lửa kích nổ sương · nấm hồi máu · rễ trói",
+    "sky": [
+      0.06,
+      0.1,
+      0.08
+    ],
+    "horizon": [
+      0.2,
+      0.3,
+      0.18
+    ],
+    "mountain": [
+      0.1,
+      0.2,
+      0.12
+    ],
+    "ground": [
+      0.1,
+      0.16,
+      0.1
+    ],
+    "accent": [
+      0.62,
+      0.95,
+      0.35
+    ],
+    "structure": [
+      0.45,
+      0.3,
+      0.55
+    ],
+    "orb": [
+      0.75,
+      0.9,
+      0.6
+    ],
+    "ambient": "spores",
+    "terrain": {
+      "zones": [
+        {
+          "kind": "poison",
+          "x": 195,
+          "w": 90,
+          "h": 60
+        },
+        {
+          "kind": "poison",
+          "x": 412,
+          "w": 42,
+          "h": 60
+        }
+      ],
+      "objects": [
+        {
+          "kind": "mushroom",
+          "x": 40
+        },
+        {
+          "kind": "mushroom",
+          "x": 436
+        }
+      ],
+      "events": [
+        {
+          "kind": "roots",
+          "start": 10,
+          "interval": 12,
+          "telegraph": 1.2
+        }
+      ]
+    }
   },
   {
     "id": "divinetemple",
     "name": "Thần Tàng Cổ Điện",
-    "summary": "Sàn phù văn tăng năng lượng · chuông · cầu vàng theo nhịp",
-    "sky": [0.10, 0.10, 0.22],
-    "horizon": [0.40, 0.30, 0.20],
-    "mountain": [0.25, 0.20, 0.30],
-    "ground": [0.22, 0.18, 0.14],
-    "accent": [1, 0.82, 0.40],
-    "structure": [1, 0.82, 0.40],
-    "orb": [1, 0.95, 0.80],
-    "ambient": "motes"
+    "summary": "Sàn phù văn hồi năng lượng · cầu vàng theo nhịp · chuông làm choáng · sét kích phù văn",
+    "sky": [
+      0.1,
+      0.1,
+      0.22
+    ],
+    "horizon": [
+      0.4,
+      0.3,
+      0.2
+    ],
+    "mountain": [
+      0.25,
+      0.2,
+      0.3
+    ],
+    "ground": [
+      0.22,
+      0.18,
+      0.14
+    ],
+    "accent": [
+      1,
+      0.82,
+      0.4
+    ],
+    "structure": [
+      1,
+      0.82,
+      0.4
+    ],
+    "orb": [
+      1,
+      0.95,
+      0.8
+    ],
+    "ambient": "motes",
+    "terrain": {
+      "platforms": [
+        {
+          "x": 240,
+          "y": 72,
+          "w": 110,
+          "kind": "gold",
+          "onTime": 8,
+          "offTime": 4
+        }
+      ],
+      "zones": [
+        {
+          "kind": "rune",
+          "x": 205,
+          "w": 70
+        }
+      ],
+      "objects": [
+        {
+          "kind": "bell",
+          "x": 240,
+          "y": 108
+        }
+      ],
+      "events": [
+        {
+          "kind": "lightning",
+          "start": 18,
+          "interval": 18,
+          "telegraph": 1.5
+        }
+      ]
+    }
   },
   {
     "id": "thunderplate",
     "name": "Thiên Lôi Đài",
-    "summary": "Sét đánh theo chu kỳ · cột thu lôi · kích hoạt phù văn",
-    "sky": [0.12, 0.12, 0.20],
-    "horizon": [0.30, 0.30, 0.45],
-    "mountain": [0.18, 0.18, 0.28],
-    "ground": [0.20, 0.20, 0.26],
-    "accent": [0.75, 0.85, 1],
-    "structure": [0.55, 0.60, 0.75],
-    "ambient": "rain"
+    "summary": "Sét đánh theo chu kỳ · cột thu lôi nạp 3 đòn · sét kích hoạt phù văn",
+    "sky": [
+      0.12,
+      0.12,
+      0.2
+    ],
+    "horizon": [
+      0.3,
+      0.3,
+      0.45
+    ],
+    "mountain": [
+      0.18,
+      0.18,
+      0.28
+    ],
+    "ground": [
+      0.2,
+      0.2,
+      0.26
+    ],
+    "accent": [
+      0.75,
+      0.85,
+      1
+    ],
+    "structure": [
+      0.55,
+      0.6,
+      0.75
+    ],
+    "ambient": "rain",
+    "terrain": {
+      "zones": [
+        {
+          "kind": "rune",
+          "x": 55,
+          "w": 50
+        },
+        {
+          "kind": "rune",
+          "x": 375,
+          "w": 50
+        }
+      ],
+      "objects": [
+        {
+          "kind": "rod",
+          "x": 240
+        }
+      ],
+      "events": [
+        {
+          "kind": "lightning",
+          "start": 6,
+          "interval": 7,
+          "telegraph": 1.5
+        }
+      ]
+    }
   },
   {
     "id": "underwater",
     "name": "Thủy Hải Long Cung",
-    "summary": "Dưới nước: nhảy cao và nổi, di chuyển chậm hơn",
-    "sky": [0.03, 0.20, 0.32],
-    "horizon": [0.08, 0.40, 0.50],
-    "mountain": [0.05, 0.28, 0.36],
-    "ground": [0.10, 0.22, 0.26],
-    "accent": [0.45, 0.95, 0.90],
-    "structure": [0.90, 0.40, 0.35],
+    "summary": "Dưới nước: nhảy cao, đi và đánh chậm hơn · dòng chảy đẩy người · bệ san hô",
+    "sky": [
+      0.03,
+      0.2,
+      0.32
+    ],
+    "horizon": [
+      0.08,
+      0.4,
+      0.5
+    ],
+    "mountain": [
+      0.05,
+      0.28,
+      0.36
+    ],
+    "ground": [
+      0.1,
+      0.22,
+      0.26
+    ],
+    "accent": [
+      0.45,
+      0.95,
+      0.9
+    ],
+    "structure": [
+      0.9,
+      0.4,
+      0.35
+    ],
     "ambient": "bubbles",
     "gravity": 0.6,
-    "moveScale": 0.8
+    "moveScale": 0.8,
+    "animSpeed": 0.85,
+    "terrain": {
+      "platforms": [
+        {
+          "x": 240,
+          "y": 84,
+          "w": 70,
+          "kind": "coral"
+        }
+      ],
+      "events": [
+        {
+          "kind": "current",
+          "start": 10,
+          "interval": 14,
+          "telegraph": 1.5,
+          "duration": 4
+        }
+      ]
+    }
   },
   {
     "id": "underworld",
     "name": "Cổ Mộ Âm Phủ",
-    "summary": "Bia mộ sinh hồn · đèn lồng xanh · bóng tối che tầm nhìn",
-    "sky": [0.03, 0.03, 0.07],
-    "horizon": [0.10, 0.12, 0.22],
-    "mountain": [0.08, 0.08, 0.14],
-    "ground": [0.07, 0.07, 0.11],
-    "accent": [0.40, 0.65, 1],
-    "structure": [0.30, 0.50, 0.90],
-    "orb": [0.55, 0.70, 0.95],
-    "ambient": "souls"
+    "summary": "Bia mộ sinh hồn ma · bóng tối định kỳ · đánh đèn lồng để thắp sáng",
+    "sky": [
+      0.03,
+      0.03,
+      0.07
+    ],
+    "horizon": [
+      0.1,
+      0.12,
+      0.22
+    ],
+    "mountain": [
+      0.08,
+      0.08,
+      0.14
+    ],
+    "ground": [
+      0.07,
+      0.07,
+      0.11
+    ],
+    "accent": [
+      0.4,
+      0.65,
+      1
+    ],
+    "structure": [
+      0.3,
+      0.5,
+      0.9
+    ],
+    "orb": [
+      0.55,
+      0.7,
+      0.95
+    ],
+    "ambient": "souls",
+    "terrain": {
+      "objects": [
+        {
+          "kind": "tombstone",
+          "x": 60
+        },
+        {
+          "kind": "tombstone",
+          "x": 420
+        },
+        {
+          "kind": "lantern",
+          "x": 175,
+          "y": 74
+        },
+        {
+          "kind": "lantern",
+          "x": 305,
+          "y": 74
+        }
+      ],
+      "events": [
+        {
+          "kind": "souls",
+          "start": 6,
+          "interval": 9,
+          "telegraph": 1
+        },
+        {
+          "kind": "darkness",
+          "start": 15,
+          "interval": 22,
+          "telegraph": 1.5,
+          "duration": 7
+        }
+      ]
+    }
   },
   {
     "id": "astralvoid",
     "name": "Hư Không Tinh Hải",
-    "summary": "Trọng lực thấp · bệ trôi nổi · khe hư không",
-    "sky": [0.02, 0.01, 0.06],
-    "horizon": [0.18, 0.08, 0.30],
-    "mountain": [0.12, 0.07, 0.22],
-    "ground": [0.10, 0.06, 0.18],
-    "accent": [0.85, 0.65, 1],
-    "structure": [0.85, 0.65, 1],
-    "orb": [0.90, 0.80, 1],
+    "summary": "Trọng lực thấp · khe hư không · bệ trôi nổi và bệ chớp tắt · thiên thạch bay ngang",
+    "sky": [
+      0.02,
+      0.01,
+      0.06
+    ],
+    "horizon": [
+      0.18,
+      0.08,
+      0.3
+    ],
+    "mountain": [
+      0.12,
+      0.07,
+      0.22
+    ],
+    "ground": [
+      0.1,
+      0.06,
+      0.18
+    ],
+    "accent": [
+      0.85,
+      0.65,
+      1
+    ],
+    "structure": [
+      0.85,
+      0.65,
+      1
+    ],
+    "orb": [
+      0.9,
+      0.8,
+      1
+    ],
     "ambient": "stars",
-    "gravity": 0.55
+    "gravity": 0.55,
+    "terrain": {
+      "platforms": [
+        {
+          "x": 240,
+          "y": 84,
+          "w": 70,
+          "kind": "astral",
+          "moveY": 14,
+          "period": 6
+        },
+        {
+          "x": 95,
+          "y": 104,
+          "w": 50,
+          "kind": "astral",
+          "onTime": 6,
+          "offTime": 3
+        },
+        {
+          "x": 385,
+          "y": 104,
+          "w": 50,
+          "kind": "astral",
+          "onTime": 6,
+          "offTime": 3
+        }
+      ],
+      "zones": [
+        {
+          "kind": "void",
+          "x": 205,
+          "w": 70
+        }
+      ],
+      "events": [
+        {
+          "kind": "debris",
+          "start": 8,
+          "interval": 10,
+          "telegraph": 1
+        }
+      ]
+    }
   }
 ]

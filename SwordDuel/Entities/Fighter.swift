@@ -41,6 +41,9 @@ final class Fighter: SKNode {
     /// Map modifiers: underwater and astral arenas lower gravity or slow movement.
     var gravityScale: CGFloat = 1
     var moveScale: CGFloat = 1
+    var animationScale: CGFloat = 1
+    /// One-way platforms; the floor at y = 42 is always solid.
+    weak var terrain: TerrainSurface?
     /// Awakening meter 0–100. Reaching 100 starts a 12s awakened state, once per round.
     private(set) var awakening: CGFloat = 0
     private(set) var awakenedTime: CGFloat = 0
@@ -151,6 +154,13 @@ final class Fighter: SKNode {
         if let burn = effect.burn, burn > 0 { burnTicks = 3; burnDamage = max(1, burn / 3); burnClock = 0.5 }
     }
     func cleanse() { slowTime = 0; burnTicks = 0 }
+    /// Small terrain damage (poison mist) that does not stagger.
+    func applyChip(_ amount: Int) {
+        guard hp > 0, !invulnerable else { return }
+        hp = max(0, hp - amount)
+        if hp == 0 { state = .ko; animation.set("ko") }
+    }
+    var standingOnPlatform: Bool { onGround && position.y > 42.5 }
 
     func reset(at x: CGFloat, facing: CGFloat) {
         position = CGPoint(x: x, y: 42)
@@ -250,15 +260,20 @@ final class Fighter: SKNode {
                 else { state = .idle; animation.set("idle") }
             }
         }
+        // Walking off a platform edge, or a platform vanishing, starts a fall.
+        if standingOnPlatform && terrain?.supports(x: position.x, y: position.y) != true { onGround = false }
         if !onGround {
             let floating: CGFloat = has(.glide) && velocity.dy < 0 ? 0.35 : 1
             velocity.dy -= 440 * gravityScale * floating * dt
+            let previousY = position.y
             position.y += velocity.dy * dt
-            if position.y <= 42 { position.y = 42; velocity.dy = 0; onGround = true }
+            if velocity.dy <= 0, let top = terrain?.landingHeight(x: position.x, from: previousY, to: position.y) {
+                position.y = top; velocity.dy = 0; onGround = true
+            } else if position.y <= 42 { position.y = 42; velocity.dy = 0; onGround = true }
         }
         position.x = min(454, max(26, position.x + velocity.dx * dt))
         if state == .hurt || state == .ko { velocity.dx *= 0.84 }
-        let finished = animation.update(dt)
+        let finished = animation.update(dt * animationScale)
         updateVisuals()
         if finished, case .attacking(let move) = state {
             invulnerable = false

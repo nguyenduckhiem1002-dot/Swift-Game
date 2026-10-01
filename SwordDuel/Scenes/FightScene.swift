@@ -21,6 +21,7 @@ final class FightScene: GameScene {
     private var ai: AIController!
     private let map: MapData
     private let arena: ArenaBackground
+    private let terrain: ArenaTerrain
     private var controls = TouchControls()
     private var projectiles: [Projectile] = []
     private var touchMap: [ObjectIdentifier: Control] = [:]
@@ -61,19 +62,25 @@ final class FightScene: GameScene {
         self.config = config
         map = MapLibrary.map(id: config.mapID)
         arena = ArenaBackground(map: map)
+        terrain = ArenaTerrain(map: map)
         super.init(size: size)
     }
     required init?(coder: NSCoder) { fatalError() }
     override func didMove(to view: SKView) {
         arena.zPosition = -10; addChild(arena)
+        terrain.zPosition = 8; terrain.delegate = self; addChild(terrain)
         let playerData = CharacterLibrary.all[config.playerIndex]
         let opponentData = CharacterLibrary.all[config.opponentIndex]
         player = Fighter(data: playerData, isPlayer: true)
         opponent = Fighter(data: opponentData, isPlayer: false)
-        for fighter in [player!, opponent!] { fighter.gravityScale = map.gravityScale; fighter.moveScale = map.movementScale }
+        for fighter in [player!, opponent!] {
+            fighter.gravityScale = map.gravityScale; fighter.moveScale = map.movementScale
+            fighter.animationScale = map.animSpeed ?? 1; fighter.terrain = terrain
+        }
         player.zPosition = 15; opponent.zPosition = 15
         addChild(player); addChild(opponent)
         ai = AIController(fighter: opponent, target: player, difficulty: config.difficulty)
+        ai.terrain = terrain
         controls.configure(character: playerData)
         addChild(controls)
         setupHUD()
@@ -141,7 +148,30 @@ final class FightScene: GameScene {
         }
         runAwakeningChecks()
         for map in MapLibrary.all { precondition(!ArenaBackground(map: map).children.isEmpty, "\(map.id) arena is empty") }
+        runTerrainChecks()
         print("PASS UI: shared touch ownership, independent inputs, pause/resume, frozen timer, disabled/pressed menu states, missing-file fallback, \(CharacterLibrary.all.count) character rosters and ULT strips, \(MapLibrary.all.count) arenas.")
+    }
+    /// Layout sanity plus a 40-second headless run of every map's events with two idle fighters.
+    private func runTerrainChecks() {
+        for map in MapLibrary.all {
+            for zone in map.terrain?.zones ?? [] where ["lava", "poison", "void"].contains(zone.kind) {
+                precondition(!(zone.x...(zone.x + zone.w)).contains(122) && !(zone.x...(zone.x + zone.w)).contains(358), "\(map.id) hazard covers a spawn point")
+            }
+            for platform in map.terrain?.platforms ?? [] {
+                // A standard jump rises about 39 points; low-gravity maps reach higher.
+                precondition(platform.y - 42 <= 39 / map.gravityScale, "\(map.id) platform at y \(platform.y) is out of jump reach")
+            }
+            let field = ArenaTerrain(map: map)
+            let a = Fighter(data: CharacterLibrary.all[0], isPlayer: true), b = Fighter(data: CharacterLibrary.all[1], isPlayer: false)
+            a.reset(at: 122, facing: 1); b.reset(at: 358, facing: -1)
+            for fighter in [a, b] { fighter.terrain = field; fighter.gravityScale = map.gravityScale }
+            for _ in 0..<2400 {
+                a.updateFixed(1.0 / 60.0); b.updateFixed(1.0 / 60.0)
+                field.updateFixed(1.0 / 60.0, fighters: [a, b], projectiles: [])
+            }
+            field.reset()
+            precondition(a.position.x >= 26 && a.position.x <= 454 && b.position.y >= 42, "\(map.id) terrain moved a fighter out of bounds")
+        }
     }
     private func runAwakeningChecks() {
         let probe = Fighter(data: CharacterLibrary.all[0], isPlayer: false)
@@ -231,6 +261,7 @@ final class FightScene: GameScene {
         roundSeconds = 60; roundResolved = false; roundDraw = false; roundEndDelay = -1
         projectiles.forEach { $0.removeFromParent() }; projectiles.removeAll()
         pendingHits.removeAll(); landedSerial.removeAll(); comboHits = 0; comboTimer = 0
+        terrain.reset()
         announcementPanel.texture = UIAssets.shared.texture("banner_fight", size: CGSize(width: 160, height: 40))
         announcement.fontColor = .white
         announcement.text = "FIGHT!"; roundLabel.text = "ROUND \(round)"
@@ -276,6 +307,7 @@ final class FightScene: GameScene {
             if player.position.x < opponent.position.x { player.position.x = middle - 11; opponent.position.x = middle + 11 }
             else { player.position.x = middle + 11; opponent.position.x = middle - 11 }
         }
+        terrain.updateFixed(dt, fighters: [player!, opponent!], projectiles: projectiles)
         handleMove(player, target: opponent)
         handleMove(opponent, target: player)
         for projectile in projectiles {
@@ -289,7 +321,7 @@ final class FightScene: GameScene {
             }
             if target.has(.vanish) { continue }
             projectile.didHit = true
-            registerHit(attacker: projectile.owner, target: target, damage: projectile.damage, knockback: projectile.direction * 48, unblockable: false,
+            registerHit(attacker: projectile.owner, target: target, damage: projectile.damage, knockback: projectile.direction * 48 * projectile.pushScale, unblockable: false,
                         effect: projectile.effect, enhanced: projectile.enhanced)
             showEffect("skill1_impact", at: projectile.position, color: projectile.owner.data.accentColor)
             projectile.removeFromParent()
@@ -558,5 +590,28 @@ final class FightScene: GameScene {
         guard let control = KeyboardInput.control(for: key) else { return }
         if down { if keyMap.insert(control).inserted { controlDown(control) } }
         else { keyMap.remove(control); controlUp(control) }
+    }
+}
+
+extension FightScene: TerrainDelegate {
+    func terrainHit(_ fighter: Fighter, damage: Int, knockback: CGFloat, launch: CGFloat, stun: CGFloat, color: SKColor) -> Bool {
+        guard roundEndDelay < 0 else { return false }
+        let dealt = fighter.takeHit(damage: damage, knockback: knockback, unblockable: true)
+        guard dealt > 0 else { return false }
+        if launch > 0 && fighter.hp > 0 { fighter.velocity.dy = launch; fighter.onGround = false }
+        if stun > 0 { fighter.applyEffect(HitEffect(stun: stun)) }
+        gainAwakening(fighter, 3, versus: fighter === player ? opponent! : player!)
+        shakeTime = max(shakeTime, 0.12)
+        showEffect("hit_spark", at: CGPoint(x: fighter.position.x, y: fighter.position.y + 30), color: color)
+        return true
+    }
+    func terrainAwakening(_ fighter: Fighter, amount: CGFloat) {
+        gainAwakening(fighter, amount, versus: fighter === player ? opponent! : player!)
+    }
+    func terrainCallout(_ text: String, at point: CGPoint, color: SKColor) {
+        let label = Theme.label(text, size: 8, color: color)
+        label.position = CGPoint(x: min(420, max(60, point.x)), y: min(200, point.y)); label.zPosition = 61
+        addChild(label)
+        label.run(.sequence([.group([.moveBy(x: 0, y: 12, duration: 1), .sequence([.wait(forDuration: 0.6), .fadeOut(withDuration: 0.4)])]), .removeFromParent()]))
     }
 }

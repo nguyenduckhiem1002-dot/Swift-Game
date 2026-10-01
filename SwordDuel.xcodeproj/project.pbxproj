@@ -46,6 +46,8 @@
   00000000000000000000009B /* Characters.json in Resources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000009A /* Characters.json */; };
   B00000000000000000000003 /* MapData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwordDuel/Data/MapData.swift"; sourceTree = "<group>"; };
   B00000000000000000000004 /* MapData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000003 /* MapData.swift */; };
+  B00000000000000000000007 /* ArenaTerrain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwordDuel/Scenes/ArenaTerrain.swift"; sourceTree = "<group>"; };
+  B00000000000000000000008 /* ArenaTerrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000007 /* ArenaTerrain.swift */; };
   B00000000000000000000005 /* Maps.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "SwordDuel/Data/Maps.json"; sourceTree = "<group>"; };
   B00000000000000000000006 /* Maps.json in Resources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000005 /* Maps.json */; };
   A0000000000000000000000F /* Assets in Resources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000010 /* Assets */; };
@@ -68,6 +70,7 @@
     000000000000000000000085 /* KeyboardInput.swift */,
     000000000000000000000088 /* TouchControls.swift */,
     00000000000000000000008B /* ArenaBackground.swift */,
+    B00000000000000000000007 /* ArenaTerrain.swift */,
     00000000000000000000008E /* FightScene.swift */,
     000000000000000000000091 /* ResultScene.swift */,
     000000000000000000000094 /* SelectScene.swift */,
@@ -94,6 +97,7 @@
     000000000000000000000086 /* KeyboardInput.swift in Sources */,
     000000000000000000000089 /* TouchControls.swift in Sources */,
     00000000000000000000008C /* ArenaBackground.swift in Sources */,
+    B00000000000000000000008 /* ArenaTerrain.swift in Sources */,
     00000000000000000000008F /* FightScene.swift in Sources */,
     000000000000000000000092 /* ResultScene.swift in Sources */,
     000000000000000000000095 /* SelectScene.swift in Sources */,

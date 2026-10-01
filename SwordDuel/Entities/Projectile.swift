@@ -9,6 +9,9 @@ final class Projectile: SKNode {
     let effect: HitEffect?
     let enhanced: Bool
     var life: CGFloat = 2.2
+    /// Set each step by the arena: tailwind 1.3, headwind and sandstorm slower.
+    var speedScale: CGFloat = 1
+    var pushScale: CGFloat = 1
     var didHit = false
     let visual: SKSpriteNode
     init(owner: Fighter, damage: Int, direction: CGFloat, rise: CGFloat = 0, effect: HitEffect? = nil, enhanced: Bool = false) {
@@ -32,7 +35,7 @@ final class Projectile: SKNode {
     }
     var hitbox: CGRect { CGRect(x: position.x - 16, y: position.y - 9, width: 32, height: 18) }
     func updateFixed(_ dt: CGFloat) {
-        position.x += direction * 180 * dt
+        position.x += direction * 180 * speedScale * dt
         position.y += rise * dt
         life -= dt
         if life <= 0 || position.x < -25 || position.x > 505 || position.y < 36 || position.y > 280 { removeFromParent() }

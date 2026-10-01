@@ -22,9 +22,62 @@ struct MapData: Codable {
     /// Illustrated full-screen background in Assets/Backgrounds, with an optional transparent mist overlay.
     let painting: String?
     let mist: String?
+    /// Animation speed multiplier, e.g. slower attacks underwater.
+    let animSpeed: CGFloat?
+    let terrain: TerrainData?
 
     var gravityScale: CGFloat { gravity ?? 1 }
     var movementScale: CGFloat { moveScale ?? 1 }
+}
+
+/// Interactive arena layout. Coordinates are scene points; the floor is y = 42.
+struct TerrainData: Codable {
+    let platforms: [PlatformData]?
+    let zones: [ZoneData]?
+    let objects: [ObjectData]?
+    let events: [EventData]?
+}
+
+/// One-way platform; `x` is its center and `y` its walkable top.
+struct PlatformData: Codable {
+    let x: CGFloat
+    let y: CGFloat
+    let w: CGFloat
+    /// stone, cloud (fire dissipates it), gold, chain, coral, astral.
+    let kind: String
+    let moveX: CGFloat?
+    let moveY: CGFloat?
+    let period: CGFloat?
+    /// Timed platforms are solid for `onTime`, then gone for `offTime`.
+    let onTime: CGFloat?
+    let offTime: CGFloat?
+    /// Collapses after two seconds of standing on it, returns after eight.
+    let crumble: Bool?
+}
+
+/// Floor strip from `x` to `x + w`. lava, poison, rune, void, waterfall.
+struct ZoneData: Codable {
+    let kind: String
+    let x: CGFloat
+    let w: CGFloat
+    let h: CGFloat?
+}
+
+/// pillar, bell, mushroom, tombstone, lantern, rod, tablet, statue.
+struct ObjectData: Codable {
+    let kind: String
+    let x: CGFloat
+    let y: CGFloat?
+}
+
+/// Timed map event: first fires at `start`, then every `interval` seconds, after a `telegraph` warning.
+/// wind, geyser, sandstorm, statueBeam, roots, lightning, current, souls, darkness, debris.
+struct EventData: Codable {
+    let kind: String
+    let start: CGFloat
+    let interval: CGFloat
+    let telegraph: CGFloat?
+    let duration: CGFloat?
 }
 
 enum MapLibrary {

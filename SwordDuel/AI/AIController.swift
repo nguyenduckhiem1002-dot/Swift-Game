@@ -7,6 +7,8 @@ final class AIController {
     private let target: Fighter
     private let difficulty: Difficulty
     private(set) var state: AIState = .approach
+    /// Map hazards to sidestep and statue beams to hop over.
+    weak var terrain: ArenaTerrain?
     private var decisionClock: CGFloat = 0
     private var stateClock: CGFloat = 0
     init(fighter: Fighter, target: Fighter, difficulty: Difficulty) {
@@ -36,6 +38,10 @@ final class AIController {
     }
     private func movement(delta: CGFloat, distance: CGFloat) {
         guard !fighter.state.locksMovement else { return }
+        if let terrain {
+            if terrain.shouldJump(fighter) { fighter.jump() }
+            if let direction = terrain.escapeDirection(for: fighter) { fighter.leftHeld = direction < 0; fighter.rightHeld = direction > 0; return }
+        }
         if state == .defending { fighter.blockHeld = true }
         else if state == .retreat { fighter.leftHeld = delta > 0; fighter.rightHeld = delta < 0 }
         else if state == .approach && distance > 46 { fighter.leftHeld = delta < 0; fighter.rightHeld = delta > 0 }
