@@ -1,0 +1,13 @@
+# Xcode / Swift build output
+DerivedData/
+.build/
+*.xcuserstate
+xcuserdata/
+
+# macOS
+.DS_Store
+
+# Generated previews and temporary asset QA
+Art/Generated/
+Art/QA/
+*.tmp

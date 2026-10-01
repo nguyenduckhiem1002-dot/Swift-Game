@@ -1,2 +1,0 @@
-Target dependency graph (1 target)
-Target 'SwordDuel' in project 'SwordDuel' (no dependencies)
