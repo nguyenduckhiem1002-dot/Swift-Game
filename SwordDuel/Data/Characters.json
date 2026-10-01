@@ -94,7 +94,21 @@
         },
         "knockback": 20,
         "energyCost": 0,
-        "cooldown": 0
+        "cooldown": 0,
+        "hitboxes": {
+          "2": {
+            "x": 7,
+            "y": 22,
+            "w": 29,
+            "h": 27
+          },
+          "3": {
+            "x": 7,
+            "y": 18,
+            "w": 29,
+            "h": 27
+          }
+        }
       },
       "attack2": {
         "damage": 5,
@@ -108,7 +122,21 @@
         },
         "knockback": 20,
         "energyCost": 0,
-        "cooldown": 0
+        "cooldown": 0,
+        "hitboxes": {
+          "2": {
+            "x": 7,
+            "y": 22,
+            "w": 30,
+            "h": 30
+          },
+          "3": {
+            "x": 7,
+            "y": 18,
+            "w": 30,
+            "h": 30
+          }
+        }
       },
       "attack3": {
         "damage": 8,
@@ -122,7 +150,21 @@
         },
         "knockback": 70,
         "energyCost": 0,
-        "cooldown": 0
+        "cooldown": 0,
+        "hitboxes": {
+          "3": {
+            "x": 7,
+            "y": 19,
+            "w": 37,
+            "h": 35
+          },
+          "4": {
+            "x": 7,
+            "y": 15,
+            "w": 37,
+            "h": 35
+          }
+        }
       },
       "skill1": {
         "damage": 12,
@@ -156,6 +198,26 @@
         "cooldown": 5,
         "enhanced": {
           "slow": 1.5
+        },
+        "hitboxes": {
+          "2": {
+            "x": 7,
+            "y": 18,
+            "w": 37,
+            "h": 35
+          },
+          "3": {
+            "x": 7,
+            "y": 16,
+            "w": 48,
+            "h": 35
+          },
+          "4": {
+            "x": 7,
+            "y": 14,
+            "w": 37,
+            "h": 35
+          }
         }
       },
       "ult": {
@@ -208,6 +270,26 @@
         "onHit": {
           "slow": 2
         }
+      }
+    },
+    "hurtboxes": {
+      "standing": {
+        "x": -12.0,
+        "y": 3,
+        "w": 24,
+        "h": 50
+      },
+      "block": {
+        "x": -12.0,
+        "y": 3,
+        "w": 24,
+        "h": 35
+      },
+      "air": {
+        "x": -12.0,
+        "y": 8,
+        "w": 24,
+        "h": 40
       }
     }
   },
@@ -306,7 +388,21 @@
         },
         "knockback": 20,
         "energyCost": 0,
-        "cooldown": 0
+        "cooldown": 0,
+        "hitboxes": {
+          "2": {
+            "x": 8,
+            "y": 22,
+            "w": 29,
+            "h": 27
+          },
+          "3": {
+            "x": 8,
+            "y": 18,
+            "w": 29,
+            "h": 27
+          }
+        }
       },
       "attack2": {
         "damage": 5,
@@ -320,7 +416,21 @@
         },
         "knockback": 20,
         "energyCost": 0,
-        "cooldown": 0
+        "cooldown": 0,
+        "hitboxes": {
+          "2": {
+            "x": 8,
+            "y": 22,
+            "w": 30,
+            "h": 30
+          },
+          "3": {
+            "x": 8,
+            "y": 18,
+            "w": 30,
+            "h": 30
+          }
+        }
       },
       "attack3": {
         "damage": 8,
@@ -334,7 +444,21 @@
         },
         "knockback": 70,
         "energyCost": 0,
-        "cooldown": 0
+        "cooldown": 0,
+        "hitboxes": {
+          "3": {
+            "x": 8,
+            "y": 19,
+            "w": 37,
+            "h": 35
+          },
+          "4": {
+            "x": 8,
+            "y": 15,
+            "w": 37,
+            "h": 35
+          }
+        }
       },
       "skill1": {
         "damage": 12,
@@ -369,6 +493,26 @@
         "teleport": true,
         "enhanced": {
           "burn": 6
+        },
+        "hitboxes": {
+          "2": {
+            "x": 8,
+            "y": 18,
+            "w": 37,
+            "h": 35
+          },
+          "3": {
+            "x": 8,
+            "y": 16,
+            "w": 48,
+            "h": 35
+          },
+          "4": {
+            "x": 8,
+            "y": 14,
+            "w": 37,
+            "h": 35
+          }
         }
       },
       "ult": {
@@ -422,6 +566,26 @@
           "burn": 9
         }
       }
+    },
+    "hurtboxes": {
+      "standing": {
+        "x": -13.0,
+        "y": 3,
+        "w": 26,
+        "h": 54
+      },
+      "block": {
+        "x": -13.0,
+        "y": 3,
+        "w": 26,
+        "h": 38
+      },
+      "air": {
+        "x": -13.0,
+        "y": 8,
+        "w": 26,
+        "h": 43
+      }
     }
   },
   {
@@ -452,7 +616,7 @@
         "loop": false
       },
       "crouch_block": {
-        "frames": 2,
+        "frames": 3,
         "fps": 8,
         "loop": false
       },
@@ -520,7 +684,21 @@
         },
         "knockback": 20,
         "energyCost": 0,
-        "cooldown": 0
+        "cooldown": 0,
+        "hitboxes": {
+          "2": {
+            "x": 7,
+            "y": 22,
+            "w": 29,
+            "h": 27
+          },
+          "3": {
+            "x": 7,
+            "y": 18,
+            "w": 29,
+            "h": 27
+          }
+        }
       },
       "attack2": {
         "damage": 5,
@@ -534,7 +712,21 @@
         },
         "knockback": 20,
         "energyCost": 0,
-        "cooldown": 0
+        "cooldown": 0,
+        "hitboxes": {
+          "2": {
+            "x": 7,
+            "y": 22,
+            "w": 30,
+            "h": 30
+          },
+          "3": {
+            "x": 7,
+            "y": 18,
+            "w": 30,
+            "h": 30
+          }
+        }
       },
       "attack3": {
         "damage": 8,
@@ -548,7 +740,21 @@
         },
         "knockback": 70,
         "energyCost": 0,
-        "cooldown": 0
+        "cooldown": 0,
+        "hitboxes": {
+          "3": {
+            "x": 7,
+            "y": 19,
+            "w": 37,
+            "h": 35
+          },
+          "4": {
+            "x": 7,
+            "y": 15,
+            "w": 37,
+            "h": 35
+          }
+        }
       },
       "skill1": {
         "damage": 12,
@@ -587,7 +793,21 @@
         "enhanced": {
           "drain": 0.3
         },
-        "reflect": true
+        "reflect": true,
+        "hitboxes": {
+          "4": {
+            "x": 6,
+            "y": 14,
+            "w": 34,
+            "h": 40
+          },
+          "5": {
+            "x": 6,
+            "y": 10,
+            "w": 34,
+            "h": 40
+          }
+        }
       },
       "ult": {
         "damage": 35,
@@ -641,6 +861,26 @@
         "buff": "reflect",
         "buffTime": 3
       }
+    },
+    "hurtboxes": {
+      "standing": {
+        "x": -12.0,
+        "y": 3,
+        "w": 24,
+        "h": 48
+      },
+      "block": {
+        "x": -12.0,
+        "y": 3,
+        "w": 24,
+        "h": 34
+      },
+      "air": {
+        "x": -12.0,
+        "y": 8,
+        "w": 24,
+        "h": 38
+      }
     }
   },
   {
@@ -670,7 +910,7 @@
         "loop": false
       },
       "crouch_block": {
-        "frames": 2,
+        "frames": 3,
         "fps": 8,
         "loop": false
       },
@@ -738,7 +978,21 @@
         },
         "knockback": 20,
         "energyCost": 0,
-        "cooldown": 0
+        "cooldown": 0,
+        "hitboxes": {
+          "2": {
+            "x": 7,
+            "y": 22,
+            "w": 29,
+            "h": 27
+          },
+          "3": {
+            "x": 7,
+            "y": 18,
+            "w": 29,
+            "h": 27
+          }
+        }
       },
       "attack2": {
         "damage": 5,
@@ -752,7 +1006,21 @@
         },
         "knockback": 20,
         "energyCost": 0,
-        "cooldown": 0
+        "cooldown": 0,
+        "hitboxes": {
+          "2": {
+            "x": 7,
+            "y": 22,
+            "w": 30,
+            "h": 30
+          },
+          "3": {
+            "x": 7,
+            "y": 18,
+            "w": 30,
+            "h": 30
+          }
+        }
       },
       "attack3": {
         "damage": 8,
@@ -766,7 +1034,21 @@
         },
         "knockback": 70,
         "energyCost": 0,
-        "cooldown": 0
+        "cooldown": 0,
+        "hitboxes": {
+          "3": {
+            "x": 7,
+            "y": 19,
+            "w": 37,
+            "h": 35
+          },
+          "4": {
+            "x": 7,
+            "y": 15,
+            "w": 37,
+            "h": 35
+          }
+        }
       },
       "skill1": {
         "damage": 12,
@@ -807,6 +1089,26 @@
         },
         "onHit": {
           "stun": 0.5
+        },
+        "hitboxes": {
+          "3": {
+            "x": 7,
+            "y": 4,
+            "w": 22,
+            "h": 20
+          },
+          "4": {
+            "x": 7,
+            "y": 2,
+            "w": 28,
+            "h": 20
+          },
+          "5": {
+            "x": 7,
+            "y": 0,
+            "w": 22,
+            "h": 20
+          }
         }
       },
       "ult": {
@@ -860,6 +1162,26 @@
           "burn": 10
         }
       }
+    },
+    "hurtboxes": {
+      "standing": {
+        "x": -12.0,
+        "y": 3,
+        "w": 24,
+        "h": 45
+      },
+      "block": {
+        "x": -12.0,
+        "y": 3,
+        "w": 24,
+        "h": 31
+      },
+      "air": {
+        "x": -12.0,
+        "y": 8,
+        "w": 24,
+        "h": 36
+      }
     }
   },
   {
@@ -889,7 +1211,7 @@
         "loop": false
       },
       "crouch_block": {
-        "frames": 2,
+        "frames": 3,
         "fps": 8,
         "loop": false
       },
@@ -957,7 +1279,21 @@
         },
         "knockback": 20,
         "energyCost": 0,
-        "cooldown": 0
+        "cooldown": 0,
+        "hitboxes": {
+          "2": {
+            "x": 8,
+            "y": 22,
+            "w": 29,
+            "h": 27
+          },
+          "3": {
+            "x": 8,
+            "y": 18,
+            "w": 29,
+            "h": 27
+          }
+        }
       },
       "attack2": {
         "damage": 5,
@@ -971,7 +1307,21 @@
         },
         "knockback": 20,
         "energyCost": 0,
-        "cooldown": 0
+        "cooldown": 0,
+        "hitboxes": {
+          "2": {
+            "x": 8,
+            "y": 22,
+            "w": 30,
+            "h": 30
+          },
+          "3": {
+            "x": 8,
+            "y": 18,
+            "w": 30,
+            "h": 30
+          }
+        }
       },
       "attack3": {
         "damage": 8,
@@ -985,7 +1335,21 @@
         },
         "knockback": 70,
         "energyCost": 0,
-        "cooldown": 0
+        "cooldown": 0,
+        "hitboxes": {
+          "3": {
+            "x": 8,
+            "y": 19,
+            "w": 37,
+            "h": 35
+          },
+          "4": {
+            "x": 8,
+            "y": 15,
+            "w": 37,
+            "h": 35
+          }
+        }
       },
       "skill1": {
         "damage": 12,
@@ -1025,6 +1389,20 @@
         "invulnerable": true,
         "enhanced": {
           "stun": 0.3
+        },
+        "hitboxes": {
+          "4": {
+            "x": 4,
+            "y": 4,
+            "w": 70,
+            "h": 50
+          },
+          "5": {
+            "x": 4,
+            "y": 0,
+            "w": 70,
+            "h": 50
+          }
         }
       },
       "ult": {
@@ -1077,6 +1455,26 @@
         "hitInterval": 0.15,
         "heal": 20
       }
+    },
+    "hurtboxes": {
+      "standing": {
+        "x": -14.0,
+        "y": 3,
+        "w": 28,
+        "h": 48
+      },
+      "block": {
+        "x": -14.0,
+        "y": 3,
+        "w": 28,
+        "h": 34
+      },
+      "air": {
+        "x": -14.0,
+        "y": 8,
+        "w": 28,
+        "h": 38
+      }
     }
   },
   {
@@ -1106,7 +1504,7 @@
         "loop": false
       },
       "crouch_block": {
-        "frames": 2,
+        "frames": 3,
         "fps": 8,
         "loop": false
       },
@@ -1174,7 +1572,21 @@
         },
         "knockback": 20,
         "energyCost": 0,
-        "cooldown": 0
+        "cooldown": 0,
+        "hitboxes": {
+          "2": {
+            "x": 7,
+            "y": 22,
+            "w": 29,
+            "h": 27
+          },
+          "3": {
+            "x": 7,
+            "y": 18,
+            "w": 29,
+            "h": 27
+          }
+        }
       },
       "attack2": {
         "damage": 5,
@@ -1188,7 +1600,21 @@
         },
         "knockback": 20,
         "energyCost": 0,
-        "cooldown": 0
+        "cooldown": 0,
+        "hitboxes": {
+          "2": {
+            "x": 7,
+            "y": 22,
+            "w": 30,
+            "h": 30
+          },
+          "3": {
+            "x": 7,
+            "y": 18,
+            "w": 30,
+            "h": 30
+          }
+        }
       },
       "attack3": {
         "damage": 8,
@@ -1202,7 +1628,21 @@
         },
         "knockback": 70,
         "energyCost": 0,
-        "cooldown": 0
+        "cooldown": 0,
+        "hitboxes": {
+          "3": {
+            "x": 7,
+            "y": 19,
+            "w": 37,
+            "h": 35
+          },
+          "4": {
+            "x": 7,
+            "y": 15,
+            "w": 37,
+            "h": 35
+          }
+        }
       },
       "skill1": {
         "damage": 12,
@@ -1220,6 +1660,20 @@
         "projectiles": 0,
         "enhanced": {
           "stun": 0.3
+        },
+        "hitboxes": {
+          "3": {
+            "x": 7,
+            "y": 14,
+            "w": 39,
+            "h": 45
+          },
+          "4": {
+            "x": 7,
+            "y": 10,
+            "w": 39,
+            "h": 45
+          }
         }
       },
       "skill2": {
@@ -1243,6 +1697,26 @@
         },
         "onHit": {
           "stun": 0.4
+        },
+        "hitboxes": {
+          "2": {
+            "x": 7,
+            "y": 24,
+            "w": 74,
+            "h": 20
+          },
+          "3": {
+            "x": 7,
+            "y": 22,
+            "w": 95,
+            "h": 20
+          },
+          "4": {
+            "x": 7,
+            "y": 20,
+            "w": 74,
+            "h": 20
+          }
         }
       },
       "ult": {
@@ -1293,6 +1767,26 @@
         "hits": 4,
         "hitInterval": 0.18
       }
+    },
+    "hurtboxes": {
+      "standing": {
+        "x": -11.0,
+        "y": 3,
+        "w": 22,
+        "h": 44
+      },
+      "block": {
+        "x": -11.0,
+        "y": 3,
+        "w": 22,
+        "h": 31
+      },
+      "air": {
+        "x": -11.0,
+        "y": 8,
+        "w": 22,
+        "h": 35
+      }
     }
   },
   {
@@ -1324,17 +1818,17 @@
         "loop": false
       },
       "crouch_block": {
-        "frames": 2,
+        "frames": 3,
         "fps": 8,
         "loop": false
       },
       "attack1": {
-        "frames": 5,
+        "frames": 6,
         "fps": 12,
         "loop": false
       },
       "attack2": {
-        "frames": 5,
+        "frames": 6,
         "fps": 12,
         "loop": false
       },
@@ -1392,7 +1886,21 @@
         },
         "knockback": 20,
         "energyCost": 0,
-        "cooldown": 0
+        "cooldown": 0,
+        "hitboxes": {
+          "2": {
+            "x": 8,
+            "y": 22,
+            "w": 29,
+            "h": 27
+          },
+          "3": {
+            "x": 8,
+            "y": 18,
+            "w": 29,
+            "h": 27
+          }
+        }
       },
       "attack2": {
         "damage": 6,
@@ -1406,7 +1914,21 @@
         },
         "knockback": 20,
         "energyCost": 0,
-        "cooldown": 0
+        "cooldown": 0,
+        "hitboxes": {
+          "2": {
+            "x": 8,
+            "y": 22,
+            "w": 30,
+            "h": 30
+          },
+          "3": {
+            "x": 8,
+            "y": 18,
+            "w": 30,
+            "h": 30
+          }
+        }
       },
       "attack3": {
         "damage": 10,
@@ -1420,7 +1942,21 @@
         },
         "knockback": 90,
         "energyCost": 0,
-        "cooldown": 0
+        "cooldown": 0,
+        "hitboxes": {
+          "3": {
+            "x": 8,
+            "y": 19,
+            "w": 37,
+            "h": 35
+          },
+          "4": {
+            "x": 8,
+            "y": 15,
+            "w": 37,
+            "h": 35
+          }
+        }
       },
       "skill1": {
         "damage": 14,
@@ -1457,6 +1993,26 @@
         "invulnerable": false,
         "enhanced": {
           "stun": 0.4
+        },
+        "hitboxes": {
+          "2": {
+            "x": 8,
+            "y": 18,
+            "w": 31,
+            "h": 35
+          },
+          "3": {
+            "x": 8,
+            "y": 16,
+            "w": 40,
+            "h": 35
+          },
+          "4": {
+            "x": 8,
+            "y": 14,
+            "w": 31,
+            "h": 35
+          }
         }
       },
       "ult": {
@@ -1511,6 +2067,26 @@
         "buff": "superArmor",
         "buffTime": 1.5
       }
+    },
+    "hurtboxes": {
+      "standing": {
+        "x": -14.0,
+        "y": 3,
+        "w": 28,
+        "h": 46
+      },
+      "block": {
+        "x": -14.0,
+        "y": 3,
+        "w": 28,
+        "h": 32
+      },
+      "air": {
+        "x": -14.0,
+        "y": 8,
+        "w": 28,
+        "h": 37
+      }
     }
   },
   {
@@ -1541,7 +2117,7 @@
         "loop": false
       },
       "crouch_block": {
-        "frames": 2,
+        "frames": 3,
         "fps": 8,
         "loop": false
       },
@@ -1609,7 +2185,21 @@
         },
         "knockback": 20,
         "energyCost": 0,
-        "cooldown": 0
+        "cooldown": 0,
+        "hitboxes": {
+          "2": {
+            "x": 7,
+            "y": 22,
+            "w": 29,
+            "h": 27
+          },
+          "3": {
+            "x": 7,
+            "y": 18,
+            "w": 29,
+            "h": 27
+          }
+        }
       },
       "attack2": {
         "damage": 4,
@@ -1623,7 +2213,21 @@
         },
         "knockback": 20,
         "energyCost": 0,
-        "cooldown": 0
+        "cooldown": 0,
+        "hitboxes": {
+          "2": {
+            "x": 7,
+            "y": 22,
+            "w": 30,
+            "h": 30
+          },
+          "3": {
+            "x": 7,
+            "y": 18,
+            "w": 30,
+            "h": 30
+          }
+        }
       },
       "attack3": {
         "damage": 7,
@@ -1637,7 +2241,21 @@
         },
         "knockback": 70,
         "energyCost": 0,
-        "cooldown": 0
+        "cooldown": 0,
+        "hitboxes": {
+          "3": {
+            "x": 7,
+            "y": 19,
+            "w": 37,
+            "h": 35
+          },
+          "4": {
+            "x": 7,
+            "y": 15,
+            "w": 37,
+            "h": 35
+          }
+        }
       },
       "skill1": {
         "damage": 12,
@@ -1676,6 +2294,26 @@
         "teleport": true,
         "enhanced": {
           "drain": 0.3
+        },
+        "hitboxes": {
+          "2": {
+            "x": 7,
+            "y": 18,
+            "w": 37,
+            "h": 35
+          },
+          "3": {
+            "x": 7,
+            "y": 16,
+            "w": 48,
+            "h": 35
+          },
+          "4": {
+            "x": 7,
+            "y": 14,
+            "w": 37,
+            "h": 35
+          }
         }
       },
       "ult": {
@@ -1727,6 +2365,26 @@
         "hitInterval": 0.12,
         "pull": true
       }
+    },
+    "hurtboxes": {
+      "standing": {
+        "x": -11.0,
+        "y": 3,
+        "w": 22,
+        "h": 44
+      },
+      "block": {
+        "x": -11.0,
+        "y": 3,
+        "w": 22,
+        "h": 31
+      },
+      "air": {
+        "x": -11.0,
+        "y": 8,
+        "w": 22,
+        "h": 35
+      }
     }
   },
   {
@@ -1758,7 +2416,7 @@
         "loop": false
       },
       "crouch_block": {
-        "frames": 2,
+        "frames": 3,
         "fps": 8,
         "loop": false
       },
@@ -1826,7 +2484,21 @@
         },
         "knockback": 20,
         "energyCost": 0,
-        "cooldown": 0
+        "cooldown": 0,
+        "hitboxes": {
+          "2": {
+            "x": 9,
+            "y": 22,
+            "w": 29,
+            "h": 27
+          },
+          "3": {
+            "x": 9,
+            "y": 18,
+            "w": 29,
+            "h": 27
+          }
+        }
       },
       "attack2": {
         "damage": 5,
@@ -1840,7 +2512,21 @@
         },
         "knockback": 20,
         "energyCost": 0,
-        "cooldown": 0
+        "cooldown": 0,
+        "hitboxes": {
+          "2": {
+            "x": 9,
+            "y": 22,
+            "w": 30,
+            "h": 30
+          },
+          "3": {
+            "x": 9,
+            "y": 18,
+            "w": 30,
+            "h": 30
+          }
+        }
       },
       "attack3": {
         "damage": 8,
@@ -1854,7 +2540,21 @@
         },
         "knockback": 70,
         "energyCost": 0,
-        "cooldown": 0
+        "cooldown": 0,
+        "hitboxes": {
+          "3": {
+            "x": 8,
+            "y": 19,
+            "w": 37,
+            "h": 35
+          },
+          "4": {
+            "x": 8,
+            "y": 15,
+            "w": 37,
+            "h": 35
+          }
+        }
       },
       "skill1": {
         "damage": 12,
@@ -1891,6 +2591,26 @@
         "invulnerable": true,
         "enhanced": {
           "burn": 6
+        },
+        "hitboxes": {
+          "2": {
+            "x": 9,
+            "y": 14,
+            "w": 41,
+            "h": 40
+          },
+          "3": {
+            "x": 9,
+            "y": 12,
+            "w": 52,
+            "h": 40
+          },
+          "4": {
+            "x": 9,
+            "y": 10,
+            "w": 41,
+            "h": 40
+          }
         }
       },
       "ult": {
@@ -1942,6 +2662,26 @@
         "hitInterval": 0.35,
         "buff": "giant",
         "buffTime": 10
+      }
+    },
+    "hurtboxes": {
+      "standing": {
+        "x": -23.0,
+        "y": 3,
+        "w": 46,
+        "h": 34
+      },
+      "block": {
+        "x": -23.0,
+        "y": 3,
+        "w": 46,
+        "h": 24
+      },
+      "air": {
+        "x": -23.0,
+        "y": 8,
+        "w": 46,
+        "h": 27
       }
     }
   }

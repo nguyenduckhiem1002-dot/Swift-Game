@@ -24,13 +24,17 @@ final class ArenaBackground: SKNode {
         super.init()
         if let name = map.painting, let painting = backgroundTexture(name) {
             buildIllustratedArena(painting)
+            if groundInWorld { worldGround = makeWorldGround() }
+            buildAmbient()
             return
         }
         // Map art: <id>_far.png replaces the sky, <id>_mid.png the scenery and ground, <id>_near.png tiles in front.
         // The illustrated arena also accepts the legacy far/mid/near names when its painting is removed.
         let far = layerTexture("far"), mid = layerTexture("mid"), near = layerTexture("near")
         if let far {
-            let sprite = SKSpriteNode(texture: far, size: CGSize(width: 480, height: 270))
+            // Fill the viewport without stretching the source board's wide panels.
+            let scale = max(480 / far.size().width, 270 / far.size().height)
+            let sprite = SKSpriteNode(texture: far, size: CGSize(width: far.size().width * scale, height: far.size().height * scale))
             sprite.position = CGPoint(x: 240, y: 135); sprite.zPosition = 1.5; addChild(sprite)
         } else {
             buildProceduralSky()
@@ -43,7 +47,7 @@ final class ArenaBackground: SKNode {
             }
         }
         clouds.zPosition = 4; addChild(clouds)
-        for i in 0..<12 {
+        for i in 0..<(far == nil ? 12 : 0) {
             let cloud = SKShapeNode(ellipseOf: CGSize(width: 78, height: 13))
             cloud.position = CGPoint(x: CGFloat(i * 62 - 50), y: CGFloat(82 + i % 3 * 13))
             cloud.fillColor = SKColor(rgb: map.horizon).blended(with: .white, amount: 0.45).withAlphaComponent(0.19)

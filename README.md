@@ -1,8 +1,10 @@
 # Kiếm Tiên Đối Kháng
 
-A 480×270, landscape, two fighter SpriteKit test game for iPhone. All code and game data are included; no external packages are needed. Băng Kiếm Tiên uses the supplied character reference and matching supplemental poses. Missing art for other characters is drawn as labeled pixel placeholders at runtime. The arena uses a widescreen watercolor xianxia painting with a moon, spirit dragon, palaces, and drifting transparent mist. Procedural scenery is retained as a fallback.
+A 480×270, landscape, two fighter SpriteKit test game for iPhone. All code and game data are included; no external packages are needed. The supplied animation boards are now imported for Vũ Tán Tiên Tử, Đường Môn Ám Khí Sư, Đạo Tăng, Mục Thần Đồng Tử, Tàn Lão, Thiên Ma Nữ, Hỏa Ma Kiếm, and Đại Khư Linh Thú. Their HUD portraits and SK1/SK2/ULT icons use the supplied character art. Băng Kiếm Tiên keeps its separate atlas. The arena uses a widescreen watercolor xianxia painting with a moon, spirit dragon, palaces, and drifting transparent mist. Procedural scenery is retained as a fallback.
 
 ## Run
+
+Latest collision, resource and UI changes, verification steps, and remaining art limitations are documented in [Art/Runtime-audit.md](Art/Runtime-audit.md).
 
 1. Open `SwordDuel.xcodeproj` in Xcode 15 or newer.
 2. Select the `SwordDuel` scheme and an iPhone Simulator running iOS 16 or newer.
@@ -28,15 +30,15 @@ SK3 applies a timed buff: `guardian` (-50% damage taken, no knockback: frost, el
 
 Until `<charId>_skill3.png` art exists, SK3 reuses the character's `win` animation.
 
-## Imported Frost character
+## Imported character art
 
-The new Frost art is bundled as transparent atlases with per-frame foot pivots. See `Art/README.md` for source, prompts, animation mappings, and preview launch arguments. Atlas crops retain the supplied artwork's resolution and allow wide sword effects; the standard strip format below remains supported.
+The supplied character boards are preserved in `Art/References/Imported/`. Reproducible import scripts remove the connected magenta matte and export every pose as its own trimmed transparent PNG, with per-frame foot pivots, square HUD portraits, and the three skill icons. Hỏa Ma Kiếm (`flame`) uses `flame-swordsman-atlas.png`; the purple female column is correctly assigned to Thiên Ma Nữ (`demon`). See `Art/README.md` for source files and extraction details. Frame crops retain the source artwork's resolution; the standard strip format below remains supported.
 
 ## Add art
 
-Put horizontal PNG sprite strips in `SwordDuel/Resources/Assets/Characters/<charId>/<charId>_<animation>.png`. The character IDs are `frost`, `flame`, `umbrella`, `tang`, `monk`, `herder`, `elder`, `demon` and `beast` (see `Art/Design/characters-expansion.md`). Each frame must be 64×64 pixels (`beast` uses 96×96 via `frameSize`), and the strip width must be `frame size × frame count`. All strips should face right; the game mirrors them for left-facing fighters. The runtime loader uses nearest-neighbor filtering. Transparent backgrounds are recommended. If a file is absent or too small, its labeled placeholder appears.
+Put horizontal PNG sprite strips in `SwordDuel/Resources/Assets/Characters/<charId>/<charId>_<animation>.png`; these take precedence over atlas data. The character IDs are `frost`, `flame`, `umbrella`, `tang`, `monk`, `herder`, `elder`, `demon` and `beast` (see `Art/Design/characters-expansion.md`). For strips, each frame is 64×64 pixels (`beast` uses 96×96 via `frameSize`), and the strip width must be `frame size × frame count`. The supplied character imports instead use `<charId>_atlas.json` plus one transparent `<charId>_<animation>_<frame>.png` per pose. All art should face right; the game mirrors it for left-facing fighters. The runtime loader uses nearest-neighbor filtering. Transparent backgrounds are recommended. If a file is absent or too small, its labeled placeholder appears.
 
-Animations and frame counts for each character:
+Default animation frame counts for strip imports (the supplied atlas imports may override these; for example, imported characters use three block frames and five or six attack2 frames):
 
 | Name | Frames | FPS |
 | --- | ---: | ---: |

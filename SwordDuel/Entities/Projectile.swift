@@ -15,6 +15,7 @@ final class Projectile: SKNode {
     var arenaWidth: CGFloat = 480
     var didHit = false
     let visual: SKSpriteNode
+    private var previousPosition = CGPoint.zero
     init(owner: Fighter, damage: Int, direction: CGFloat, rise: CGFloat = 0, effect: HitEffect? = nil, enhanced: Bool = false) {
         self.owner = owner; self.damage = damage; self.direction = direction; self.rise = rise
         self.effect = effect; self.enhanced = enhanced
@@ -25,6 +26,7 @@ final class Projectile: SKNode {
         visual.xScale = direction
         addChild(visual)
         position = CGPoint(x: owner.position.x + direction * 25, y: owner.position.y + 32)
+        previousPosition = position
         if rise != 0 { visual.zRotation = atan2(rise, 180) * direction }
         visual.run(.repeatForever(.animate(with: frames, timePerFrame: 0.09)))
     }
@@ -35,10 +37,21 @@ final class Projectile: SKNode {
         visual.xScale = direction; visual.zRotation = -visual.zRotation
     }
     var hitbox: CGRect { CGRect(x: position.x - 16, y: position.y - 9, width: 32, height: 18) }
+    func contactTime(with target: CGRect) -> CGFloat? {
+        HitboxSystem.contactTime(from: previousPosition, to: position, halfSize: CGSize(width: 16, height: 9), target: target)
+    }
+    func moveToContact(_ time: CGFloat) {
+        position = CGPoint(x: previousPosition.x + (position.x - previousPosition.x) * time,
+                           y: previousPosition.y + (position.y - previousPosition.y) * time)
+    }
+    func removeIfExpired() {
+        if life <= 0 || position.x < -25 || position.x > arenaWidth + 25 || position.y < 36 || position.y > 280 { removeFromParent() }
+    }
     func updateFixed(_ dt: CGFloat) {
+        previousPosition = position
         position.x += direction * 180 * speedScale * dt
         position.y += rise * dt
         life -= dt
-        if life <= 0 || position.x < -25 || position.x > arenaWidth + 25 || position.y < 36 || position.y > 280 { removeFromParent() }
+        // The final swept segment must resolve before retiring an off-screen shot.
     }
 }

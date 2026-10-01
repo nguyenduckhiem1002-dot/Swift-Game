@@ -1,0 +1,279 @@
+{
+  "" : {
+    "diagnostics" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/SwordDuel-primary.dia",
+    "emit-module-dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/SwordDuel-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/SwordDuel-primary-emit-module.dia",
+    "pch" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/SwordDuel-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/SwordDuel-primary.swiftdeps"
+  },
+  "/Users/duck/Dev/Game/SwordDuel/AI/AIController.swift" : {
+    "const-values" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/AIController.swiftconstvalues",
+    "dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/AIController.d",
+    "diagnostics" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/AIController.dia",
+    "index-unit-output-path" : "/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/AIController.o",
+    "llvm-bc" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/AIController.bc",
+    "object" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/AIController.o",
+    "swift-dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/AIController.swiftdeps",
+    "swiftmodule" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/AIController~partial.swiftmodule"
+  },
+  "/Users/duck/Dev/Game/SwordDuel/Core/AnimationController.swift" : {
+    "const-values" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/AnimationController.swiftconstvalues",
+    "dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/AnimationController.d",
+    "diagnostics" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/AnimationController.dia",
+    "index-unit-output-path" : "/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/AnimationController.o",
+    "llvm-bc" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/AnimationController.bc",
+    "object" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/AnimationController.o",
+    "swift-dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/AnimationController.swiftdeps",
+    "swiftmodule" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/AnimationController~partial.swiftmodule"
+  },
+  "/Users/duck/Dev/Game/SwordDuel/Core/CombatHUD.swift" : {
+    "const-values" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/CombatHUD.swiftconstvalues",
+    "dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/CombatHUD.d",
+    "diagnostics" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/CombatHUD.dia",
+    "index-unit-output-path" : "/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/CombatHUD.o",
+    "llvm-bc" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/CombatHUD.bc",
+    "object" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/CombatHUD.o",
+    "swift-dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/CombatHUD.swiftdeps",
+    "swiftmodule" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/CombatHUD~partial.swiftmodule"
+  },
+  "/Users/duck/Dev/Game/SwordDuel/Core/CombatSystem.swift" : {
+    "const-values" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/CombatSystem.swiftconstvalues",
+    "dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/CombatSystem.d",
+    "diagnostics" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/CombatSystem.dia",
+    "index-unit-output-path" : "/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/CombatSystem.o",
+    "llvm-bc" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/CombatSystem.bc",
+    "object" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/CombatSystem.o",
+    "swift-dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/CombatSystem.swiftdeps",
+    "swiftmodule" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/CombatSystem~partial.swiftmodule"
+  },
+  "/Users/duck/Dev/Game/SwordDuel/Core/HitboxSystem.swift" : {
+    "const-values" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/HitboxSystem.swiftconstvalues",
+    "dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/HitboxSystem.d",
+    "diagnostics" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/HitboxSystem.dia",
+    "index-unit-output-path" : "/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/HitboxSystem.o",
+    "llvm-bc" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/HitboxSystem.bc",
+    "object" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/HitboxSystem.o",
+    "swift-dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/HitboxSystem.swiftdeps",
+    "swiftmodule" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/HitboxSystem~partial.swiftmodule"
+  },
+  "/Users/duck/Dev/Game/SwordDuel/Core/SceneStyle.swift" : {
+    "const-values" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/SceneStyle.swiftconstvalues",
+    "dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/SceneStyle.d",
+    "diagnostics" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/SceneStyle.dia",
+    "index-unit-output-path" : "/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/SceneStyle.o",
+    "llvm-bc" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/SceneStyle.bc",
+    "object" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/SceneStyle.o",
+    "swift-dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/SceneStyle.swiftdeps",
+    "swiftmodule" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/SceneStyle~partial.swiftmodule"
+  },
+  "/Users/duck/Dev/Game/SwordDuel/Core/SpriteSheet.swift" : {
+    "const-values" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/SpriteSheet.swiftconstvalues",
+    "dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/SpriteSheet.d",
+    "diagnostics" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/SpriteSheet.dia",
+    "index-unit-output-path" : "/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/SpriteSheet.o",
+    "llvm-bc" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/SpriteSheet.bc",
+    "object" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/SpriteSheet.o",
+    "swift-dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/SpriteSheet.swiftdeps",
+    "swiftmodule" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/SpriteSheet~partial.swiftmodule"
+  },
+  "/Users/duck/Dev/Game/SwordDuel/Core/StateMachine.swift" : {
+    "const-values" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/StateMachine.swiftconstvalues",
+    "dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/StateMachine.d",
+    "diagnostics" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/StateMachine.dia",
+    "index-unit-output-path" : "/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/StateMachine.o",
+    "llvm-bc" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/StateMachine.bc",
+    "object" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/StateMachine.o",
+    "swift-dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/StateMachine.swiftdeps",
+    "swiftmodule" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/StateMachine~partial.swiftmodule"
+  },
+  "/Users/duck/Dev/Game/SwordDuel/Core/UIAssets.swift" : {
+    "const-values" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/UIAssets.swiftconstvalues",
+    "dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/UIAssets.d",
+    "diagnostics" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/UIAssets.dia",
+    "index-unit-output-path" : "/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/UIAssets.o",
+    "llvm-bc" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/UIAssets.bc",
+    "object" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/UIAssets.o",
+    "swift-dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/UIAssets.swiftdeps",
+    "swiftmodule" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/UIAssets~partial.swiftmodule"
+  },
+  "/Users/duck/Dev/Game/SwordDuel/Data/CharacterData.swift" : {
+    "const-values" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/CharacterData.swiftconstvalues",
+    "dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/CharacterData.d",
+    "diagnostics" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/CharacterData.dia",
+    "index-unit-output-path" : "/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/CharacterData.o",
+    "llvm-bc" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/CharacterData.bc",
+    "object" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/CharacterData.o",
+    "swift-dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/CharacterData.swiftdeps",
+    "swiftmodule" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/CharacterData~partial.swiftmodule"
+  },
+  "/Users/duck/Dev/Game/SwordDuel/Data/MapData.swift" : {
+    "const-values" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/MapData.swiftconstvalues",
+    "dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/MapData.d",
+    "diagnostics" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/MapData.dia",
+    "index-unit-output-path" : "/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/MapData.o",
+    "llvm-bc" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/MapData.bc",
+    "object" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/MapData.o",
+    "swift-dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/MapData.swiftdeps",
+    "swiftmodule" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/MapData~partial.swiftmodule"
+  },
+  "/Users/duck/Dev/Game/SwordDuel/Data/StageData.swift" : {
+    "const-values" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/StageData.swiftconstvalues",
+    "dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/StageData.d",
+    "diagnostics" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/StageData.dia",
+    "index-unit-output-path" : "/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/StageData.o",
+    "llvm-bc" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/StageData.bc",
+    "object" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/StageData.o",
+    "swift-dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/StageData.swiftdeps",
+    "swiftmodule" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/StageData~partial.swiftmodule"
+  },
+  "/Users/duck/Dev/Game/SwordDuel/Entities/EffectNode.swift" : {
+    "const-values" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/EffectNode.swiftconstvalues",
+    "dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/EffectNode.d",
+    "diagnostics" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/EffectNode.dia",
+    "index-unit-output-path" : "/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/EffectNode.o",
+    "llvm-bc" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/EffectNode.bc",
+    "object" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/EffectNode.o",
+    "swift-dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/EffectNode.swiftdeps",
+    "swiftmodule" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/EffectNode~partial.swiftmodule"
+  },
+  "/Users/duck/Dev/Game/SwordDuel/Entities/Fighter.swift" : {
+    "const-values" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/Fighter.swiftconstvalues",
+    "dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/Fighter.d",
+    "diagnostics" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/Fighter.dia",
+    "index-unit-output-path" : "/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/Fighter.o",
+    "llvm-bc" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/Fighter.bc",
+    "object" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/Fighter.o",
+    "swift-dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/Fighter.swiftdeps",
+    "swiftmodule" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/Fighter~partial.swiftmodule"
+  },
+  "/Users/duck/Dev/Game/SwordDuel/Entities/Monster.swift" : {
+    "const-values" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/Monster.swiftconstvalues",
+    "dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/Monster.d",
+    "diagnostics" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/Monster.dia",
+    "index-unit-output-path" : "/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/Monster.o",
+    "llvm-bc" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/Monster.bc",
+    "object" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/Monster.o",
+    "swift-dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/Monster.swiftdeps",
+    "swiftmodule" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/Monster~partial.swiftmodule"
+  },
+  "/Users/duck/Dev/Game/SwordDuel/Entities/Projectile.swift" : {
+    "const-values" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/Projectile.swiftconstvalues",
+    "dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/Projectile.d",
+    "diagnostics" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/Projectile.dia",
+    "index-unit-output-path" : "/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/Projectile.o",
+    "llvm-bc" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/Projectile.bc",
+    "object" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/Projectile.o",
+    "swift-dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/Projectile.swiftdeps",
+    "swiftmodule" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/Projectile~partial.swiftmodule"
+  },
+  "/Users/duck/Dev/Game/SwordDuel/GameApp.swift" : {
+    "const-values" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/GameApp.swiftconstvalues",
+    "dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/GameApp.d",
+    "diagnostics" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/GameApp.dia",
+    "index-unit-output-path" : "/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/GameApp.o",
+    "llvm-bc" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/GameApp.bc",
+    "object" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/GameApp.o",
+    "swift-dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/GameApp.swiftdeps",
+    "swiftmodule" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/GameApp~partial.swiftmodule"
+  },
+  "/Users/duck/Dev/Game/SwordDuel/Input/KeyboardInput.swift" : {
+    "const-values" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/KeyboardInput.swiftconstvalues",
+    "dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/KeyboardInput.d",
+    "diagnostics" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/KeyboardInput.dia",
+    "index-unit-output-path" : "/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/KeyboardInput.o",
+    "llvm-bc" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/KeyboardInput.bc",
+    "object" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/KeyboardInput.o",
+    "swift-dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/KeyboardInput.swiftdeps",
+    "swiftmodule" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/KeyboardInput~partial.swiftmodule"
+  },
+  "/Users/duck/Dev/Game/SwordDuel/Input/PlayerInputRouter.swift" : {
+    "const-values" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/PlayerInputRouter.swiftconstvalues",
+    "dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/PlayerInputRouter.d",
+    "diagnostics" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/PlayerInputRouter.dia",
+    "index-unit-output-path" : "/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/PlayerInputRouter.o",
+    "llvm-bc" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/PlayerInputRouter.bc",
+    "object" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/PlayerInputRouter.o",
+    "swift-dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/PlayerInputRouter.swiftdeps",
+    "swiftmodule" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/PlayerInputRouter~partial.swiftmodule"
+  },
+  "/Users/duck/Dev/Game/SwordDuel/Input/TouchControls.swift" : {
+    "const-values" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/TouchControls.swiftconstvalues",
+    "dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/TouchControls.d",
+    "diagnostics" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/TouchControls.dia",
+    "index-unit-output-path" : "/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/TouchControls.o",
+    "llvm-bc" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/TouchControls.bc",
+    "object" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/TouchControls.o",
+    "swift-dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/TouchControls.swiftdeps",
+    "swiftmodule" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/TouchControls~partial.swiftmodule"
+  },
+  "/Users/duck/Dev/Game/SwordDuel/Scenes/ArenaBackground.swift" : {
+    "const-values" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/ArenaBackground.swiftconstvalues",
+    "dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/ArenaBackground.d",
+    "diagnostics" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/ArenaBackground.dia",
+    "index-unit-output-path" : "/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/ArenaBackground.o",
+    "llvm-bc" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/ArenaBackground.bc",
+    "object" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/ArenaBackground.o",
+    "swift-dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/ArenaBackground.swiftdeps",
+    "swiftmodule" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/ArenaBackground~partial.swiftmodule"
+  },
+  "/Users/duck/Dev/Game/SwordDuel/Scenes/ArenaTerrain.swift" : {
+    "const-values" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/ArenaTerrain.swiftconstvalues",
+    "dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/ArenaTerrain.d",
+    "diagnostics" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/ArenaTerrain.dia",
+    "index-unit-output-path" : "/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/ArenaTerrain.o",
+    "llvm-bc" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/ArenaTerrain.bc",
+    "object" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/ArenaTerrain.o",
+    "swift-dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/ArenaTerrain.swiftdeps",
+    "swiftmodule" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/ArenaTerrain~partial.swiftmodule"
+  },
+  "/Users/duck/Dev/Game/SwordDuel/Scenes/FightScene.swift" : {
+    "const-values" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/FightScene.swiftconstvalues",
+    "dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/FightScene.d",
+    "diagnostics" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/FightScene.dia",
+    "index-unit-output-path" : "/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/FightScene.o",
+    "llvm-bc" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/FightScene.bc",
+    "object" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/FightScene.o",
+    "swift-dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/FightScene.swiftdeps",
+    "swiftmodule" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/FightScene~partial.swiftmodule"
+  },
+  "/Users/duck/Dev/Game/SwordDuel/Scenes/ResultScene.swift" : {
+    "const-values" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/ResultScene.swiftconstvalues",
+    "dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/ResultScene.d",
+    "diagnostics" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/ResultScene.dia",
+    "index-unit-output-path" : "/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/ResultScene.o",
+    "llvm-bc" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/ResultScene.bc",
+    "object" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/ResultScene.o",
+    "swift-dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/ResultScene.swiftdeps",
+    "swiftmodule" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/ResultScene~partial.swiftmodule"
+  },
+  "/Users/duck/Dev/Game/SwordDuel/Scenes/SelectScene.swift" : {
+    "const-values" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/SelectScene.swiftconstvalues",
+    "dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/SelectScene.d",
+    "diagnostics" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/SelectScene.dia",
+    "index-unit-output-path" : "/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/SelectScene.o",
+    "llvm-bc" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/SelectScene.bc",
+    "object" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/SelectScene.o",
+    "swift-dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/SelectScene.swiftdeps",
+    "swiftmodule" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/SelectScene~partial.swiftmodule"
+  },
+  "/Users/duck/Dev/Game/SwordDuel/Scenes/StageScene.swift" : {
+    "const-values" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/StageScene.swiftconstvalues",
+    "dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/StageScene.d",
+    "diagnostics" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/StageScene.dia",
+    "index-unit-output-path" : "/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/StageScene.o",
+    "llvm-bc" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/StageScene.bc",
+    "object" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/StageScene.o",
+    "swift-dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/StageScene.swiftdeps",
+    "swiftmodule" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/StageScene~partial.swiftmodule"
+  },
+  "/Users/duck/Dev/Game/SwordDuel/Scenes/TitleScene.swift" : {
+    "const-values" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/TitleScene.swiftconstvalues",
+    "dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/TitleScene.d",
+    "diagnostics" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/TitleScene.dia",
+    "index-unit-output-path" : "/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/TitleScene.o",
+    "llvm-bc" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/TitleScene.bc",
+    "object" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/TitleScene.o",
+    "swift-dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/TitleScene.swiftdeps",
+    "swiftmodule" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/TitleScene~partial.swiftmodule"
+  }
+}

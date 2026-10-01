@@ -1,0 +1,901 @@
+{
+  "frames": {
+    "idle0": {
+      "image": "frost_reference_atlas",
+      "rect": {
+        "x": 12,
+        "y": 48,
+        "w": 125,
+        "h": 187
+      },
+      "pivot": [
+        86,
+        182
+      ],
+      "scale": 0.34
+    },
+    "idle1": {
+      "image": "frost_reference_atlas",
+      "rect": {
+        "x": 141,
+        "y": 48,
+        "w": 103,
+        "h": 187
+      },
+      "pivot": [
+        68,
+        182
+      ],
+      "scale": 0.34
+    },
+    "idle2": {
+      "image": "frost_reference_atlas",
+      "rect": {
+        "x": 249,
+        "y": 48,
+        "w": 102,
+        "h": 187
+      },
+      "pivot": [
+        71,
+        182
+      ],
+      "scale": 0.34
+    },
+    "idle3": {
+      "image": "frost_reference_atlas",
+      "rect": {
+        "x": 358,
+        "y": 48,
+        "w": 103,
+        "h": 187
+      },
+      "pivot": [
+        72,
+        182
+      ],
+      "scale": 0.34
+    },
+    "idle4": {
+      "image": "frost_reference_atlas",
+      "rect": {
+        "x": 468,
+        "y": 48,
+        "w": 103,
+        "h": 187
+      },
+      "pivot": [
+        72,
+        182
+      ],
+      "scale": 0.34
+    },
+    "idle5": {
+      "image": "frost_reference_atlas",
+      "rect": {
+        "x": 580,
+        "y": 48,
+        "w": 110,
+        "h": 187
+      },
+      "pivot": [
+        70,
+        182
+      ],
+      "scale": 0.34
+    },
+    "float0": {
+      "image": "frost_reference_atlas",
+      "rect": {
+        "x": 737,
+        "y": 45,
+        "w": 148,
+        "h": 203
+      },
+      "pivot": [
+        95,
+        183
+      ],
+      "scale": 0.34
+    },
+    "float1": {
+      "image": "frost_reference_atlas",
+      "rect": {
+        "x": 885,
+        "y": 45,
+        "w": 129,
+        "h": 203
+      },
+      "pivot": [
+        78,
+        183
+      ],
+      "scale": 0.34
+    },
+    "float2": {
+      "image": "frost_reference_atlas",
+      "rect": {
+        "x": 1014,
+        "y": 45,
+        "w": 110,
+        "h": 203
+      },
+      "pivot": [
+        66,
+        183
+      ],
+      "scale": 0.34
+    },
+    "float3": {
+      "image": "frost_reference_atlas",
+      "rect": {
+        "x": 1124,
+        "y": 45,
+        "w": 124,
+        "h": 203
+      },
+      "pivot": [
+        74,
+        183
+      ],
+      "scale": 0.34
+    },
+    "float4": {
+      "image": "frost_reference_atlas",
+      "rect": {
+        "x": 1248,
+        "y": 45,
+        "w": 127,
+        "h": 203
+      },
+      "pivot": [
+        76,
+        183
+      ],
+      "scale": 0.34
+    },
+    "float5": {
+      "image": "frost_reference_atlas",
+      "rect": {
+        "x": 1375,
+        "y": 45,
+        "w": 161,
+        "h": 203
+      },
+      "pivot": [
+        79,
+        183
+      ],
+      "scale": 0.34
+    },
+    "walk0": {
+      "image": "frost_reference_atlas",
+      "rect": {
+        "x": 4,
+        "y": 310,
+        "w": 118,
+        "h": 150
+      },
+      "pivot": [
+        82,
+        146
+      ],
+      "scale": 0.4
+    },
+    "walk1": {
+      "image": "frost_reference_atlas",
+      "rect": {
+        "x": 122,
+        "y": 310,
+        "w": 96,
+        "h": 150
+      },
+      "pivot": [
+        60,
+        146
+      ],
+      "scale": 0.4
+    },
+    "walk2": {
+      "image": "frost_reference_atlas",
+      "rect": {
+        "x": 218,
+        "y": 310,
+        "w": 93,
+        "h": 150
+      },
+      "pivot": [
+        60,
+        146
+      ],
+      "scale": 0.4
+    },
+    "walk3": {
+      "image": "frost_reference_atlas",
+      "rect": {
+        "x": 311,
+        "y": 310,
+        "w": 88,
+        "h": 150
+      },
+      "pivot": [
+        58,
+        146
+      ],
+      "scale": 0.4
+    },
+    "walk4": {
+      "image": "frost_reference_atlas",
+      "rect": {
+        "x": 399,
+        "y": 310,
+        "w": 88,
+        "h": 150
+      },
+      "pivot": [
+        57,
+        146
+      ],
+      "scale": 0.4
+    },
+    "walk5": {
+      "image": "frost_reference_atlas",
+      "rect": {
+        "x": 487,
+        "y": 310,
+        "w": 91,
+        "h": 150
+      },
+      "pivot": [
+        58,
+        146
+      ],
+      "scale": 0.4
+    },
+    "walk6": {
+      "image": "frost_reference_atlas",
+      "rect": {
+        "x": 578,
+        "y": 310,
+        "w": 86,
+        "h": 150
+      },
+      "pivot": [
+        55,
+        146
+      ],
+      "scale": 0.4
+    },
+    "walk7": {
+      "image": "frost_reference_atlas",
+      "rect": {
+        "x": 664,
+        "y": 310,
+        "w": 94,
+        "h": 150
+      },
+      "pivot": [
+        60,
+        146
+      ],
+      "scale": 0.4
+    },
+    "attack0": {
+      "image": "frost_reference_atlas",
+      "rect": {
+        "x": 4,
+        "y": 518,
+        "w": 187,
+        "h": 164
+      },
+      "pivot": [
+        106,
+        157
+      ],
+      "scale": 0.4
+    },
+    "attack1": {
+      "image": "frost_reference_atlas",
+      "rect": {
+        "x": 191,
+        "y": 518,
+        "w": 202,
+        "h": 164
+      },
+      "pivot": [
+        125,
+        157
+      ],
+      "scale": 0.4
+    },
+    "attack2": {
+      "image": "frost_reference_atlas",
+      "rect": {
+        "x": 393,
+        "y": 518,
+        "w": 268,
+        "h": 164
+      },
+      "pivot": [
+        131,
+        157
+      ],
+      "scale": 0.4
+    },
+    "attack3": {
+      "image": "frost_reference_atlas",
+      "rect": {
+        "x": 661,
+        "y": 518,
+        "w": 339,
+        "h": 164
+      },
+      "pivot": [
+        134,
+        157
+      ],
+      "scale": 0.4
+    },
+    "attack4": {
+      "image": "frost_reference_atlas",
+      "rect": {
+        "x": 1000,
+        "y": 518,
+        "w": 286,
+        "h": 164
+      },
+      "pivot": [
+        110,
+        157
+      ],
+      "scale": 0.4
+    },
+    "attack5": {
+      "image": "frost_reference_atlas",
+      "rect": {
+        "x": 1286,
+        "y": 518,
+        "w": 250,
+        "h": 164
+      },
+      "pivot": [
+        114,
+        157
+      ],
+      "scale": 0.4
+    },
+    "special0": {
+      "image": "frost_reference_atlas",
+      "rect": {
+        "x": 0,
+        "y": 739,
+        "w": 181,
+        "h": 243
+      },
+      "pivot": [
+        95,
+        235
+      ],
+      "scale": 0.43
+    },
+    "special1": {
+      "image": "frost_reference_atlas",
+      "rect": {
+        "x": 181,
+        "y": 739,
+        "w": 180,
+        "h": 243
+      },
+      "pivot": [
+        89,
+        235
+      ],
+      "scale": 0.43
+    },
+    "special2": {
+      "image": "frost_reference_atlas",
+      "rect": {
+        "x": 361,
+        "y": 739,
+        "w": 207,
+        "h": 243
+      },
+      "pivot": [
+        103,
+        235
+      ],
+      "scale": 0.43
+    },
+    "special3": {
+      "image": "frost_reference_atlas",
+      "rect": {
+        "x": 568,
+        "y": 739,
+        "w": 232,
+        "h": 243
+      },
+      "pivot": [
+        119,
+        235
+      ],
+      "scale": 0.43
+    },
+    "special4": {
+      "image": "frost_reference_atlas",
+      "rect": {
+        "x": 800,
+        "y": 739,
+        "w": 260,
+        "h": 243
+      },
+      "pivot": [
+        110,
+        235
+      ],
+      "scale": 0.43
+    },
+    "special5": {
+      "image": "frost_reference_atlas",
+      "rect": {
+        "x": 1060,
+        "y": 739,
+        "w": 313,
+        "h": 243
+      },
+      "pivot": [
+        140,
+        235
+      ],
+      "scale": 0.43
+    },
+    "special6": {
+      "image": "frost_reference_atlas",
+      "rect": {
+        "x": 1373,
+        "y": 739,
+        "w": 163,
+        "h": 243
+      },
+      "pivot": [
+        78,
+        235
+      ],
+      "scale": 0.43
+    },
+    "guard0": {
+      "image": "frost_extra_atlas",
+      "rect": {
+        "x": 0,
+        "y": 65,
+        "w": 265,
+        "h": 210
+      },
+      "pivot": [
+        128,
+        203
+      ],
+      "scale": 0.25
+    },
+    "guard1": {
+      "image": "frost_extra_atlas",
+      "rect": {
+        "x": 265,
+        "y": 65,
+        "w": 275,
+        "h": 210
+      },
+      "pivot": [
+        121,
+        203
+      ],
+      "scale": 0.25
+    },
+    "hurt0": {
+      "image": "frost_extra_atlas",
+      "rect": {
+        "x": 539,
+        "y": 25,
+        "w": 230,
+        "h": 250
+      },
+      "pivot": [
+        108,
+        243
+      ],
+      "scale": 0.25
+    },
+    "hurt1": {
+      "image": "frost_extra_atlas",
+      "rect": {
+        "x": 769,
+        "y": 25,
+        "w": 256,
+        "h": 250
+      },
+      "pivot": [
+        134,
+        243
+      ],
+      "scale": 0.25
+    },
+    "hurt2": {
+      "image": "frost_extra_atlas",
+      "rect": {
+        "x": 1025,
+        "y": 25,
+        "w": 263,
+        "h": 250
+      },
+      "pivot": [
+        133,
+        243
+      ],
+      "scale": 0.25
+    },
+    "ko0": {
+      "image": "frost_extra_atlas",
+      "rect": {
+        "x": 0,
+        "y": 302,
+        "w": 256,
+        "h": 210
+      },
+      "pivot": [
+        128,
+        202
+      ],
+      "scale": 0.25
+    },
+    "ko1": {
+      "image": "frost_extra_atlas",
+      "rect": {
+        "x": 256,
+        "y": 302,
+        "w": 256,
+        "h": 210
+      },
+      "pivot": [
+        129,
+        202
+      ],
+      "scale": 0.25
+    },
+    "ko2": {
+      "image": "frost_extra_atlas",
+      "rect": {
+        "x": 512,
+        "y": 302,
+        "w": 255,
+        "h": 210
+      },
+      "pivot": [
+        129,
+        202
+      ],
+      "scale": 0.25
+    },
+    "ko3": {
+      "image": "frost_extra_atlas",
+      "rect": {
+        "x": 767,
+        "y": 302,
+        "w": 255,
+        "h": 210
+      },
+      "pivot": [
+        128,
+        202
+      ],
+      "scale": 0.25
+    },
+    "ko4": {
+      "image": "frost_extra_atlas",
+      "rect": {
+        "x": 1022,
+        "y": 302,
+        "w": 256,
+        "h": 210
+      },
+      "pivot": [
+        130,
+        202
+      ],
+      "scale": 0.25
+    },
+    "ko5": {
+      "image": "frost_extra_atlas",
+      "rect": {
+        "x": 1278,
+        "y": 302,
+        "w": 258,
+        "h": 210
+      },
+      "pivot": [
+        128,
+        202
+      ],
+      "scale": 0.25
+    },
+    "win0": {
+      "image": "frost_extra_atlas",
+      "rect": {
+        "x": 0,
+        "y": 508,
+        "w": 259,
+        "h": 302
+      },
+      "pivot": [
+        130,
+        296
+      ],
+      "scale": 0.25
+    },
+    "win1": {
+      "image": "frost_extra_atlas",
+      "rect": {
+        "x": 259,
+        "y": 508,
+        "w": 257,
+        "h": 302
+      },
+      "pivot": [
+        126,
+        296
+      ],
+      "scale": 0.25
+    },
+    "win2": {
+      "image": "frost_extra_atlas",
+      "rect": {
+        "x": 516,
+        "y": 508,
+        "w": 249,
+        "h": 302
+      },
+      "pivot": [
+        125,
+        296
+      ],
+      "scale": 0.25
+    },
+    "win3": {
+      "image": "frost_extra_atlas",
+      "rect": {
+        "x": 765,
+        "y": 508,
+        "w": 258,
+        "h": 302
+      },
+      "pivot": [
+        131,
+        296
+      ],
+      "scale": 0.25
+    },
+    "win4": {
+      "image": "frost_extra_atlas",
+      "rect": {
+        "x": 1023,
+        "y": 508,
+        "w": 257,
+        "h": 302
+      },
+      "pivot": [
+        129,
+        296
+      ],
+      "scale": 0.25
+    },
+    "win5": {
+      "image": "frost_extra_atlas",
+      "rect": {
+        "x": 1280,
+        "y": 508,
+        "w": 256,
+        "h": 302
+      },
+      "pivot": [
+        128,
+        296
+      ],
+      "scale": 0.25
+    },
+    "dash0": {
+      "image": "frost_extra_atlas",
+      "rect": {
+        "x": 0,
+        "y": 815,
+        "w": 256,
+        "h": 209
+      },
+      "pivot": [
+        139,
+        200
+      ],
+      "scale": 0.3
+    },
+    "dash1": {
+      "image": "frost_extra_atlas",
+      "rect": {
+        "x": 256,
+        "y": 815,
+        "w": 256,
+        "h": 209
+      },
+      "pivot": [
+        139,
+        200
+      ],
+      "scale": 0.3
+    },
+    "dash2": {
+      "image": "frost_extra_atlas",
+      "rect": {
+        "x": 512,
+        "y": 815,
+        "w": 257,
+        "h": 209
+      },
+      "pivot": [
+        138,
+        200
+      ],
+      "scale": 0.3
+    },
+    "dash3": {
+      "image": "frost_extra_atlas",
+      "rect": {
+        "x": 769,
+        "y": 815,
+        "w": 255,
+        "h": 209
+      },
+      "pivot": [
+        133,
+        200
+      ],
+      "scale": 0.3
+    },
+    "dash4": {
+      "image": "frost_extra_atlas",
+      "rect": {
+        "x": 1024,
+        "y": 815,
+        "w": 266,
+        "h": 209
+      },
+      "pivot": [
+        130,
+        200
+      ],
+      "scale": 0.3
+    },
+    "dash5": {
+      "image": "frost_extra_atlas",
+      "rect": {
+        "x": 1290,
+        "y": 815,
+        "w": 246,
+        "h": 209
+      },
+      "pivot": [
+        130,
+        200
+      ],
+      "scale": 0.3
+    }
+  },
+  "animations": {
+    "idle": [
+      "idle0",
+      "idle1",
+      "idle2",
+      "idle3",
+      "idle4",
+      "idle5"
+    ],
+    "walk": [
+      "walk0",
+      "walk1",
+      "walk2",
+      "walk3",
+      "walk4",
+      "walk5",
+      "walk6",
+      "walk7"
+    ],
+    "jump": [
+      "float0",
+      "float1",
+      "float3",
+      "float5"
+    ],
+    "crouch_block": [
+      "guard0",
+      "guard1"
+    ],
+    "attack1": [
+      "attack0",
+      "attack1",
+      "attack2",
+      "attack3",
+      "attack5"
+    ],
+    "attack2": [
+      "attack0",
+      "attack1",
+      "attack3",
+      "attack4",
+      "attack5"
+    ],
+    "attack3": [
+      "attack0",
+      "attack1",
+      "attack2",
+      "attack3",
+      "attack4",
+      "attack5"
+    ],
+    "skill1": [
+      "attack0",
+      "attack1",
+      "attack2",
+      "attack3",
+      "attack4",
+      "attack5"
+    ],
+    "skill2": [
+      "dash0",
+      "dash1",
+      "dash2",
+      "dash3",
+      "dash4",
+      "dash5"
+    ],
+    "ult": [
+      "special0",
+      "special1",
+      "special2",
+      "special2",
+      "special3",
+      "special3",
+      "special4",
+      "special4",
+      "special6",
+      "special6"
+    ],
+    "hurt": [
+      "hurt0",
+      "hurt1",
+      "hurt2"
+    ],
+    "ko": [
+      "ko0",
+      "ko1",
+      "ko2",
+      "ko3",
+      "ko4",
+      "ko5"
+    ],
+    "win": [
+      "win0",
+      "win1",
+      "win2",
+      "win3",
+      "win4",
+      "win5"
+    ]
+  },
+  "effects": {
+    "ult_ice": [
+      "special5",
+      "special5",
+      "special5",
+      "special5",
+      "special5",
+      "special5",
+      "special5",
+      "special5"
+    ]
+  }
+}

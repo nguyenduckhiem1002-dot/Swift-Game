@@ -28,12 +28,13 @@ final class FighterHUD: SKNode {
         }
         tier.position = CGPoint(x: left ? 160 : 320, y: 222); addChild(tier)
         let portrait = SKNode(); portrait.position = CGPoint(x: left ? 24 : 456, y: 246)
-        portrait.addChild(SKSpriteNode(color: Theme.navy, size: CGSize(width: 28, height: 28)))
-        let crop = SKCropNode(); crop.maskNode = SKSpriteNode(color: .white, size: CGSize(width: 25, height: 25))
-        let source = SpriteSheet.shared.frames(character: fighter.data, animation: "idle")[0]
-        let face = SKTexture(rect: CGRect(x: 0.4, y: 0.5, width: 0.6, height: 0.5), in: source); face.filteringMode = .nearest
-        crop.addChild(SKSpriteNode(texture: face, size: CGSize(width: 26, height: 29))); portrait.addChild(crop)
-        let frame = UIAssets.shared.sprite("portrait_frame", size: CGSize(width: 32, height: 32)); frame.zPosition = 1
+        portrait.addChild(SKSpriteNode(color: Theme.navy, size: CGSize(width: 36, height: 36)))
+        let crop = SKCropNode(); crop.maskNode = SKSpriteNode(color: .white, size: CGSize(width: 33, height: 33))
+        let portraitTexture = SpriteSheet.shared.portrait(for: fighter.data)
+            ?? SpriteSheet.shared.frames(character: fighter.data, animation: "idle")[0]
+        crop.addChild(SKSpriteNode(texture: portraitTexture, size: CGSize(width: 34, height: 34))); portrait.addChild(crop)
+        let frame = UIAssets.shared.sprite("portrait_frame", size: CGSize(width: 32, height: 32))
+        frame.size = CGSize(width: 40, height: 40); frame.zPosition = 1
         portrait.addChild(frame); addChild(portrait)
     }
     required init?(coder: NSCoder) { fatalError() }

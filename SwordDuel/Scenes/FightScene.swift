@@ -34,8 +34,8 @@ final class FightScene: GameScene {
     private var roundDraw = false
     private var huds: [FighterHUD] = []
     private var scoreDots: [[SKSpriteNode]] = [[], []]
-    private var timerLabel = Theme.label("60", size: 18, color: Theme.gold)
-    private var announcement = Theme.label("", size: 25, color: Theme.gold)
+    private var timerLabel = Theme.title("60", size: 18, color: Theme.gold)
+    private var announcement = Theme.title("", size: 25, color: Theme.gold)
     private var shakeTime: CGFloat = 0
     private var fightPaused = false
     private var uiStatePreview = false
@@ -102,6 +102,17 @@ final class FightScene: GameScene {
             controls.update(energy: player.energy, cooldowns: player.cooldowns, awakeningTier: player.awakeningTier, dt: 0)
             updateHUD()
         }
+        let arguments = ProcessInfo.processInfo.arguments
+        if let option = arguments.firstIndex(of: "--preview-animation"), option + 1 < arguments.count {
+            uiStatePreview = true
+            let animation = arguments[option + 1]
+            let index = arguments.firstIndex(of: "--preview-frame").flatMap { $0 + 1 < arguments.count ? Int(arguments[$0 + 1]) : nil } ?? 0
+            for fighter in [player!, opponent!] {
+                SpriteSheet.shared.applyFrame(to: fighter.sprite, character: fighter.data, animation: animation, index: index)
+            }
+            for node in [announcementPanel as SKNode, announcement, roundLabel] { node.removeAllActions(); node.alpha = 0 }
+            updateHUD()
+        }
     }
     private func runUIInputChecks() {
         // Exercise the same identity-based ownership path as two simultaneous UITouches.
@@ -132,7 +143,12 @@ final class FightScene: GameScene {
             precondition(frames.count == 4 && frames.allSatisfy { $0.filteringMode == .nearest })
             for (name, spec) in character.animations {
                 precondition(SpriteSheet.shared.frames(character: character, animation: name).count == spec.frames, "\(character.id) \(name) frame count")
+                precondition(SpriteSheet.shared.hasArtwork(character: character, animation: name), "\(character.id).\(name) uses placeholder art")
             }
+            let auditControls = TouchControls()
+            auditControls.configure(character: character)
+            for button in Control.allCases { auditControls.setPressed(button, true); auditControls.setPressed(button, false) }
+            _ = FighterHUD(fighter: Fighter(data: character, isPlayer: true), left: true)
             for move in ["attack1", "attack2", "attack3", "skill1", "skill2", "ult"] { precondition(character.moves[move] != nil, "\(character.id) is missing \(move)") }
         }
         precondition(Set(CharacterLibrary.all.map(\.id)).count == CharacterLibrary.all.count, "Character ids must be unique")
@@ -143,10 +159,39 @@ final class FightScene: GameScene {
         }
         runAwakeningChecks()
         runCombatChecks()
+        runHitboxChecks()
         for map in MapLibrary.all { precondition(!ArenaBackground(map: map).children.isEmpty, "\(map.id) arena is empty") }
         runTerrainChecks()
         runStageChecks()
+        precondition(UIAssets.shared.missingAssets.subtracting(["deliberately_missing_ui_asset"]).isEmpty,
+                     "Missing UI assets: \(UIAssets.shared.missingAssets)")
         print("PASS UI: shared touch ownership, independent inputs, pause/resume, frozen timer, disabled/pressed menu states, missing-file fallback, \(CharacterLibrary.all.count) character rosters and ULT strips, \(MapLibrary.all.count) arenas.")
+    }
+    private func runHitboxChecks() {
+        let target = CGRect(x: 50, y: 0, width: 20, height: 30)
+        precondition(HitboxSystem.contactTime(from: .zero, to: CGPoint(x: 100, y: 0), halfSize: CGSize(width: 2, height: 2), target: target) != nil,
+                     "Fast projectile tunnels through target")
+        precondition(HitboxSystem.contactTime(from: .zero, to: CGPoint(x: 100, y: 100), halfSize: CGSize(width: 2, height: 2), target: target) == nil,
+                     "Diagonal projectile falsely hits outside its path")
+        for data in CharacterLibrary.all {
+            let fighter = Fighter(data: data, isPlayer: true)
+            fighter.reset(at: 200, facing: 1)
+            let standing = fighter.hurtbox
+            fighter.blockHeld = true; fighter.updateFixed(1.0/60)
+            precondition(fighter.hurtbox.height < standing.height, "Guard must lower hurtbox")
+            fighter.reset(at: 200, facing: 1)
+            precondition(fighter.use("attack1"))
+            precondition(fighter.hitboxes(for: "attack1").isEmpty, "Startup causes damage")
+            let spec = data.moves["attack1"]!
+            let fps = data.animations["attack1"]!.fps
+            fighter.updateFixed((CGFloat(spec.activeStart)+0.1)/fps)
+            guard let right = fighter.hitbox(for: "attack1") else { preconditionFailure("Missing active hitbox: \(data.id)") }
+            fighter.facing = -1
+            let left = fighter.hitbox(for: "attack1")!
+            precondition(abs(right.minX + left.maxX - 2*fighter.position.x) < 0.01, "Hitbox mirroring is asymmetric")
+            precondition(fighter.hitboxes(for: "attack2").isEmpty, "Inactive move exposes a hitbox")
+        }
+        print("PASS HITBOX: startup, active frames, guard posture, facing symmetry and swept projectile collisions")
     }
     /// Layout sanity plus a 40-second headless run of every map's events with two idle fighters.
     private func runTerrainChecks() {
@@ -200,7 +245,7 @@ final class FightScene: GameScene {
             let target = Fighter(data: CharacterLibrary.all[0], isPlayer: true)
             target.reset(at: 200, facing: 1)
             let monster = Monster(data: data, elite: false, at: CGPoint(x: 320, y: data.behavior == "flyer" ? 120 : 42))
-            monster.bounds = 26...454
+            monster.movementXRange = 26...454
             for _ in 0..<720 { monster.update(1.0 / 60.0, target: target) }
             precondition(!monster.isDead && monster.position.x >= 26 && monster.position.x <= 454, "\(data.id) left its bounds")
             var guardHits = 0
@@ -348,13 +393,16 @@ final class FightScene: GameScene {
         roundSeconds = max(0, roundSeconds - dt)
         input.applyHeld()
         ai.updateFixed(dt)
-        player.facing = player.position.x < opponent.position.x ? 1 : -1
-        opponent.facing = -player.facing
+        let direction: CGFloat = player.position.x < opponent.position.x ? 1 : -1
+        if player.currentMove == nil { player.facing = direction }
+        if opponent.currentMove == nil { opponent.facing = -direction }
         player.updateFixed(dt); opponent.updateFixed(dt)
-        if abs(player.position.x - opponent.position.x) < 22 {
-            let middle = (player.position.x + opponent.position.x) / 2
-            if player.position.x < opponent.position.x { player.position.x = middle - 11; opponent.position.x = middle + 11 }
-            else { player.position.x = middle + 11; opponent.position.x = middle - 11 }
+        if player.hurtbox.intersects(opponent.hurtbox) {
+            let minimumGap = (player.hurtbox.width + opponent.hurtbox.width) / 2
+            let overlap = minimumGap - abs(player.position.x - opponent.position.x)
+            let direction: CGFloat = player.position.x <= opponent.position.x ? -1 : 1
+            player.position.x = min(player.arenaMaxX, max(player.arenaMinX, player.position.x + direction*overlap/2))
+            opponent.position.x = min(opponent.arenaMaxX, max(opponent.arenaMinX, opponent.position.x - direction*overlap/2))
         }
         terrain.updateFixed(dt, fighters: [player!, opponent!], projectiles: combat.projectiles)
         if map.isWide && abs(player.position.x - opponent.position.x) > CameraFraming.maxGap {
@@ -391,6 +439,7 @@ final class FightScene: GameScene {
         } else { if !roundDraw { round += 1 }; startRound() }
     }
     private func updateHUD() {
+        controls.revealFighters([player!, opponent!])
         timerLabel.text = String(Int(ceil(roundSeconds)))
         for (index, fighter) in [player!, opponent!].enumerated() {
             huds[index].update(fighter)

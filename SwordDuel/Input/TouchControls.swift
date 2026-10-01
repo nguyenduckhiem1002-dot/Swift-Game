@@ -49,9 +49,11 @@ final class TouchControls: SKNode {
     func configure(character: CharacterData) { self.character = character; refreshAll() }
     func control(at point: CGPoint) -> Control? {
         // Stable ordering and circular hit regions avoid overlapping rectangle corners.
-        layout.first { _, center, diameter in
+        layout.filter { _, center, diameter in
             let dx = point.x-center.x, dy = point.y-center.y
             return dx*dx+dy*dy <= pow(diameter/2 + 3, 2)
+        }.min { a, b in
+            hypot(point.x-a.1.x, point.y-a.1.y) / a.2 < hypot(point.x-b.1.x, point.y-b.1.y) / b.2
         }?.0
     }
     func setPressed(_ control: Control, _ value: Bool) {
@@ -64,6 +66,22 @@ final class TouchControls: SKNode {
     }
     func clearPressed(except retained: Set<Control> = []) { for control in Control.allCases where !retained.contains(control) { setPressed(control, false) } }
     func setDebug(_ value: Bool) { debugOn = value; refresh(.debug) }
+    /// Keep a fighter readable when the camera places them behind touch artwork.
+    /// This changes opacity only; button locations and touch ownership stay stable.
+    func revealFighters(_ fighters: [Fighter]) {
+        let bodies = fighters.compactMap { fighter -> CGRect? in
+            guard let world = fighter.parent else { return nil }
+            let box = fighter.hurtbox.insetBy(dx: -8, dy: -4)
+            let a = convert(CGPoint(x: box.minX, y: box.minY), from: world)
+            let b = convert(CGPoint(x: box.maxX, y: box.maxY), from: world)
+            return CGRect(x: min(a.x,b.x), y: min(a.y,b.y), width: abs(b.x-a.x), height: abs(b.y-a.y))
+        }
+        for (control, node) in buttons {
+            let locked = control == .skill3 && !skill3Unlocked
+            let obscures = bodies.contains { $0.intersects(node.frame) }
+            node.alpha = locked ? 0.35 : pressed.contains(control) ? 1 : obscures ? 0.28 : 0.85
+        }
+    }
     func update(energy: Int, cooldowns: [String: CGFloat], awakeningTier: Int = 0, dt: CGFloat) {
         self.energy = energy; pulseTime += dt; refresh(.ult)
         if skill3Unlocked != (awakeningTier >= 1) {

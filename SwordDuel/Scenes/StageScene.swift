@@ -81,17 +81,17 @@ final class StageScene: GameScene, KeyboardControllable {
     private var accumulator: CGFloat = 0
     private var lastUpdate: TimeInterval = 0
     private let step: CGFloat = 1.0 / 60.0
-    private var paused = false
+    private var stagePaused = false
     private var debugEnabled = false
     private let gate = SKSpriteNode()
     private let pausePanel = PausePanel()
     private let announcementPanel = SKSpriteNode()
-    private let announcement = Theme.label("", size: 18, color: Theme.gold)
-    private let goLabel = Theme.label("ĐI TIẾP ▶", size: 9, color: Theme.gold)
+    private let announcement = Theme.title("", size: 18, color: Theme.gold)
+    private let goLabel = Theme.title("ĐI TIẾP ▶", size: 9, color: Theme.gold)
     private var hud: FighterHUD!
     private let zoneLabel = Theme.label("", size: 6, color: .white)
     private let killLabel = Theme.label("", size: 6, color: Theme.ice)
-    private let timerLabel = Theme.label("0:00", size: 10, color: Theme.gold)
+    private let timerLabel = Theme.title("0:00", size: 10, color: Theme.gold)
     private var bossBar: UIResourceBar!
     private let bossName = Theme.label("", size: 7, color: Theme.fire)
     private let minimap = SKNode()
@@ -133,7 +133,7 @@ final class StageScene: GameScene, KeyboardControllable {
         input.fighter = player
         input.onTogglePause = { [weak self] in
             guard let self else { return }
-            self.setPaused(!self.paused)
+            self.setPaused(!self.stagePaused)
         }
         input.onToggleDebug = { [weak self] in self?.toggleDebug() }
         controls.configure(character: data); addChild(controls)
@@ -170,6 +170,7 @@ final class StageScene: GameScene, KeyboardControllable {
         bossName.position = CGPoint(x: 240, y: 175); bossName.zPosition = 50; bossName.isHidden = true; addChild(bossName)
     }
     private func updateHUD() {
+        controls.revealFighters([player])
         hud.update(player)
         let waves = zone.waves?.count ?? 0
         zoneLabel.text = "KHU \(zoneIndex + 1)/\(stage.zones.count)" + (waves > 0 && !zoneCleared ? " · ĐỢT \(min(waveIndex + 1, waves))/\(waves)" : "")
@@ -271,7 +272,7 @@ final class StageScene: GameScene, KeyboardControllable {
         let y: CGFloat = data.behavior == "flyer" ? 120 : 42
         let monster = Monster(data: data, elite: elite, at: CGPoint(x: x, y: y))
         monster.host = self
-        monster.bounds = (zoneStarts[zoneIndex] + 12)...(zoneEnd(zoneIndex) - 12)
+        monster.movementXRange = (zoneStarts[zoneIndex] + 12)...(zoneEnd(zoneIndex) - 12)
         monster.zPosition = 14; world.addChild(monster); monsters.append(monster)
     }
     private func clearZone() {
@@ -314,7 +315,7 @@ final class StageScene: GameScene, KeyboardControllable {
     override func update(_ currentTime: TimeInterval) {
         if lastUpdate == 0 { lastUpdate = currentTime; return }
         let realDelta = min(0.1, max(0, currentTime - lastUpdate)); lastUpdate = currentTime
-        if paused { return }
+        if stagePaused { return }
         if hitStop > 0 { hitStop = max(0, hitStop - CGFloat(realDelta)); return }
         accumulator += CGFloat(realDelta)
         var iterations = 0
@@ -459,7 +460,7 @@ final class StageScene: GameScene, KeyboardControllable {
     // MARK: Input
 
     private func setPaused(_ value: Bool) {
-        paused = value; pausePanel.isHidden = !value
+        stagePaused = value; pausePanel.isHidden = !value
         speed = value ? 0 : 1
         accumulator = 0
         input.isPaused = value

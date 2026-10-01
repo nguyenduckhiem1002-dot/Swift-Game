@@ -1,0 +1,23 @@
+{
+  "/Users/duck/Dev/Game/SwordDuel/Core/HitboxSystem.swift" : {
+    "const-values" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/HitboxSystem.swiftconstvalues",
+    "dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/HitboxSystem.d",
+    "diagnostics" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/HitboxSystem.dia",
+    "object" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/HitboxSystem.o",
+    "swift-dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/HitboxSystem.swiftdeps"
+  },
+  "/Users/duck/Dev/Game/SwordDuel/Core/SceneStyle.swift" : {
+    "const-values" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/SceneStyle.swiftconstvalues",
+    "dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/SceneStyle.d",
+    "diagnostics" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/SceneStyle.dia",
+    "object" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/SceneStyle.o",
+    "swift-dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/SceneStyle.swiftdeps"
+  },
+  "/Users/duck/Dev/Game/SwordDuel/Core/SpriteSheet.swift" : {
+    "const-values" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/SpriteSheet.swiftconstvalues",
+    "dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/SpriteSheet.d",
+    "diagnostics" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/SpriteSheet.dia",
+    "object" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/SpriteSheet.o",
+    "swift-dependencies" : "/Users/duck/Dev/Game/DerivedData/Build/Intermediates.noindex/SwordDuel.build/Debug-iphonesimulator/SwordDuel.build/Objects-normal/arm64/SpriteSheet.swiftdeps"
+  }
+}

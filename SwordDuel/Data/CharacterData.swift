@@ -44,6 +44,8 @@ struct MoveData: Codable {
     let activeStart: Int
     let activeEnd: Int
     let hitbox: BoxData
+    /// Local attack volumes indexed by animation frame; startup/recovery stay inactive.
+    let hitboxes: [String: BoxData]?
     let knockback: CGFloat
     let energyCost: Int
     let cooldown: CGFloat
@@ -87,6 +89,7 @@ struct CharacterData: Codable {
     let frameSize: CGFloat?
     let walkSpeed: CGFloat?
     let jumpVelocity: CGFloat?
+    let hurtboxes: [String: BoxData]?
     let animations: [String: AnimationData]
     let moves: [String: MoveData]
     var tint: (red: CGFloat, green: CGFloat, blue: CGFloat) {

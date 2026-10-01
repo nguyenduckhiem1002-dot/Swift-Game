@@ -85,10 +85,29 @@ final class Fighter: SKNode {
     required init?(coder: NSCoder) { fatalError() }
     var currentFrame: Int { animation.frame }
     var currentMove: String? { if case .attacking(let name) = state { return name }; return nil }
-    var hurtbox: CGRect { CGRect(x: position.x - 12, y: position.y + 5, width: 24, height: 48) }
+    var hurtbox: CGRect {
+        let pose = state == .block ? "block" : !onGround ? "air" : "standing"
+        let box = data.hurtboxes?[pose] ?? BoxData(x: -12, y: 4, w: 24, h: 48)
+        return BoxData(x: box.x * visualScale, y: box.y * visualScale,
+                       w: box.w * visualScale, h: box.h * visualScale).rect(origin: position, facing: facing)
+    }
     func hitbox(for move: String) -> CGRect? {
-        guard let info = data.moves[move], (info.activeStart...info.activeEnd).contains(currentFrame) else { return nil }
-        return info.hitbox.rect(origin: position, facing: facing)
+        let boxes = hitboxes(for: move)
+        return boxes.isEmpty ? nil : boxes.dropFirst().reduce(boxes[0]) { $0.union($1) }
+    }
+    func hitboxes(for move: String) -> [CGRect] {
+        guard currentMove == move, let info = data.moves[move], info.damage > 0,
+              info.activeStart <= info.activeEnd, move != "ult",
+              !(move == "skill1" && (info.projectiles ?? 1) > 0) else { return [] }
+        // Check if any frame visited this tick falls within the active window
+        let low = max(info.activeStart, animation.visitedLow)
+        let high = min(info.activeEnd, animation.visitedHigh)
+        guard low <= high else { return [] }
+        return (low...high).map { frame in
+            let box = info.hitboxes?[String(frame)] ?? info.hitbox
+            return BoxData(x: box.x * visualScale, y: box.y * visualScale,
+                           w: box.w * visualScale, h: box.h * visualScale).rect(origin: position, facing: facing)
+        }
     }
 
     // MARK: Awakening
@@ -168,6 +187,7 @@ final class Fighter: SKNode {
     var standingOnPlatform: Bool { onGround && position.y > 42.5 }
 
     func reset(at x: CGFloat, facing: CGFloat) {
+        leftHeld = false; rightHeld = false; blockHeld = false
         position = CGPoint(x: x, y: 42)
         self.facing = facing
         hp = 100; energy = 0; velocity = .zero; onGround = true

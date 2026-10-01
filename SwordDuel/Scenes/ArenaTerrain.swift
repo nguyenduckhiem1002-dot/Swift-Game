@@ -110,6 +110,7 @@ private final class ArenaObject {
         case "rod": shape = CGSize(width: 5, height: 84); color = SKColor(white: 0.7, alpha: 1)
         case "tablet": shape = CGSize(width: 14, height: 22); color = stone
         case "statue": shape = CGSize(width: 24, height: 60); color = stone
+        case "runeswitch": shape = CGSize(width: 16, height: 16); color = Theme.gold
         default: shape = CGSize(width: 12, height: 12); color = accent
         }
         // `y` is the object's center for hanging props; floor props stand on y = 42.
@@ -125,7 +126,7 @@ private final class ArenaObject {
     var hittable: Bool {
         switch kind {
         case "pillar": return active
-        case "bell", "lantern", "rod", "tablet": return true
+        case "bell", "lantern", "rod", "tablet", "runeswitch": return true
         default: return false
         }
     }
@@ -207,7 +208,25 @@ final class ArenaTerrain: SKNode, TerrainSurface {
         super.init()
         let accent = SKColor(rgb: map.accent)
         let stone = SKColor(rgb: map.mountain).withAlphaComponent(1)
-        let terrain = map.terrain
+        var terrain = map.terrain
+        
+        if let tiledMapName = map.tiledMap,
+           let url = Bundle.main.url(forResource: tiledMapName, withExtension: "json"),
+           let data = try? Data(contentsOf: url),
+           let tiledMap = try? JSONDecoder().decode(TiledMap.self, from: data),
+           let tilesetSource = tiledMap.tilesets.first?.source,
+           let (texture, tileW, tileH, cols) = TiledLoader.parseTileset(tilesetSource) {
+            
+            let result = TiledArenaBuilder.build(map: tiledMap, tilesetTexture: texture, tileW: tileW, tileH: tileH, cols: cols)
+            result.node.zPosition = -1 // Render tiles behind characters
+            addChild(result.node)
+            
+            let mergedPlatforms = (terrain?.platforms ?? []) + (result.terrain.platforms ?? [])
+            let mergedZones = (terrain?.zones ?? []) + (result.terrain.zones ?? [])
+            let mergedObjects = (terrain?.objects ?? []) + (result.terrain.objects ?? [])
+            terrain = TerrainData(platforms: mergedPlatforms, zones: mergedZones, objects: mergedObjects, events: terrain?.events)
+        }
+
         for data in terrain?.zones ?? [] {
             let zone = Zone(data); zone.node.zPosition = 0; addChild(zone.node); zones.append(zone)
         }
@@ -412,6 +431,7 @@ final class ArenaTerrain: SKNode, TerrainSurface {
         case "mushroom": object.active = true; object.node.alpha = 1
         case "lantern": object.active = false; object.node.alpha = 0.45
         case "bell": object.node.alpha = 1
+        case "runeswitch": object.node.colorBlendFactor = 0
         default: break
         }
     }
@@ -451,6 +471,24 @@ final class ArenaTerrain: SKNode, TerrainSurface {
         case "tablet":
             // The claimant is spared by the next statue beam.
             object.owner = fighter; object.node.color = fighter.data.accentColor; object.node.colorBlendFactor = 0.7
+        case "runeswitch":
+            guard object.timer <= 0 else { return }
+            object.timer = 5 // Cooldown
+            object.node.colorBlendFactor = 0.8
+            callout("KÍCH HOẠT!", at: CGPoint(x: object.home.x, y: object.home.y + 20), color: Theme.gold)
+            // Toggle nearby platforms (doors) or zones (traps)
+            for platform in platforms where platform.kind == "stone" && abs(platform.top.x - object.home.x) < 200 {
+                // If it's a solid platform, turn it into a non-solid one temporarily
+                platform.solid.toggle()
+                platform.node.alpha = platform.solid ? 1.0 : 0.2
+            }
+            for zone in zones where (zone.kind == "lava" || zone.kind == "poison") && abs(zone.rect.midX - object.home.x) < 200 {
+                if zone.disabled > 0 {
+                    zone.disabled = 0; zone.cover.isHidden = true
+                } else {
+                    zone.disabled = 10; zone.cover.isHidden = false
+                }
+            }
         default: break
         }
     }
@@ -587,7 +625,7 @@ final class ArenaTerrain: SKNode, TerrainSurface {
             }
         case "debris":
             let fromLeft = debrisFromLeft
-            let y = [CGFloat(66), 100, 130].randomElement() ?? 66
+            let y: CGFloat = [CGFloat(66), CGFloat(100), CGFloat(130)].randomElement() ?? 66
             let rock = Mover(kind: "debris", at: CGPoint(x: fromLeft ? -10 : width + 10, y: y), velocity: CGVector(dx: fromLeft ? 70 : -70, dy: 0),
                              size: CGSize(width: 18, height: 14), color: SKColor(rgb: map.structure ?? map.accent), life: width / 70 + 2, hp: 2, damage: 8)
             rock.node.run(.repeatForever(.rotate(byAngle: fromLeft ? -.pi : .pi, duration: 1)))

@@ -9,7 +9,7 @@ for entry in entries {
     precondition(image.pixelsWide == w * frames && image.pixelsHigh == h, "Bad dimensions: \(name)")
     precondition(image.hasAlpha, "Missing alpha: \(name)")
 }
-let cooldown = NSBitmapImageRep(data: try Data(contentsOf: root.appendingPathComponent("cooldown.png"))))!
+let cooldown = NSBitmapImageRep(data: try Data(contentsOf: root.appendingPathComponent("cooldown.png")))!
 var coverage: [Double] = []
 for frame in 0..<8 {
     var alpha = 0.0
@@ -19,7 +19,7 @@ for frame in 0..<8 {
 precondition(coverage.last == 0)
 for i in 1..<coverage.count { precondition(coverage[i] < coverage[i-1], "Cooldown wipe must progressively clear") }
 for id in ["frost", "flame"] {
-    let image = NSBitmapImageRep(data: try Data(contentsOf: root.appendingPathComponent("btn_\(id)_ult_ready.png"))))!
+    let image = NSBitmapImageRep(data: try Data(contentsOf: root.appendingPathComponent("btn_\(id)_ult_ready.png")))!
     var light: [Double] = []
     for frame in 0..<4 {
         var sum = 0.0

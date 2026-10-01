@@ -17,7 +17,8 @@
       0.55,
       0.56,
       0.62
-    ]
+    ],
+    "frames": 1
   },
   {
     "id": "archer",
@@ -37,7 +38,8 @@
       0.62,
       0.32,
       0.72
-    ]
+    ],
+    "frames": 1
   },
   {
     "id": "brute",
@@ -58,7 +60,8 @@
       0.44,
       0.36
     ],
-    "armor": true
+    "armor": true,
+    "frames": 1
   },
   {
     "id": "bat",
@@ -78,7 +81,8 @@
       0.42,
       0.3,
       0.55
-    ]
+    ],
+    "frames": 1
   },
   {
     "id": "toad",
@@ -98,7 +102,8 @@
       0.42,
       0.72,
       0.3
-    ]
+    ],
+    "frames": 1
   },
   {
     "id": "cloudking",
@@ -126,7 +131,8 @@
       "fan",
       "slam"
     ],
-    "summon": "bat"
+    "summon": "bat",
+    "frames": 1
   },
   {
     "id": "firedragon",
@@ -155,7 +161,8 @@
       "charge",
       "fan"
     ],
-    "summon": "toad"
+    "summon": "toad",
+    "frames": 1
   },
   {
     "id": "ghostking",
@@ -183,6 +190,7 @@
       "charge",
       "slam"
     ],
-    "summon": "archer"
+    "summon": "archer",
+    "frames": 1
   }
 ]

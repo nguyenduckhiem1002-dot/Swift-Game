@@ -8,7 +8,13 @@ enum Theme {
     static let fire = SKColor(red: 1, green: 0.35, blue: 0.13, alpha: 1)
     static let awaken = SKColor(red: 0.8, green: 0.52, blue: 1, alpha: 1)
     static func label(_ text: String, size: CGFloat, color: SKColor = .white) -> SKLabelNode {
-        let node = SKLabelNode(fontNamed: "Menlo-Bold")
+        let node = SKLabelNode(fontNamed: "PlayfairDisplay-Black")
+        node.text = text; node.fontSize = size; node.fontColor = color
+        node.verticalAlignmentMode = .center
+        return node
+    }
+    static func title(_ text: String, size: CGFloat, color: SKColor = Theme.gold) -> SKLabelNode {
+        let node = SKLabelNode(fontNamed: "Charm-Bold")
         node.text = text; node.fontSize = size; node.fontColor = color
         node.verticalAlignmentMode = .center
         return node

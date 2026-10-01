@@ -1,0 +1,1295 @@
+{
+  "animations": {
+    "attack1": [
+      "attack1_1",
+      "attack1_2",
+      "attack1_3",
+      "attack1_4",
+      "attack1_5",
+      "attack1_6"
+    ],
+    "attack2": [
+      "attack2_1",
+      "attack2_2",
+      "attack2_3",
+      "attack2_4",
+      "attack2_5",
+      "attack2_6"
+    ],
+    "attack3": [
+      "attack3_1",
+      "attack3_2",
+      "attack3_3",
+      "attack3_4",
+      "attack3_5",
+      "attack3_6"
+    ],
+    "crouch_block": [
+      "crouch_block_1",
+      "crouch_block_2",
+      "crouch_block_3"
+    ],
+    "hurt": [
+      "hurt_1",
+      "hurt_2",
+      "hurt_3"
+    ],
+    "idle": [
+      "idle_1",
+      "idle_2",
+      "idle_3",
+      "idle_4",
+      "idle_5",
+      "idle_6"
+    ],
+    "jump": [
+      "jump_1",
+      "jump_2",
+      "jump_3",
+      "jump_4"
+    ],
+    "ko": [
+      "ko_1",
+      "ko_2",
+      "ko_3",
+      "ko_4",
+      "ko_5",
+      "ko_6"
+    ],
+    "run": [
+      "run_1",
+      "run_2",
+      "run_3",
+      "run_4",
+      "run_5",
+      "run_6",
+      "run_7",
+      "run_8"
+    ],
+    "skill1": [
+      "skill1_1",
+      "skill1_2",
+      "skill1_3",
+      "skill1_4",
+      "skill1_5",
+      "skill1_6"
+    ],
+    "skill2": [
+      "skill2_1",
+      "skill2_2",
+      "skill2_3",
+      "skill2_4",
+      "skill2_5",
+      "skill2_6"
+    ],
+    "ult": [
+      "ult_1",
+      "ult_2",
+      "ult_3",
+      "ult_4",
+      "ult_5",
+      "ult_6",
+      "ult_7",
+      "ult_8",
+      "ult_9",
+      "ult_10"
+    ],
+    "walk": [
+      "walk_1",
+      "walk_2",
+      "walk_3",
+      "walk_4",
+      "walk_5",
+      "walk_6",
+      "walk_7",
+      "walk_8"
+    ],
+    "win": [
+      "win_1",
+      "win_2",
+      "win_3",
+      "win_4",
+      "win_5",
+      "win_6"
+    ]
+  },
+  "effects": {},
+  "frames": {
+    "attack1_1": {
+      "image": "elder_attack1_1",
+      "pivot": [
+        34,
+        51
+      ],
+      "rect": {
+        "h": 29,
+        "w": 18,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "attack1_2": {
+      "image": "elder_attack1_2",
+      "pivot": [
+        31,
+        50
+      ],
+      "rect": {
+        "h": 38,
+        "w": 32,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "attack1_3": {
+      "image": "elder_attack1_3",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 36,
+        "w": 37,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "attack1_4": {
+      "image": "elder_attack1_4",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 36,
+        "w": 34,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "attack1_5": {
+      "image": "elder_attack1_5",
+      "pivot": [
+        37,
+        52
+      ],
+      "rect": {
+        "h": 39,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "attack1_6": {
+      "image": "elder_attack1_6",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 39,
+        "w": 33,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "attack2_1": {
+      "image": "elder_attack2_1",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 34,
+        "w": 33,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "attack2_2": {
+      "image": "elder_attack2_2",
+      "pivot": [
+        31,
+        52
+      ],
+      "rect": {
+        "h": 34,
+        "w": 28,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "attack2_3": {
+      "image": "elder_attack2_3",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 38,
+        "w": 35,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "attack2_4": {
+      "image": "elder_attack2_4",
+      "pivot": [
+        31,
+        52
+      ],
+      "rect": {
+        "h": 39,
+        "w": 25,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "attack2_5": {
+      "image": "elder_attack2_5",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 39,
+        "w": 32,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "attack2_6": {
+      "image": "elder_attack2_6",
+      "pivot": [
+        34,
+        51
+      ],
+      "rect": {
+        "h": 39,
+        "w": 27,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "attack3_1": {
+      "image": "elder_attack3_1",
+      "pivot": [
+        34,
+        51
+      ],
+      "rect": {
+        "h": 30,
+        "w": 18,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "attack3_2": {
+      "image": "elder_attack3_2",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 32,
+        "w": 33,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "attack3_3": {
+      "image": "elder_attack3_3",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 32,
+        "w": 39,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "attack3_4": {
+      "image": "elder_attack3_4",
+      "pivot": [
+        34,
+        51
+      ],
+      "rect": {
+        "h": 31,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "attack3_5": {
+      "image": "elder_attack3_5",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 31,
+        "w": 39,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "attack3_6": {
+      "image": "elder_attack3_6",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 29,
+        "w": 27,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "crouch_block_1": {
+      "image": "elder_crouch_block_1",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 40,
+        "w": 52,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "crouch_block_2": {
+      "image": "elder_crouch_block_2",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 40,
+        "w": 52,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "crouch_block_3": {
+      "image": "elder_crouch_block_3",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 40,
+        "w": 47,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "hurt_1": {
+      "image": "elder_hurt_1",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 40,
+        "w": 37,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "hurt_2": {
+      "image": "elder_hurt_2",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 34,
+        "w": 36,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "hurt_3": {
+      "image": "elder_hurt_3",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 40,
+        "w": 42,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "idle_1": {
+      "image": "elder_idle_1",
+      "pivot": [
+        19,
+        36
+      ],
+      "rect": {
+        "h": 38,
+        "w": 39,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "idle_2": {
+      "image": "elder_idle_2",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 38,
+        "w": 36,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "idle_3": {
+      "image": "elder_idle_3",
+      "pivot": [
+        33,
+        48
+      ],
+      "rect": {
+        "h": 38,
+        "w": 53,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "idle_4": {
+      "image": "elder_idle_4",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 38,
+        "w": 34,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "idle_5": {
+      "image": "elder_idle_5",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 38,
+        "w": 31,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "idle_6": {
+      "image": "elder_idle_6",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 38,
+        "w": 32,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "jump_1": {
+      "image": "elder_jump_1",
+      "pivot": [
+        31,
+        52
+      ],
+      "rect": {
+        "h": 38,
+        "w": 30,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "jump_2": {
+      "image": "elder_jump_2",
+      "pivot": [
+        31,
+        52
+      ],
+      "rect": {
+        "h": 38,
+        "w": 30,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "jump_3": {
+      "image": "elder_jump_3",
+      "pivot": [
+        31,
+        52
+      ],
+      "rect": {
+        "h": 38,
+        "w": 30,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "jump_4": {
+      "image": "elder_jump_4",
+      "pivot": [
+        35,
+        48
+      ],
+      "rect": {
+        "h": 40,
+        "w": 51,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "ko_1": {
+      "image": "elder_ko_1",
+      "pivot": [
+        34,
+        51
+      ],
+      "rect": {
+        "h": 25,
+        "w": 17,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "ko_2": {
+      "image": "elder_ko_2",
+      "pivot": [
+        34,
+        51
+      ],
+      "rect": {
+        "h": 27,
+        "w": 21,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "ko_3": {
+      "image": "elder_ko_3",
+      "pivot": [
+        34,
+        51
+      ],
+      "rect": {
+        "h": 19,
+        "w": 27,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "ko_4": {
+      "image": "elder_ko_4",
+      "pivot": [
+        34,
+        51
+      ],
+      "rect": {
+        "h": 20,
+        "w": 21,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "ko_5": {
+      "image": "elder_ko_5",
+      "pivot": [
+        34,
+        51
+      ],
+      "rect": {
+        "h": 21,
+        "w": 22,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "ko_6": {
+      "image": "elder_ko_6",
+      "pivot": [
+        34,
+        51
+      ],
+      "rect": {
+        "h": 21,
+        "w": 22,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "run_1": {
+      "image": "elder_run_1",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 40,
+        "w": 41,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "run_2": {
+      "image": "elder_run_2",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 40,
+        "w": 41,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "run_3": {
+      "image": "elder_run_3",
+      "pivot": [
+        37,
+        48
+      ],
+      "rect": {
+        "h": 32,
+        "w": 48,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "run_4": {
+      "image": "elder_run_4",
+      "pivot": [
+        37,
+        48
+      ],
+      "rect": {
+        "h": 40,
+        "w": 48,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "run_5": {
+      "image": "elder_run_5",
+      "pivot": [
+        37,
+        50
+      ],
+      "rect": {
+        "h": 40,
+        "w": 48,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "run_6": {
+      "image": "elder_run_6",
+      "pivot": [
+        37,
+        48
+      ],
+      "rect": {
+        "h": 40,
+        "w": 48,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "run_7": {
+      "image": "elder_run_7",
+      "pivot": [
+        37,
+        54
+      ],
+      "rect": {
+        "h": 33,
+        "w": 51,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "run_8": {
+      "image": "elder_run_8",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 33,
+        "w": 40,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "skill1_1": {
+      "image": "elder_skill1_1",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 32,
+        "w": 33,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "skill1_2": {
+      "image": "elder_skill1_2",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 32,
+        "w": 25,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "skill1_3": {
+      "image": "elder_skill1_3",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 32,
+        "w": 40,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "skill1_4": {
+      "image": "elder_skill1_4",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 31,
+        "w": 28,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "skill1_5": {
+      "image": "elder_skill1_5",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 32,
+        "w": 36,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "skill1_6": {
+      "image": "elder_skill1_6",
+      "pivot": [
+        34,
+        51
+      ],
+      "rect": {
+        "h": 30,
+        "w": 19,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "skill2_1": {
+      "image": "elder_skill2_1",
+      "pivot": [
+        34,
+        51
+      ],
+      "rect": {
+        "h": 30,
+        "w": 18,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "skill2_2": {
+      "image": "elder_skill2_2",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 32,
+        "w": 33,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "skill2_3": {
+      "image": "elder_skill2_3",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 32,
+        "w": 39,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "skill2_4": {
+      "image": "elder_skill2_4",
+      "pivot": [
+        34,
+        51
+      ],
+      "rect": {
+        "h": 31,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "skill2_5": {
+      "image": "elder_skill2_5",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 31,
+        "w": 39,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "skill2_6": {
+      "image": "elder_skill2_6",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 29,
+        "w": 27,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "ult_1": {
+      "image": "elder_ult_1",
+      "pivot": [
+        37,
+        52
+      ],
+      "rect": {
+        "h": 38,
+        "w": 23,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "ult_2": {
+      "image": "elder_ult_2",
+      "pivot": [
+        31,
+        50
+      ],
+      "rect": {
+        "h": 45,
+        "w": 41,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "ult_3": {
+      "image": "elder_ult_3",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 43,
+        "w": 37,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "ult_4": {
+      "image": "elder_ult_4",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 48,
+        "w": 44,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "ult_5": {
+      "image": "elder_ult_5",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 47,
+        "w": 36,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "ult_6": {
+      "image": "elder_ult_6",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 49,
+        "w": 40,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "ult_7": {
+      "image": "elder_ult_7",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 49,
+        "w": 36,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "ult_8": {
+      "image": "elder_ult_8",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 50,
+        "w": 43,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "ult_9": {
+      "image": "elder_ult_9",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 49,
+        "w": 38,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "ult_10": {
+      "image": "elder_ult_10",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 48,
+        "w": 26,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "walk_1": {
+      "image": "elder_walk_1",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 40,
+        "w": 40,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "walk_2": {
+      "image": "elder_walk_2",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 35,
+        "w": 48,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "walk_3": {
+      "image": "elder_walk_3",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 35,
+        "w": 48,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "walk_4": {
+      "image": "elder_walk_4",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 35,
+        "w": 47,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "walk_5": {
+      "image": "elder_walk_5",
+      "pivot": [
+        31,
+        50
+      ],
+      "rect": {
+        "h": 36,
+        "w": 36,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "walk_6": {
+      "image": "elder_walk_6",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 36,
+        "w": 36,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "walk_7": {
+      "image": "elder_walk_7",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 36,
+        "w": 31,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "walk_8": {
+      "image": "elder_walk_8",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 36,
+        "w": 31,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "win_1": {
+      "image": "elder_win_1",
+      "pivot": [
+        34,
+        51
+      ],
+      "rect": {
+        "h": 29,
+        "w": 14,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "win_2": {
+      "image": "elder_win_2",
+      "pivot": [
+        34,
+        51
+      ],
+      "rect": {
+        "h": 29,
+        "w": 14,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "win_3": {
+      "image": "elder_win_3",
+      "pivot": [
+        34,
+        51
+      ],
+      "rect": {
+        "h": 29,
+        "w": 14,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "win_4": {
+      "image": "elder_win_4",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 38,
+        "w": 19,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "win_5": {
+      "image": "elder_win_5",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 38,
+        "w": 19,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    "win_6": {
+      "image": "elder_win_6",
+      "pivot": [
+        31,
+        48
+      ],
+      "rect": {
+        "h": 38,
+        "w": 19,
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    }
+  }
+}

@@ -14,7 +14,7 @@ final class SelectScene: GameScene {
     private let mapName = Theme.label("", size: 7, color: Theme.gold)
     private let mapSummary = Theme.label("", size: 5, color: Theme.ice)
     override func didMove(to view: SKView) {
-        let heading = Theme.label(stageMode ? "VƯỢT ẢI · CHỌN KIẾM KHÁCH" : "CHOOSE YOUR SWORDSMAN", size: 12, color: Theme.gold)
+        let heading = Theme.title(stageMode ? "VƯỢT ẢI · CHỌN KIẾM KHÁCH" : "CHOOSE YOUR SWORDSMAN", size: 12, color: Theme.gold)
         heading.position = CGPoint(x: 240, y: 254); addChild(heading)
         // Five cards on the first row and four on the second fit the full nine-fighter roster at 480×270.
         for (index, data) in CharacterLibrary.all.enumerated() {
@@ -32,7 +32,9 @@ final class SelectScene: GameScene {
             addChild(card); cards.append(card)
             let sprite = SKSpriteNode()
             SpriteSheet.shared.applyFrame(to: sprite, character: data, animation: "idle", index: 0)
-            sprite.setScale(44 / data.spriteSize)
+            // Imported atlases retain their own crop sizes. Normalize the displayed
+            // height so a 40px source pose and a 96px beast pose fit the same card.
+            sprite.setScale(44 / max(1, sprite.size.height))
             sprite.position = CGPoint(x: 0, y: -21)
             card.addChild(sprite)
             let sub = Theme.label(data.id.uppercased(), size: 5, color: data.accentColor)

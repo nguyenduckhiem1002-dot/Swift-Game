@@ -7,9 +7,14 @@ final class SpriteSheet {
     private var layouts: [String: [FrameLayout]] = [:]
     private var atlases: [String: AtlasData] = [:]
     private var sourceImages: [String: CGImage] = [:]
+    private var portraits: [String: SKTexture] = [:]
     private var placeholderKeys: Set<String> = []
     /// Until dedicated art exists, these animations reuse a drawn one with the same frame count.
-    private static let aliases = ["skill3": "win"]
+    private static let aliases: [String: String] = [
+        "skill3": "win",
+        "crouch_block": "guard",
+        "jump": "float",
+    ]
 
     private struct FrameLayout {
         let size: CGSize
@@ -28,20 +33,25 @@ final class SpriteSheet {
     }
     private init() {}
 
+    func hasArtwork(character: CharacterData, animation: String) -> Bool {
+        _ = frames(character: character, animation: animation)
+        return !placeholderKeys.contains("\(character.id)_\(animation)")
+    }
+
     func frames(character: CharacterData, animation: String) -> [SKTexture] {
         let key = "\(character.id)_\(animation)"
         if let cached = cache[key] { return cached }
         let count = character.animations[animation]?.frames ?? 1
         let path = "Assets/Characters/\(character.id)/\(key)"
-        if let strip = loadStrip(path: path, count: count, frameSize: CGSize(width: character.spriteSize, height: character.spriteSize)) {
-            cache[key] = strip
-            return strip
-        }
         if let atlas = atlas(for: character.id), let names = atlas.animations[animation], names.count == count,
            let imported = atlasFrames(names, atlas: atlas, characterID: character.id) {
             cache[key] = imported.textures
             layouts[key] = imported.layouts
             return imported.textures
+        }
+        if let strip = loadStrip(path: path, count: count, frameSize: CGSize(width: character.spriteSize, height: character.spriteSize)) {
+            cache[key] = strip
+            return strip
         }
         if let alias = Self.aliases[animation], character.animations[alias]?.frames == count {
             let borrowed = frames(character: character, animation: alias)
@@ -74,6 +84,16 @@ final class SpriteSheet {
         }
     }
 
+    func portrait(for character: CharacterData) -> SKTexture? {
+        if let cached = portraits[character.id] { return cached }
+        guard let url = Bundle.main.url(forResource: "\(character.id)_portrait", withExtension: "png",
+                                        subdirectory: "Assets/Characters/\(character.id)"),
+              let image = UIImage(contentsOfFile: url.path) else { return nil }
+        let texture = nearest(SKTexture(image: image))
+        portraits[character.id] = texture
+        return texture
+    }
+
     private func atlas(for characterID: String) -> AtlasData? {
         if let existing = atlases[characterID] { return existing }
         guard let url = Bundle.main.url(forResource: "\(characterID)_atlas", withExtension: "json", subdirectory: "Assets/Characters/\(characterID)"),
@@ -87,21 +107,23 @@ final class SpriteSheet {
         var frameLayouts: [FrameLayout] = []
         for name in names {
             guard let frame = atlas.frames[name], frame.pivot.count == 2, frame.scale > 0 else { return nil }
-            let imageKey = "\(characterID)/\(frame.image)"
-            let image: CGImage
-            if let cached = sourceImages[imageKey] { image = cached }
-            else {
-                guard let url = Bundle.main.url(forResource: frame.image, withExtension: "png", subdirectory: "Assets/Characters/\(characterID)"),
-                      let loaded = UIImage(contentsOfFile: url.path)?.cgImage else { return nil }
-                sourceImages[imageKey] = loaded
-                image = loaded
-            }
             let rect = CGRect(x: frame.rect.x, y: frame.rect.y, width: frame.rect.w, height: frame.rect.h)
-            guard CGRect(x: 0, y: 0, width: image.width, height: image.height).contains(rect),
-                  let crop = image.cropping(to: rect) else { return nil }
-            textures.append(nearest(SKTexture(cgImage: crop)))
-            frameLayouts.append(FrameLayout(size: CGSize(width: rect.width * frame.scale, height: rect.height * frame.scale),
-                                            anchor: CGPoint(x: frame.pivot[0] / rect.width, y: 1 - frame.pivot[1] / rect.height)))
+            // The manifest is the sole authority for image, scale and foot pivot.
+            // A stale `frames/` export must never silently override its geometry.
+                let imageKey = "\(characterID)/\(frame.image)"
+                let image: CGImage
+                if let cached = sourceImages[imageKey] { image = cached }
+                else {
+                    guard let url = Bundle.main.url(forResource: frame.image, withExtension: "png", subdirectory: "Assets/Characters/\(characterID)"),
+                          let loaded = UIImage(contentsOfFile: url.path)?.cgImage else { return nil }
+                    sourceImages[imageKey] = loaded
+                    image = loaded
+                }
+                guard CGRect(x: 0, y: 0, width: image.width, height: image.height).contains(rect),
+                      let crop = image.cropping(to: rect) else { return nil }
+                textures.append(nearest(SKTexture(cgImage: crop)))
+                frameLayouts.append(FrameLayout(size: CGSize(width: rect.width * frame.scale, height: rect.height * frame.scale),
+                                                anchor: CGPoint(x: frame.pivot[0] / rect.width, y: 1 - frame.pivot[1] / rect.height)))
         }
         return textures.isEmpty ? nil : (textures, frameLayouts)
     }

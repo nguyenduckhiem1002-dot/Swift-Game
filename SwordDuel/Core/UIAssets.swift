@@ -5,6 +5,7 @@ import UIKit
 final class UIAssets {
     static let shared = UIAssets()
     private var cache: [String: [SKTexture]] = [:]
+    private(set) var missingAssets: Set<String> = []
     private init() {}
 
     func texture(_ name: String, size: CGSize) -> SKTexture {
@@ -24,7 +25,10 @@ final class UIAssets {
                 }
             }
         }
-        if result.count != count { result = (0..<count).map { fallback(name, size: frameSize, frame: $0, count: count) } }
+        if result.count != count {
+            missingAssets.insert(name)
+            result = (0..<count).map { fallback(name, size: frameSize, frame: $0, count: count) }
+        }
         cache[key] = result
         return result
     }
@@ -69,7 +73,7 @@ final class UIAssets {
             else if name.hasSuffix("_sk2") || name.hasSuffix("_sk2_pressed") { glyph = "2" }
             else if name.hasSuffix("_sk3") || name.hasSuffix("_sk3_pressed") { glyph = "3" }
             if !glyph.isEmpty {
-                let font = UIFont.monospacedSystemFont(ofSize: min(11, size.height * 0.4), weight: .bold)
+                let font = UIFont(name: "PlayfairDisplay-Black", size: min(11, size.height * 0.4)) ?? UIFont.monospacedSystemFont(ofSize: min(11, size.height * 0.4), weight: .bold)
                 let attributes: [NSAttributedString.Key: Any] = [.font: font, .foregroundColor: accent]
                 let label = glyph as NSString; let measured = label.size(withAttributes: attributes)
                 label.draw(at: CGPoint(x: (size.width-measured.width)/2, y: (size.height-measured.height)/2), withAttributes: attributes)

@@ -26,6 +26,7 @@ struct MapData: Codable {
     let animSpeed: CGFloat?
     /// Arena width in points; wider than 480 enables the following, zooming camera.
     var width: CGFloat?
+    var tiledMap: String?
     var terrain: TerrainData?
 
     var gravityScale: CGFloat { gravity ?? 1 }
@@ -119,5 +120,168 @@ extension SKColor {
     convenience init(rgb: [CGFloat], alpha: CGFloat = 1) {
         let c = rgb.count == 3 ? rgb : [1, 1, 1]
         self.init(red: c[0], green: c[1], blue: c[2], alpha: alpha)
+    }
+}
+import Foundation
+import SpriteKit
+
+struct TiledMap: Codable {
+    let width: Int
+    let height: Int
+    let tilewidth: Int
+    let tileheight: Int
+    let layers: [TiledLayer]
+    let tilesets: [TiledTilesetRef]
+}
+
+struct TiledLayer: Codable {
+    let type: String
+    let name: String
+    let visible: Bool?
+    let opacity: CGFloat?
+    let data: [Int]?
+    let objects: [TiledObject]?
+    let width: Int?
+    let height: Int?
+}
+
+struct TiledObject: Codable {
+    let id: Int
+    let name: String
+    let type: String?
+    let x: CGFloat
+    let y: CGFloat
+    let width: CGFloat
+    let height: CGFloat
+    let properties: [TiledProperty]?
+}
+
+struct TiledProperty: Codable {
+    let name: String
+    let type: String
+    let value: AnyValue
+    
+    enum AnyValue: Codable {
+        case string(String)
+        case int(Int)
+        case double(Double)
+        case bool(Bool)
+        
+        init(from decoder: Decoder) throws {
+            let container = try decoder.singleValueContainer()
+            if let v = try? container.decode(String.self) { self = .string(v) }
+            else if let v = try? container.decode(Int.self) { self = .int(v) }
+            else if let v = try? container.decode(Double.self) { self = .double(v) }
+            else if let v = try? container.decode(Bool.self) { self = .bool(v) }
+            else { throw DecodingError.dataCorruptedError(in: container, debugDescription: "Unknown value type") }
+        }
+        func encode(to encoder: Encoder) throws {}
+    }
+}
+
+struct TiledTilesetRef: Codable {
+    let firstgid: Int
+    let source: String?
+    let name: String?
+    let margin: Int?
+    let spacing: Int?
+    let tilewidth: Int?
+    let tileheight: Int?
+}
+import Foundation
+import SpriteKit
+
+struct TiledLoader {
+    static func parseTileset(_ jsonName: String) -> (texture: SKTexture, tileWidth: Int, tileHeight: Int, columns: Int)? {
+        guard let url = Bundle.main.url(forResource: jsonName, withExtension: "json"),
+              let data = try? Data(contentsOf: url),
+              let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+              let image = json["image"] as? String,
+              let tileWidth = json["tilewidth"] as? Int,
+              let tileHeight = json["tileheight"] as? Int,
+              let columns = json["columns"] as? Int else {
+            return nil
+        }
+        let textureName = (image as NSString).lastPathComponent
+        return (UIAssets.shared.texture(textureName, size: .zero), tileWidth, tileHeight, columns)
+    }
+}
+import Foundation
+import SpriteKit
+
+class TiledArenaBuilder {
+    static func build(map: TiledMap, tilesetTexture: SKTexture, tileW: Int, tileH: Int, cols: Int) -> (node: SKNode, terrain: TerrainData) {
+        let node = SKNode()
+        var platforms: [PlatformData] = []
+        var zones: [ZoneData] = []
+        var objects: [ObjectData] = []
+        
+        let mapWidth = CGFloat(map.width * map.tilewidth)
+        let mapHeight = CGFloat(map.height * map.tileheight)
+        
+        for layer in map.layers {
+            if layer.type == "tilelayer", let data = layer.data {
+                let layerNode = SKNode()
+                let width = layer.width ?? map.width
+                
+                // Assuming floor Y = 42 for now, or we can align map bottom to Y = 0
+                // Let's align map bottom to Y = 0 (or 42)
+                for (index, gid) in data.enumerated() {
+                    if gid == 0 { continue }
+                    let localGid = gid - (map.tilesets.first?.firstgid ?? 1)
+                    if localGid < 0 { continue }
+                    
+                    let col = index % width
+                    let row = index / width
+                    let x = CGFloat(col * map.tilewidth) + CGFloat(map.tilewidth) / 2
+                    let y = mapHeight - CGFloat(row * map.tileheight) - CGFloat(map.tileheight) / 2
+                    
+                    let tx = localGid % cols
+                    let ty = localGid / cols
+                    
+                    let rect = CGRect(
+                        x: CGFloat(tx) * CGFloat(tileW) / tilesetTexture.size().width,
+                        y: 1.0 - CGFloat(ty + 1) * CGFloat(tileH) / tilesetTexture.size().height,
+                        width: CGFloat(tileW) / tilesetTexture.size().width,
+                        height: CGFloat(tileH) / tilesetTexture.size().height
+                    )
+                    
+                    let sprite = SKSpriteNode(texture: SKTexture(rect: rect, in: tilesetTexture))
+                    sprite.position = CGPoint(x: x, y: y)
+                    sprite.size = CGSize(width: map.tilewidth, height: map.tileheight)
+                    layerNode.addChild(sprite)
+                }
+                node.addChild(layerNode)
+            } else if layer.type == "objectgroup", let objs = layer.objects {
+                for obj in objs {
+                    // Coordinates in Tiled for objects are bottom-left for some types, top-left for others. 
+                    // Usually origin is top-left, but Y goes down.
+                    let x = obj.x + obj.width / 2
+                    let y = mapHeight - obj.y + obj.height / 2
+                    
+                    if let type = obj.type {
+                        if type == "platform" {
+                            platforms.append(PlatformData(x: x, y: y, w: obj.width, kind: "stone", moveX: nil, moveY: nil, period: nil, onTime: nil, offTime: nil, crumble: false))
+                        } else if type == "zone" {
+                            let kind = obj.properties?.first(where: { $0.name == "kind" })?.stringValue ?? "lava"
+                            zones.append(ZoneData(kind: kind, x: obj.x, w: obj.width, h: obj.height))
+                        } else {
+                            objects.append(ObjectData(kind: type, x: x, y: y))
+                        }
+                    } else {
+                        objects.append(ObjectData(kind: obj.name, x: x, y: y))
+                    }
+                }
+            }
+        }
+        
+        return (node, TerrainData(platforms: platforms, zones: zones, objects: objects, events: nil))
+    }
+}
+
+extension TiledProperty {
+    var stringValue: String? {
+        if case .string(let v) = value { return v }
+        return nil
     }
 }

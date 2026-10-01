@@ -146,13 +146,14 @@ final class CombatSystem {
             }
             showEffect("dash_trail", at: attacker.position, color: attacker.data.accentColor)
         }
-        guard shots == 0, move != "ult", info.damage > 0, let box = attacker.hitbox(for: move) else { return }
-        for target in host?.combatTargets(for: attacker) ?? [] where target.canBeHit && box.intersects(target.hurtbox) {
+        let boxes = attacker.hitboxes(for: move)
+        guard shots == 0, move != "ult", info.damage > 0, !boxes.isEmpty else { return }
+        for target in host?.combatTargets(for: attacker) ?? [] where target.canBeHit && boxes.contains(where: { $0.intersects(target.hurtbox) }) {
             let key = HitKey(attacker: ObjectIdentifier(attacker), target: ObjectIdentifier(target))
             guard landed[key] != attacker.attackSerial else { continue }
-            landed[key] = attacker.attackSerial
-            registerHit(attacker: attacker, target: target, damage: info.damage, knockback: attacker.facing * info.knockback,
+            let dealt = registerHit(attacker: attacker, target: target, damage: info.damage, knockback: attacker.facing * info.knockback,
                         effect: hitEffect(info, enhanced: enhanced), enhanced: enhanced)
+            if dealt > 0 { landed[key] = attacker.attackSerial }
         }
     }
     private func hitEffect(_ info: MoveData, enhanced: Bool) -> HitEffect? {
@@ -222,9 +223,17 @@ final class CombatSystem {
     private func updateProjectiles(_ dt: CGFloat) {
         for projectile in projectiles {
             projectile.updateFixed(dt)
+            defer { projectile.removeIfExpired() }
             guard !projectile.didHit, projectile.parent != nil,
-                  let target = (host?.combatTargets(for: projectile.owner) ?? []).first(where: { $0.canBeHit && projectile.hitbox.intersects($0.hurtbox) })
+                  let contact = (host?.combatTargets(for: projectile.owner) ?? [])
+                    .filter({ $0.canBeHit && !(($0 as? Fighter)?.invulnerable ?? false) && !(($0 as? Fighter)?.has(.vanish) ?? false) })
+                    .compactMap({ target -> (CombatTarget, CGFloat)? in
+                        guard let time = projectile.contactTime(with: target.hurtbox) else { return nil }
+                        return (target, time)
+                    }).min(by: { $0.1 < $1.1 })
             else { continue }
+            let target = contact.0
+            projectile.moveToContact(contact.1)
             if let fighter = target as? Fighter {
                 if fighter.isReflecting {
                     projectile.reflect(to: fighter)
@@ -356,7 +365,7 @@ final class CombatSystem {
         var boxes = extra
         for fighter in fighters {
             boxes.append((fighter.hurtbox, .green))
-            if let move = fighter.currentMove, let box = fighter.hitbox(for: move) { boxes.append((box, .red)) }
+            if let move = fighter.currentMove { boxes += fighter.hitboxes(for: move).map { ($0, .red) } }
         }
         for projectile in projectiles { boxes.append((projectile.hitbox, .yellow)) }
         for (rect, color) in boxes {

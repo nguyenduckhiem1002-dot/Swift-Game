@@ -20,7 +20,7 @@ final class Monster: SKNode {
     weak var host: MonsterHost?
     var velocity = CGVector.zero
     private(set) var facing: CGFloat = -1
-    var bounds: ClosedRange<CGFloat> = 26...454
+    var movementXRange: ClosedRange<CGFloat> = 26...454
     /// Live swing or contact hitbox; the stage hits the player once per `attackSerial`.
     private(set) var attackBox: CGRect?
     private(set) var attackSerial = 0
@@ -59,6 +59,7 @@ final class Monster: SKNode {
         textures = Monster.loadFrames(data)
         if let first = textures.first {
             body.texture = first; body.color = .white
+            flash.texture = first
         } else {
             // Placeholder face on the front side; the body flips with facing.
             for offset in [CGFloat(0.12), 0.32] {
@@ -275,7 +276,7 @@ final class Monster: SKNode {
             if position.y <= 42 { position.y = 42; velocity.dy = 0; airborne = false }
             position.x += velocity.dx * dt
         }
-        let clamped = min(bounds.upperBound, max(bounds.lowerBound, position.x))
+        let clamped = min(movementXRange.upperBound, max(movementXRange.lowerBound, position.x))
         if clamped != position.x {
             position.x = clamped
             // A charge ends at the arena wall.
