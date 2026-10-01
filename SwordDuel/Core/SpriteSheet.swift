@@ -7,6 +7,9 @@ final class SpriteSheet {
     private var layouts: [String: [FrameLayout]] = [:]
     private var atlases: [String: AtlasData] = [:]
     private var sourceImages: [String: CGImage] = [:]
+    private var placeholderKeys: Set<String> = []
+    /// Until dedicated art exists, these animations reuse a drawn one with the same frame count.
+    private static let aliases = ["skill3": "win"]
 
     private struct FrameLayout {
         let size: CGSize
@@ -40,8 +43,18 @@ final class SpriteSheet {
             layouts[key] = imported.layouts
             return imported.textures
         }
+        if let alias = Self.aliases[animation], character.animations[alias]?.frames == count {
+            let borrowed = frames(character: character, animation: alias)
+            let aliasKey = "\(character.id)_\(alias)"
+            if !placeholderKeys.contains(aliasKey) {
+                cache[key] = borrowed
+                layouts[key] = layouts[aliasKey]
+                return borrowed
+            }
+        }
         let fallback = (0..<count).map { placeholder(character: character, animation: animation, frame: $0) }
         cache[key] = fallback
+        placeholderKeys.insert(key)
         return fallback
     }
 

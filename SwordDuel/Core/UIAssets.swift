@@ -48,7 +48,7 @@ final class UIAssets {
                 c.closePath(); c.fillPath(); return
             }
             if name.contains("fill") {
-                c.setFillColor((name.contains("energy") ? Theme.gold : accent).cgColor)
+                c.setFillColor((name.contains("energy") ? Theme.gold : name.contains("awaken") ? Theme.awaken : accent).cgColor)
                 c.fill(CGRect(origin: .zero, size: size)); return
             }
             let round = name.hasPrefix("dpad") || name.hasPrefix("round") || (name.hasPrefix("btn") && !name.contains("menu") && !name.contains("difficulty") && !name.contains("debug"))
@@ -67,6 +67,7 @@ final class UIAssets {
             else if name.contains("ult") { glyph = "ULT" }
             else if name.hasSuffix("_sk1") || name.hasSuffix("_sk1_pressed") { glyph = "1" }
             else if name.hasSuffix("_sk2") || name.hasSuffix("_sk2_pressed") { glyph = "2" }
+            else if name.hasSuffix("_sk3") || name.hasSuffix("_sk3_pressed") { glyph = "3" }
             if !glyph.isEmpty {
                 let font = UIFont.monospacedSystemFont(ofSize: min(11, size.height * 0.4), weight: .bold)
                 let attributes: [NSAttributedString.Key: Any] = [.font: font, .foregroundColor: accent]

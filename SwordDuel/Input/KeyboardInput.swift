@@ -10,6 +10,7 @@ enum KeyboardInput {
         case "j": return .attack
         case "k": return .skill1
         case "l": return .skill2
+        case "u": return .skill3
         case "i": return .ult
         case "b": return .debug
         case "p": return .pause

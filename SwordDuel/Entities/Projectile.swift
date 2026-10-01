@@ -1,15 +1,19 @@
 import SpriteKit
 
 final class Projectile: SKNode {
-    let owner: Fighter
+    private(set) var owner: Fighter
     let damage: Int
-    let direction: CGFloat
+    private(set) var direction: CGFloat
     let rise: CGFloat
+    /// On-hit effect and tier II enhancement, captured when the projectile is fired.
+    let effect: HitEffect?
+    let enhanced: Bool
     var life: CGFloat = 2.2
     var didHit = false
     let visual: SKSpriteNode
-    init(owner: Fighter, damage: Int, direction: CGFloat, rise: CGFloat = 0) {
+    init(owner: Fighter, damage: Int, direction: CGFloat, rise: CGFloat = 0, effect: HitEffect? = nil, enhanced: Bool = false) {
         self.owner = owner; self.damage = damage; self.direction = direction; self.rise = rise
+        self.effect = effect; self.enhanced = enhanced
         let frames = SpriteSheet.shared.effect(named: SpriteSheet.shared.effectName("projectile", character: owner.data), count: 4, color: owner.data.accentColor)
         visual = SKSpriteNode(texture: frames.first)
         super.init()
@@ -21,6 +25,11 @@ final class Projectile: SKNode {
         visual.run(.repeatForever(.animate(with: frames, timePerFrame: 0.09)))
     }
     required init?(coder: NSCoder) { fatalError() }
+    /// Umbrella counters and reflect buffs send the projectile back at its thrower.
+    func reflect(to newOwner: Fighter) {
+        owner = newOwner; direction = -direction; life = 2.2
+        visual.xScale = direction; visual.zRotation = -visual.zRotation
+    }
     var hitbox: CGRect { CGRect(x: position.x - 16, y: position.y - 9, width: 32, height: 18) }
     func updateFixed(_ dt: CGFloat) {
         position.x += direction * 180 * dt

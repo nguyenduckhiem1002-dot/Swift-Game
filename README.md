@@ -12,9 +12,21 @@ If `xcodebuild` uses Command Line Tools instead of Xcode, select Xcode in Settin
 
 ## Controls
 
-Touch the on-screen directional controls and action buttons; multi-touch allows moving while attacking. Down and BLOCK both guard. BOX toggles hitbox outlines. On a hardware keyboard: A/D move, W jump, S block, J attack, K/L skills, I ultimate, B hitbox overlay, P pause.
+Touch the on-screen directional controls and action buttons; multi-touch allows moving while attacking. Down and BLOCK both guard. BOX toggles hitbox outlines. On a hardware keyboard: A/D move, W jump, S block, J attack, K/L skills, U skill 3, I ultimate, B hitbox overlay, P pause.
 
 Light attacks chain through three hits. Skills need energy and have cooldowns. Each match is best of three 60-second rounds. The select screen offers Easy and Normal AI.
+
+## Awakening and SK3
+
+Each fighter has an awakening meter (the violet bar under energy) that resets every round. Landing a hit adds 6, a successful block adds 4, and taking a hit adds 3. The fighter with less HP gains 50% more.
+
+- **Tier I (30):** unlocks SK3 (20 energy, 8s cooldown). The SK3 button stays dimmed below this tier.
+- **Tier II (60):** SK1 and SK2 deal +20% damage and add the character's `enhanced` effect (slow, stun, burn or drain).
+- **Tier III (100):** 12 seconds awakened (the bar becomes a countdown): +20% damage, double energy gain, and the first ULT is the awakened ULT. Only one awakening per round.
+
+SK3 applies a timed buff: `guardian` (-50% damage taken, no knockback: frost, elder), `frenzy` (+25% speed, +15% damage, 20% lifesteal: flame, beast), `glide` (extra air jump, slow fall, heal 5: umbrella), `vanish` (projectiles pass through, next hit +50%: tang), `meditate` (2s channel; heals 10 and cleanses slow/burn unless hit: monk), `summon` (phantom strikes 3×5 over 6s: herder) and `clone` (shadow repeats landed hits at 40%, first hit +50%: demon). Awakened ULTs deal a fixed 60 split over their `hits` and may add `reflect`, `superArmor`, `giant`, a heal, a pull or a burn. Awakening bonuses do not scale ULT damage. Frost and flame have no SK3 or awakened ULT in the design spec, so their names and effects here are placeholders to replace.
+
+Until `<charId>_skill3.png` art exists, SK3 reuses the character's `win` animation.
 
 ## Imported Frost character
 
@@ -54,9 +66,9 @@ Arenas are listed in `SwordDuel/Data/Maps.json` and chosen with the `<` / `>` se
 
 ## Roster data
 
-Each character entry in `Characters.json` can also set `role`, `accent` (RGB 0–1), `frameSize`, `walkSpeed` and `jumpVelocity`. Moves accept `projectiles` (skill1 fan size; `0` turns skill1 into a melee hitbox), `dashSpeed`, `dashTime`, `invulnerable` and `teleport`. A negative `knockback` pulls the target. The new fighters reuse the shared SK1 / SK2 / ULT systems approximately; SK3, awakening, counters, traps, slows and summons from the expansion spec are not yet implemented. Missing button and HP-fill art falls back to generated textures in the character's accent color.
+Each character entry in `Characters.json` can also set `role`, `accent` (RGB 0–1), `frameSize`, `walkSpeed` and `jumpVelocity`. Moves accept `projectiles` (skill1 fan size; `0` turns skill1 into a melee hitbox), `dashSpeed`, `dashTime`, `invulnerable`, `teleport`, `reflect`, `onHit` and `enhanced` (`slow`, `stun`, `burn`, `drain`). A negative `knockback` pulls the target. `skill3` and `ultAwakened` add `title`, `buff`, `buffTime`, `heal`, `hits`, `hitInterval`, `delay`, `unblockable` and `pull`. Trap placement and some spec details (exact counter timing, clone mirroring, black-hole projectile pull) are approximated with these shared systems. Missing button and HP-fill art falls back to generated textures in the character's accent color.
 
-The select screen picks a random CPU opponent. For art review, add `--preview-fight --character <id> --opponent <id> --map <mapId>` to the scheme's Run arguments; `--test-ui` now also checks every character's frame counts and builds every arena.
+The select screen picks a random CPU opponent. For art review, add `--preview-fight --character <id> --opponent <id> --map <mapId>` to the scheme's Run arguments; `--test-ui` now also checks every character's frame counts and SK3/awakened ULT data, runs awakening tier rules on a test fighter, and builds every arena.
 
 After adding PNGs, ensure they appear under the blue `Assets` folder reference in Xcode. Xcode copies that folder into the app bundle.
 
@@ -96,6 +108,8 @@ Pause via the top-center pause icon or keyboard P. Pause freezes the round timer
 | `btn_flame_sk1_pressed.png` | 36×36 | 36×36 | pressed |
 | `btn_flame_sk2.png` | 36×36 | 36×36 | static / normal |
 | `btn_flame_sk2_pressed.png` | 36×36 | 36×36 | pressed |
+| `btn_<charId>_sk3.png` | 36×36 | 36×36 | optional; generated fallback in accent color |
+| `btn_<charId>_sk3_pressed.png` | 36×36 | 36×36 | optional pressed |
 | `btn_frost_ult_locked.png` | 44×44 | 44×44 | locked |
 | `btn_frost_ult_ready.png` | 44×44 | 176×44 | 4 pulsing ready frames |
 | `btn_flame_ult_locked.png` | 44×44 | 44×44 | locked |
@@ -113,6 +127,7 @@ Pause via the top-center pause icon or keyboard P. Pause freezes the round timer
 | `hp_flame_fill.png` | 124×10 | 124×10 | static / normal |
 | `energy_frame.png` | 96×8 | 96×8 | static / normal |
 | `energy_fill.png` | 92×4 | 92×4 | static / normal |
+| `awaken_fill.png` | 92×4 | 92×4 | optional; violet fallback |
 | `timer_frame.png` | 48×24 | 48×24 | static / normal |
 | `round_empty.png` | 16×16 | 16×16 | empty |
 | `round_filled.png` | 16×16 | 16×16 | filled |

@@ -6,6 +6,7 @@ enum Theme {
     static let ice = SKColor(red: 0.46, green: 0.84, blue: 1, alpha: 1)
     static let gold = SKColor(red: 1, green: 0.79, blue: 0.38, alpha: 1)
     static let fire = SKColor(red: 1, green: 0.35, blue: 0.13, alpha: 1)
+    static let awaken = SKColor(red: 0.8, green: 0.52, blue: 1, alpha: 1)
     static func label(_ text: String, size: CGFloat, color: SKColor = .white) -> SKLabelNode {
         let node = SKLabelNode(fontNamed: "Menlo-Bold")
         node.text = text; node.fontSize = size; node.fontColor = color

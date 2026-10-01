@@ -1,6 +1,19 @@
 import SpriteKit
 import UIKit
 
+/// A delayed hit: ULT volleys, clone echoes and phantom strikes.
+private struct PendingHit {
+    enum Kind { case ult, echo, summon }
+    var time: CGFloat
+    let attacker: Fighter
+    let defender: Fighter
+    let damage: Int
+    let unblockable: Bool
+    let kind: Kind
+    var effect: HitEffect? = nil
+    var knockback: CGFloat = 0
+}
+
 final class FightScene: GameScene {
     private let config: MatchConfig
     private var player: Fighter!
@@ -24,12 +37,14 @@ final class FightScene: GameScene {
     private var roundEndDelay: CGFloat = -1
     private var roundResolved = false
     private var roundDraw = false
-    private var pendingUlt: [(time: CGFloat, attacker: Fighter, defender: Fighter, damage: Int, first: Bool)] = []
+    private var pendingHits: [PendingHit] = []
     private var landedSerial: [ObjectIdentifier: Int] = [:]
     private var comboHits = 0
     private var comboTimer: CGFloat = 0
     private var hpFill: [UIResourceBar] = []
     private var energyFill: [UIResourceBar] = []
+    private var awakeningFill: [UIResourceBar] = []
+    private var tierLabels: [SKLabelNode] = []
     private var scoreDots: [[SKSpriteNode]] = [[], []]
     private var timerLabel = Theme.label("60", size: 18, color: Theme.gold)
     private var comboLabel = Theme.label("", size: 10, color: Theme.gold)
@@ -78,10 +93,11 @@ final class FightScene: GameScene {
             uiStatePreview = true
             player.hp = 60; opponent.hp = 35; player.energy = 100; opponent.energy = 48
             player.wins = 1; opponent.wins = 1
-            player.cooldowns = ["skill1": 1.5, "skill2": 3.75]
+            player.cooldowns = ["skill1": 1.5, "skill2": 3.75, "skill3": 4]
+            player.gainAwakening(65); opponent.gainAwakening(35)
             for node in [announcementPanel as SKNode, announcement, roundLabel] { node.removeAllActions(); node.alpha = 0 }
             controls.setPressed(.attack, true)
-            controls.update(energy: player.energy, cooldowns: player.cooldowns, dt: 0)
+            controls.update(energy: player.energy, cooldowns: player.cooldowns, awakeningTier: player.awakeningTier, dt: 0)
             updateHUD()
         }
     }
@@ -118,8 +134,28 @@ final class FightScene: GameScene {
             for move in ["attack1", "attack2", "attack3", "skill1", "skill2", "ult"] { precondition(character.moves[move] != nil, "\(character.id) is missing \(move)") }
         }
         precondition(Set(CharacterLibrary.all.map(\.id)).count == CharacterLibrary.all.count, "Character ids must be unique")
+        for character in CharacterLibrary.all {
+            for move in ["skill3", "ultAwakened"] { precondition(character.moves[move] != nil, "\(character.id) is missing \(move)") }
+            if let buff = character.moves["skill3"]?.buff { precondition(Buff(rawValue: buff) != nil, "\(character.id) has unknown SK3 buff \(buff)") }
+            if let buff = character.moves["ultAwakened"]?.buff { precondition(Buff(rawValue: buff) != nil, "\(character.id) has unknown ULT buff \(buff)") }
+        }
+        runAwakeningChecks()
         for map in MapLibrary.all { precondition(!ArenaBackground(map: map).children.isEmpty, "\(map.id) arena is empty") }
         print("PASS UI: shared touch ownership, independent inputs, pause/resume, frozen timer, disabled/pressed menu states, missing-file fallback, \(CharacterLibrary.all.count) character rosters and ULT strips, \(MapLibrary.all.count) arenas.")
+    }
+    private func runAwakeningChecks() {
+        let probe = Fighter(data: CharacterLibrary.all[0], isPlayer: false)
+        probe.reset(at: 100, facing: 1); probe.energy = 100
+        precondition(!probe.use("skill3"), "SK3 stays locked below tier I")
+        probe.gainAwakening(30)
+        precondition(probe.awakeningTier == 1 && probe.use("skill3"), "Tier I unlocks SK3")
+        probe.reset(at: 100, facing: 1)
+        precondition(probe.gainAwakening(100) && probe.isAwakened && probe.awakeningTier == 3, "A full meter awakens")
+        precondition(probe.consumeAwakenedUlt() && !probe.consumeAwakenedUlt(), "One awakened ULT per awakening")
+        for _ in 0...Int(Fighter.awakenedDuration * 60) { probe.updateFixed(1.0 / 60.0) }
+        precondition(!probe.isAwakened && !probe.gainAwakening(100) && probe.awakeningTier == 2, "One awakening per round")
+        probe.reset(at: 100, facing: 1); probe.apply(.guardian, for: 3)
+        precondition(probe.takeHit(damage: 10, knockback: 50, unblockable: true) == 5 && probe.velocity.dx == 0, "Guardian halves damage and knockback")
     }
     private func setupHUD() {
         let backing = SKSpriteNode(color: Theme.navy.withAlphaComponent(0.58), size: CGSize(width: 480, height: 57))
@@ -133,6 +169,18 @@ final class FightScene: GameScene {
             hp.position = CGPoint(x: left ? 132 : 348, y: 247); hp.zPosition = 50; addChild(hp); hpFill.append(hp)
             let energy = UIResourceBar(frame: "energy_frame", fill: "energy_fill", nativeFrame: CGSize(width: 96, height: 8), nativeFill: CGSize(width: 92, height: 4), displayWidth: 124, outsideIsLeft: left)
             energy.position = CGPoint(x: left ? 111 : 369, y: 233); energy.zPosition = 50; addChild(energy); energyFill.append(energy)
+            let awaken = UIResourceBar(frame: "energy_frame", fill: "awaken_fill", nativeFrame: CGSize(width: 96, height: 8), nativeFill: CGSize(width: 92, height: 4), displayWidth: 100, outsideIsLeft: left)
+            awaken.position = CGPoint(x: left ? 99 : 381, y: 222); awaken.zPosition = 50; addChild(awaken); awakeningFill.append(awaken)
+            // Tier I and II thresholds, measured from the inner (center-facing) end where the fill starts.
+            let inner: CGFloat = 96
+            for mark in [CGFloat(0.3), 0.6] {
+                let tick = SKSpriteNode(color: .white, size: CGSize(width: 1, height: 6))
+                tick.alpha = 0.7; tick.zPosition = 3
+                tick.position.x = left ? inner / 2 - inner * mark : -inner / 2 + inner * mark
+                awaken.addChild(tick)
+            }
+            let tier = Theme.label("", size: 6, color: Theme.awaken)
+            tier.position = CGPoint(x: left ? 160 : 320, y: 222); tier.zPosition = 50; addChild(tier); tierLabels.append(tier)
             var dots: [SKSpriteNode] = []
             for dotIndex in 0..<2 {
                 let dot = UIAssets.shared.sprite("round_empty", size: CGSize(width: 16, height: 16))
@@ -182,7 +230,7 @@ final class FightScene: GameScene {
         player.reset(at: 122, facing: 1); opponent.reset(at: 358, facing: -1)
         roundSeconds = 60; roundResolved = false; roundDraw = false; roundEndDelay = -1
         projectiles.forEach { $0.removeFromParent() }; projectiles.removeAll()
-        pendingUlt.removeAll(); landedSerial.removeAll(); comboHits = 0; comboTimer = 0
+        pendingHits.removeAll(); landedSerial.removeAll(); comboHits = 0; comboTimer = 0
         announcementPanel.texture = UIAssets.shared.texture("banner_fight", size: CGSize(width: 160, height: 40))
         announcement.fontColor = .white
         announcement.text = "FIGHT!"; roundLabel.text = "ROUND \(round)"
@@ -190,7 +238,7 @@ final class FightScene: GameScene {
             node.removeAllActions(); node.alpha = 1
             node.run(.sequence([.wait(forDuration: 0.8), .fadeOut(withDuration: 0.3)]))
         }
-        controls.update(energy: player.energy, cooldowns: player.cooldowns, dt: 0)
+        controls.update(energy: player.energy, cooldowns: player.cooldowns, awakeningTier: player.awakeningTier, dt: 0)
         updateHUD()
     }
     override func update(_ currentTime: TimeInterval) {
@@ -205,7 +253,7 @@ final class FightScene: GameScene {
         if iterations == 6 { accumulator = 0 }
     }
     private func fixedUpdate(_ dt: CGFloat) {
-        if uiStatePreview { controls.update(energy: player.energy, cooldowns: player.cooldowns, dt: dt); return }
+        if uiStatePreview { controls.update(energy: player.energy, cooldowns: player.cooldowns, awakeningTier: player.awakeningTier, dt: dt); return }
         arena.updateFixed(dt)
         if shakeTime > 0 {
             shakeTime -= dt
@@ -233,22 +281,22 @@ final class FightScene: GameScene {
         for projectile in projectiles {
             projectile.updateFixed(dt)
             let target = projectile.owner === player ? opponent! : player!
-            if !projectile.didHit && projectile.parent != nil && projectile.hitbox.intersects(target.hurtbox) {
-                projectile.didHit = true
-                registerHit(attacker: projectile.owner, target: target, damage: projectile.damage, knockback: projectile.direction * 48, unblockable: false)
-                showEffect("skill1_impact", at: projectile.position, color: projectile.owner.data.accentColor)
-                projectile.removeFromParent()
+            guard !projectile.didHit, projectile.parent != nil, projectile.hitbox.intersects(target.hurtbox) else { continue }
+            if target.isReflecting {
+                projectile.reflect(to: target)
+                showEffect("hit_spark", at: projectile.position, color: target.data.accentColor)
+                continue
             }
+            if target.has(.vanish) { continue }
+            projectile.didHit = true
+            registerHit(attacker: projectile.owner, target: target, damage: projectile.damage, knockback: projectile.direction * 48, unblockable: false,
+                        effect: projectile.effect, enhanced: projectile.enhanced)
+            showEffect("skill1_impact", at: projectile.position, color: projectile.owner.data.accentColor)
+            projectile.removeFromParent()
         }
         projectiles.removeAll { $0.parent == nil }
-        for i in pendingUlt.indices.reversed() {
-            pendingUlt[i].time -= dt
-            if pendingUlt[i].time <= 0 {
-                let hit = pendingUlt.remove(at: i)
-                if hit.defender.hp > 0 { registerHit(attacker: hit.attacker, target: hit.defender, damage: hit.damage, knockback: hit.attacker.facing * 18, unblockable: hit.first) }
-            }
-        }
-        controls.update(energy: player.energy, cooldowns: player.cooldowns, dt: dt)
+        resolvePendingHits(dt)
+        controls.update(energy: player.energy, cooldowns: player.cooldowns, awakeningTier: player.awakeningTier, dt: dt)
         updateHUD()
         if player.hp == 0 || opponent.hp == 0 || roundSeconds <= 0 { resolveRound() }
         if debugEnabled { drawDebug() }
@@ -256,23 +304,35 @@ final class FightScene: GameScene {
     private func handleMove(_ attacker: Fighter, target: Fighter) {
         guard let move = attacker.currentMove, let info = attacker.data.moves[move] else { return }
         let shots = move == "skill1" ? max(0, info.projectiles ?? 1) : 0
+        let enhanced = (move == "skill1" || move == "skill2") && attacker.awakeningTier >= 2
         if shots > 0, !attacker.emitted, attacker.currentFrame >= info.activeStart {
             attacker.markEmitted()
             // A fan splits the move's total damage; each projectile can land once.
             for index in 0..<shots {
                 let damage = info.damage / shots + (index < info.damage % shots ? 1 : 0)
                 let rise = (CGFloat(index) - CGFloat(shots - 1) / 2) * 42
-                let projectile = Projectile(owner: attacker, damage: max(1, damage), direction: attacker.facing, rise: rise)
+                let projectile = Projectile(owner: attacker, damage: max(1, damage), direction: attacker.facing, rise: rise,
+                                            effect: hitEffect(info, enhanced: enhanced), enhanced: enhanced)
                 projectile.zPosition = 20; addChild(projectile); projectiles.append(projectile)
             }
+        }
+        if let name = info.buff, move != "ult", !attacker.emitted, attacker.currentFrame >= info.activeStart {
+            attacker.markEmitted()
+            castBuff(name, info: info, caster: attacker, target: target)
         }
         if move == "ult", !attacker.emitted, attacker.currentFrame >= info.activeStart {
             attacker.markEmitted(); darkOverlay.alpha = 0.65
             darkOverlay.run(.sequence([.wait(forDuration: 0.5), .fadeOut(withDuration: 0.25)]))
-            let effect = EffectNode(name: SpriteSheet.shared.effectName("ult", character: attacker.data), frames: 8, color: attacker.data.accentColor, size: CGSize(width: 250, height: 130), frameTime: 0.08)
+            let awakened = attacker.consumeAwakenedUlt() ? attacker.data.moves["ultAwakened"] : nil
+            let size = awakened == nil ? CGSize(width: 250, height: 130) : CGSize(width: 320, height: 170)
+            let effect = EffectNode(name: SpriteSheet.shared.effectName("ult", character: attacker.data), frames: 8, color: attacker.data.accentColor, size: size, frameTime: 0.08)
             effect.position = CGPoint(x: 240, y: 110); effect.zPosition = 45; addChild(effect)
-            for (index, delay) in [CGFloat(0), 0.13, 0.26].enumerated() {
-                pendingUlt.append((time: delay, attacker: attacker, defender: target, damage: index == 2 ? 11 : 12, first: index == 0))
+            if let awakened { castAwakenedUlt(awakened, caster: attacker, target: target) }
+            else {
+                for (index, delay) in [CGFloat(0), 0.13, 0.26].enumerated() {
+                    pendingHits.append(PendingHit(time: delay, attacker: attacker, defender: target, damage: index == 2 ? 11 : 12,
+                                                  unblockable: index == 0, kind: .ult, knockback: attacker.facing * 18))
+                }
             }
         }
         if info.teleport == true, !attacker.emitted, attacker.currentFrame >= info.activeStart {
@@ -281,16 +341,113 @@ final class FightScene: GameScene {
             attacker.markEmitted()
             showEffect("dash_trail", at: attacker.position, color: attacker.data.accentColor)
         }
-        guard shots == 0, move != "ult", let hitbox = attacker.hitbox(for: move), hitbox.intersects(target.hurtbox) else { return }
+        guard shots == 0, move != "ult", info.damage > 0, let hitbox = attacker.hitbox(for: move), hitbox.intersects(target.hurtbox) else { return }
         let key = ObjectIdentifier(attacker)
         guard landedSerial[key] != attacker.attackSerial else { return }
         landedSerial[key] = attacker.attackSerial
-        registerHit(attacker: attacker, target: target, damage: info.damage, knockback: attacker.facing * info.knockback, unblockable: false)
+        registerHit(attacker: attacker, target: target, damage: info.damage, knockback: attacker.facing * info.knockback, unblockable: false,
+                    effect: hitEffect(info, enhanced: enhanced), enhanced: enhanced)
     }
-    private func registerHit(attacker: Fighter, target: Fighter, damage: Int, knockback: CGFloat, unblockable: Bool) {
-        let dealt = target.takeHit(damage: damage, knockback: knockback, unblockable: unblockable)
+    private func hitEffect(_ info: MoveData, enhanced: Bool) -> HitEffect? {
+        guard enhanced, let extra = info.enhanced else { return info.onHit }
+        return (info.onHit ?? HitEffect()).merged(with: extra)
+    }
+    /// SK3: apply the caster's buff; a summon also schedules its phantom's three strikes.
+    private func castBuff(_ name: String, info: MoveData, caster: Fighter, target: Fighter) {
+        guard let buff = Buff(rawValue: name) else { return }
+        let duration = info.buffTime ?? 3
+        caster.apply(buff, for: duration)
+        if buff != .meditate, let heal = info.heal { caster.heal(heal) }
+        if buff == .summon {
+            for strike in 1...3 {
+                pendingHits.append(PendingHit(time: duration * CGFloat(strike) / 4, attacker: caster, defender: target, damage: 5, unblockable: false, kind: .summon))
+            }
+        }
+        showEffect("skill1_impact", at: CGPoint(x: caster.position.x, y: caster.position.y + 30), color: caster.data.accentColor)
+        callout(info.title, over: caster)
+    }
+    /// The once-per-awakening ULT: fixed spec damage split over `hits`, plus its buff, heal or pull.
+    private func castAwakenedUlt(_ spec: MoveData, caster: Fighter, target: Fighter) {
+        darkOverlay.removeAllActions(); darkOverlay.alpha = 0.75
+        darkOverlay.run(.sequence([.wait(forDuration: 0.9), .fadeOut(withDuration: 0.3)]))
+        callout(spec.title, over: caster, color: Theme.awaken, size: 10)
+        if let name = spec.buff, let buff = Buff(rawValue: name) { caster.apply(buff, for: spec.buffTime ?? 3) }
+        if let heal = spec.heal { caster.heal(heal) }
+        if spec.pull == true {
+            target.position.x = min(454, max(26, caster.position.x + caster.facing * 40)); target.velocity = .zero
+            for projectile in projectiles where projectile.owner === target { projectile.removeFromParent() }
+        }
+        let hits = max(1, spec.hits ?? 4)
+        for index in 0..<hits {
+            let last = index == hits - 1
+            pendingHits.append(PendingHit(time: (spec.delay ?? 0) + CGFloat(index) * (spec.hitInterval ?? 0.15), attacker: caster, defender: target,
+                                          damage: spec.damage / hits + (index < spec.damage % hits ? 1 : 0),
+                                          unblockable: spec.unblockable == true || index == 0, kind: .ult,
+                                          effect: last ? spec.onHit : nil, knockback: caster.facing * (last ? spec.knockback : 18)))
+        }
+    }
+    private func resolvePendingHits(_ dt: CGFloat) {
+        // Indices are captured up front; echoes appended during the loop resolve on a later step.
+        for i in pendingHits.indices.reversed() {
+            pendingHits[i].time -= dt
+            guard pendingHits[i].time <= 0 else { continue }
+            let hit = pendingHits.remove(at: i)
+            guard hit.defender.hp > 0 else { continue }
+            switch hit.kind {
+            case .ult:
+                registerHit(attacker: hit.attacker, target: hit.defender, damage: hit.damage, knockback: hit.knockback, unblockable: hit.unblockable,
+                            effect: hit.effect, scaled: false, allowEcho: false)
+            case .echo:
+                guard hit.attacker.has(.clone), hit.attacker.hp > 0 else { continue }
+                registerHit(attacker: hit.attacker, target: hit.defender, damage: hit.damage, knockback: hit.knockback, unblockable: false,
+                            scaled: false, allowEcho: false)
+            case .summon:
+                let dx = hit.defender.position.x - hit.attacker.position.x
+                guard hit.attacker.has(.summon), hit.attacker.hp > 0, abs(dx) < 170 else { continue }
+                let phantom = hit.attacker.phantom, home = -24 * hit.attacker.facing
+                phantom.run(.sequence([.moveTo(x: dx - 14 * hit.attacker.facing, duration: 0.08), .wait(forDuration: 0.08), .moveTo(x: home, duration: 0.14)]), withKey: "strike")
+                registerHit(attacker: hit.attacker, target: hit.defender, damage: hit.damage, knockback: hit.attacker.facing * 20, unblockable: false, allowEcho: false)
+            }
+        }
+    }
+    private func callout(_ text: String?, over fighter: Fighter, color: SKColor? = nil, size: CGFloat = 8) {
+        guard let text, !text.isEmpty else { return }
+        let label = Theme.label(text, size: size, color: color ?? fighter.data.accentColor)
+        label.position = CGPoint(x: min(400, max(80, fighter.position.x)), y: min(200, fighter.position.y + 84)); label.zPosition = 61
+        addChild(label)
+        label.run(.sequence([.group([.moveBy(x: 0, y: 14, duration: 1.1), .sequence([.wait(forDuration: 0.7), .fadeOut(withDuration: 0.4)])]), .removeFromParent()]))
+    }
+    /// Awakening gains: the fighter with less HP charges 50% faster.
+    private func gainAwakening(_ fighter: Fighter, _ amount: CGFloat, versus other: Fighter) {
+        guard fighter.gainAwakening(amount * (fighter.hp < other.hp ? 1.5 : 1)) else { return }
+        callout("THỨC TỈNH!", over: fighter, color: Theme.awaken, size: 11)
+        showEffect("hit_spark", at: CGPoint(x: fighter.position.x, y: fighter.position.y + 30), color: Theme.awaken)
+        slowMotion = max(slowMotion, 0.25)
+    }
+    /// `scaled` applies awakening, tier II, frenzy and empower bonuses; ULT hits keep their fixed spec damage.
+    private func registerHit(attacker: Fighter, target: Fighter, damage: Int, knockback: CGFloat, unblockable: Bool,
+                             effect: HitEffect? = nil, enhanced: Bool = false, scaled: Bool = true, allowEcho: Bool = true) {
+        let empowered = scaled && attacker.has(.empower)
+        var amount = CGFloat(damage)
+        if scaled { amount *= attacker.damageMultiplier(enhanced: enhanced) * (empowered ? 1.5 : 1) }
+        let dealt = target.takeHit(damage: max(1, Int(amount.rounded())), knockback: knockback, unblockable: unblockable)
         guard dealt > 0 else { return }
-        attacker.energy = min(100, attacker.energy + 8)
+        if empowered { _ = attacker.consumeEmpower() }
+        attacker.gainEnergy(8)
+        gainAwakening(attacker, 6, versus: target)
+        gainAwakening(target, target.lastHitGuarded ? 4 : 3, versus: attacker)
+        if !target.lastHitGuarded {
+            if let effect {
+                target.applyEffect(effect)
+                if let drain = effect.drain { attacker.heal(max(1, Int((CGFloat(dealt) * drain).rounded()))) }
+            }
+            if attacker.has(.frenzy) { attacker.heal(max(1, Int((CGFloat(dealt) * 0.2).rounded()))) }
+        }
+        if allowEcho && attacker.has(.clone) {
+            // The shadow clone repeats the hit at 40% a moment later.
+            pendingHits.append(PendingHit(time: 0.12, attacker: attacker, defender: target, damage: max(1, damage * 2 / 5),
+                                          unblockable: false, kind: .echo, knockback: knockback))
+        }
         hitStop = 0.06; shakeTime = 0.18
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
         let position = CGPoint(x: (attacker.position.x + target.position.x) / 2, y: target.position.y + 32)
@@ -330,6 +487,8 @@ final class FightScene: GameScene {
         for (index, fighter) in [player!, opponent!].enumerated() {
             hpFill[index].setFraction(CGFloat(fighter.hp) / 100)
             energyFill[index].setFraction(CGFloat(fighter.energy) / 100)
+            awakeningFill[index].setFraction(fighter.awakeningFraction)
+            tierLabels[index].text = ["", "I", "II", "III"][fighter.awakeningTier]
             for dotIndex in 0..<2 {
                 scoreDots[index][dotIndex].texture = UIAssets.shared.texture(fighter.wins > dotIndex ? "round_filled" : "round_empty", size: CGSize(width: 16, height: 16))
             }
@@ -362,6 +521,7 @@ final class FightScene: GameScene {
         case .attack: player.attack()
         case .skill1: _ = player.use("skill1")
         case .skill2: _ = player.use("skill2")
+        case .skill3: _ = player.use("skill3")
         case .ult: _ = player.use("ult")
         case .debug:
             debugEnabled.toggle(); controls.setDebug(debugEnabled)
