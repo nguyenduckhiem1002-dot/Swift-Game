@@ -1,6 +1,8 @@
 import SpriteKit
 
 final class SelectScene: GameScene {
+    /// Stage mode picks a stage instead of a 1v1 arena; set before presenting.
+    var stageMode = false
     private var choice = 0
     private var mapIndex = 0
     private var difficulty: Difficulty = .normal
@@ -12,7 +14,7 @@ final class SelectScene: GameScene {
     private let mapName = Theme.label("", size: 7, color: Theme.gold)
     private let mapSummary = Theme.label("", size: 5, color: Theme.ice)
     override func didMove(to view: SKView) {
-        let heading = Theme.label("CHOOSE YOUR SWORDSMAN", size: 12, color: Theme.gold)
+        let heading = Theme.label(stageMode ? "VƯỢT ẢI · CHỌN KIẾM KHÁCH" : "CHOOSE YOUR SWORDSMAN", size: 12, color: Theme.gold)
         heading.position = CGPoint(x: 240, y: 254); addChild(heading)
         // Five cards on the first row and four on the second fit the full nine-fighter roster at 480×270.
         for (index, data) in CharacterLibrary.all.enumerated() {
@@ -51,7 +53,7 @@ final class SelectScene: GameScene {
         }
         refreshDifficulty()
 
-        let mapCaption = Theme.label("MAP", size: 6, color: Theme.ice)
+        let mapCaption = Theme.label(stageMode ? "ẢI" : "MAP", size: 6, color: Theme.ice)
         mapCaption.position = CGPoint(x: 240, y: 54); addChild(mapCaption)
         mapName.position = CGPoint(x: 240, y: 34); addChild(mapName)
         mapSummary.position = CGPoint(x: 240, y: 12); addChild(mapSummary)
@@ -60,8 +62,12 @@ final class SelectScene: GameScene {
             button.position = CGPoint(x: x, y: 34); addChild(button)
         }
 
-        addChild(Theme.button("FIGHT", at: CGPoint(x: 410, y: 34), width: 90) { [weak self] in
+        addChild(Theme.button(stageMode ? "START" : "FIGHT", at: CGPoint(x: 410, y: 34), width: 90) { [weak self] in
             guard let self else { return }
+            if self.stageMode {
+                self.transition(to: StageScene(size: self.size, stage: StageLibrary.all[self.mapIndex], playerIndex: self.choice, difficulty: self.difficulty))
+                return
+            }
             // The CPU picks a different fighter each match; rematches keep the same pairing.
             let others = CharacterLibrary.all.indices.filter { $0 != self.choice }
             let config = MatchConfig(playerIndex: self.choice, opponentIndex: others.randomElement() ?? self.choice,
@@ -81,16 +87,24 @@ final class SelectScene: GameScene {
         detailRole.text = (data.role ?? "").uppercased()
     }
     private func cycleMap(_ offset: Int) {
-        mapIndex = (mapIndex + offset + MapLibrary.all.count) % MapLibrary.all.count
+        let count = stageMode ? StageLibrary.all.count : MapLibrary.all.count
+        mapIndex = (mapIndex + offset + count) % count
         refreshMap()
     }
     private func refreshMap() {
-        let map = MapLibrary.all[mapIndex]
+        let stage = stageMode ? StageLibrary.all[mapIndex] : nil
+        let map: MapData
+        if let stage { map = MapLibrary.map(id: stage.map) } else { map = MapLibrary.all[mapIndex] }
         arena?.removeFromParent()
         let preview = ArenaBackground(map: map); preview.zPosition = -10; preview.alpha = 0.62
         addChild(preview); arena = preview
-        mapName.text = map.name
-        mapSummary.text = (map.isWide ? "MAP RỘNG \(Int(map.arenaWidth)) · " : "") + (map.summary ?? "")
+        if let stage {
+            mapName.text = stage.name
+            mapSummary.text = stage.summary ?? ""
+        } else {
+            mapName.text = map.name
+            mapSummary.text = (map.isWide ? "MAP RỘNG \(Int(map.arenaWidth)) · " : "") + (map.summary ?? "")
+        }
     }
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if endMenuTouches(touches) { return }

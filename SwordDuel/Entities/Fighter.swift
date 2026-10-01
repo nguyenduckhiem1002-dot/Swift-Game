@@ -42,7 +42,8 @@ final class Fighter: SKNode {
     var gravityScale: CGFloat = 1
     var moveScale: CGFloat = 1
     var animationScale: CGFloat = 1
-    /// Right walking limit; the left limit is 26. Wide arenas raise it.
+    /// Walking limits; wide arenas raise the right one and stage zones move both.
+    var arenaMinX: CGFloat = 26
     var arenaMaxX: CGFloat = 454
     /// One-way platforms; the floor at y = 42 is always solid.
     weak var terrain: TerrainSurface?
@@ -112,6 +113,8 @@ final class Fighter: SKNode {
         awakenedUltReady = false
         return true
     }
+    /// Stage zones each allow one new awakening; a 1v1 round allows one in total.
+    func allowNewAwakening() { if !isAwakened { awakenedThisRound = false } }
     func gainEnergy(_ amount: Int) { energy = min(100, energy + amount * (isAwakened ? 2 : 1)) }
 
     // MARK: Buffs and effects
@@ -273,7 +276,7 @@ final class Fighter: SKNode {
                 position.y = top; velocity.dy = 0; onGround = true
             } else if position.y <= 42 { position.y = 42; velocity.dy = 0; onGround = true }
         }
-        position.x = min(arenaMaxX, max(26, position.x + velocity.dx * dt))
+        position.x = min(arenaMaxX, max(arenaMinX, position.x + velocity.dx * dt))
         if state == .hurt || state == .ko { velocity.dx *= 0.84 }
         let finished = animation.update(dt * animationScale)
         updateVisuals()

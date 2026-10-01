@@ -25,8 +25,8 @@ struct MapData: Codable {
     /// Animation speed multiplier, e.g. slower attacks underwater.
     let animSpeed: CGFloat?
     /// Arena width in points; wider than 480 enables the following, zooming camera.
-    let width: CGFloat?
-    let terrain: TerrainData?
+    var width: CGFloat?
+    var terrain: TerrainData?
 
     var gravityScale: CGFloat { gravity ?? 1 }
     var movementScale: CGFloat { moveScale ?? 1 }

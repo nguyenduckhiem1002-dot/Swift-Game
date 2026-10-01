@@ -86,13 +86,34 @@ Arena damage is unblockable, counts as being hit for awakening, and stops when a
 - **Floor:** drawn across the whole arena in the world. An optional `<mapId>_ground.png` (42 points high, tileable) replaces the procedural floor.
 - **Minimap:** wide maps show a strip between the touch controls with both fighters and the current camera view.
 
-The stage mode from the spec (4–6 screen zones with locked exits) is not implemented; arenas are 1v1 only.
+## Stage mode
+
+Choose **VƯỢT ẢI** on the title screen, pick a fighter and a stage, then START. One player crosses the stage left to right against monsters. Stages live in `SwordDuel/Data/Stages.json` and monsters in `SwordDuel/Data/Monsters.json`; the code is `Scenes/StageScene.swift` and `Entities/Monster.swift`.
+
+- **Stages:** 2880 points wide (6 screens), split into 4–6 zones that run safe → combat → boss, as in the map spec. A stage takes its look, physics and ambience from `map` and has its own absolute-coordinate `terrain`.
+- **Zones and waves:** each zone's exit gate stays locked until its `waves` are cleared in order. A cleared zone heals 15 HP and opens the gate (ĐI TIẾP ▶). Walking into the next zone locks the way back. A zone with no waves, such as Hỏa Sơn's secret cave, opens immediately. Clearing the boss zone wins the stage; reaching 0 HP loses it. RETRY restarts the stage.
+- **Monsters:** `behavior` selects the AI.
+  - `melee`: lunges.
+  - `ranged`: keeps its distance and shoots.
+  - `slam`: armored, with a ground-marked area slam.
+  - `flyer`: hovers, then dives.
+  - `hopper`: hops on you.
+  - `boss`: rotates `attacks` (`charge`, `fan`, `slam`, where slam sends shockwaves along the floor that you jump over), speeds up below 50% HP, and summons two `summon` minions at 66% and 33%.
+
+  Every attack is telegraphed by a red flash, and charges and slams also mark the floor. Elites (`"elite": true` in a wave) have 2.5× HP, 1.5× damage and a gold outline. Easy difficulty scales monster damage to 70%.
+- **Combat:** the full moveset works on monsters. Melee hits each monster once per swing. Projectiles fans and enhanced effects work as in 1v1. SK2 teleports behind the nearest monster. The ULT and awakened ULT hit every monster on screen. Clones echo hits, the herder's phantom strikes the nearest monster, and reflect sends monster shots back as your projectiles. You can block monster attacks.
+- **Awakening:** +6 per hit, +4 per block, +3 when hit, plus kill rewards of +5 normal, +20 elite and +50 boss. Linh Văn Thạch gives +10. Each zone allows a new awakening.
+- **Pickups** (`pickups` per zone, `x` from the zone's left edge, `y` above the floor): `peach` +25 HP, `stone` (Linh Văn Thạch) +10 awakening, `elixir` +40 energy. Elites always drop a stone; normal monsters drop a peach 12% of the time.
+- **HUD:** player bars on the left; stage, zone, wave and kill count on the right; elapsed time at top; a boss bar during the boss fight; a minimap with zone borders and every monster.
+- **Monster art:** optional `Assets/Monsters/<monsterId>.png` horizontal strip with `frames` set in `Monsters.json`. Without it, monsters are colored blocks with eyes.
+
+Preview a stage directly with `--preview-stage <stageId> --character <id>`.
 
 ## Roster data
 
 Each character entry in `Characters.json` can also set `role`, `accent` (RGB 0–1), `frameSize`, `walkSpeed` and `jumpVelocity`. Moves accept `projectiles` (skill1 fan size; `0` turns skill1 into a melee hitbox), `dashSpeed`, `dashTime`, `invulnerable`, `teleport`, `reflect`, `onHit` and `enhanced` (`slow`, `stun`, `burn`, `drain`). A negative `knockback` pulls the target. `skill3` and `ultAwakened` add `title`, `buff`, `buffTime`, `heal`, `hits`, `hitInterval`, `delay`, `unblockable` and `pull`. Trap placement and some spec details (exact counter timing, clone mirroring, black-hole projectile pull) are approximated with these shared systems. Missing button and HP-fill art falls back to generated textures in the character's accent color.
 
-The select screen picks a random CPU opponent. For art review, add `--preview-fight --character <id> --opponent <id> --map <mapId>` to the scheme's Run arguments; `--test-ui` now also checks every character's frame counts and SK3/awakened ULT data, runs awakening tier rules on a test fighter, builds every arena, checks that hazards avoid spawn points and platforms are within jump reach, checks camera framing at the walls, the maximum gap and the spawn points, and runs 40 seconds of each map's terrain events.
+The select screen picks a random CPU opponent. For art review, add `--preview-fight --character <id> --opponent <id> --map <mapId>` to the scheme's Run arguments; `--test-ui` now also checks every character's frame counts and SK3/awakened ULT data, runs awakening tier rules on a test fighter, builds every arena, checks that hazards avoid spawn points and platforms are within jump reach, checks camera framing at the walls, the maximum gap and the spawn points, runs 40 seconds of each map's terrain events, validates stage and monster data, and runs every monster type for 12 seconds before killing it.
 
 After adding PNGs, ensure they appear under the blue `Assets` folder reference in Xcode. Xcode copies that folder into the app bundle.
 

@@ -162,6 +162,7 @@ final class FightScene: GameScene {
         runAwakeningChecks()
         for map in MapLibrary.all { precondition(!ArenaBackground(map: map).children.isEmpty, "\(map.id) arena is empty") }
         runTerrainChecks()
+        runStageChecks()
         print("PASS UI: shared touch ownership, independent inputs, pause/resume, frozen timer, disabled/pressed menu states, missing-file fallback, \(CharacterLibrary.all.count) character rosters and ULT strips, \(MapLibrary.all.count) arenas.")
     }
     /// Layout sanity plus a 40-second headless run of every map's events with two idle fighters.
@@ -196,6 +197,32 @@ final class FightScene: GameScene {
             }
             field.reset()
             precondition(a.position.x >= 26 && a.position.x <= map.arenaWidth - 26 && b.position.y >= 42, "\(map.id) terrain moved a fighter out of bounds")
+        }
+    }
+    /// Stage data rules from the spec, then every monster type fights an idle fighter for 12 seconds and is killed.
+    private func runStageChecks() {
+        for stage in StageLibrary.all {
+            precondition((4...6).contains(stage.zones.count), "\(stage.id) needs 4-6 zones")
+            precondition(stage.width >= 4 * 480 - 0.5 && stage.width <= 6 * 480 + 0.5, "\(stage.id) should be 4-6 screens wide")
+            precondition(stage.zones.last?.kind == "boss", "\(stage.id) must end in a boss zone")
+            precondition(MapLibrary.all.contains { $0.id == stage.map }, "\(stage.id) uses an unknown map")
+            for zone in stage.zones {
+                for spawn in (zone.waves ?? []).flatMap({ $0 }) { precondition(MonsterLibrary.monster(spawn.type) != nil, "\(stage.id) spawns unknown \(spawn.type)") }
+                precondition((zone.pickups ?? []).allSatisfy { $0.x >= 0 && $0.x <= zone.width }, "\(stage.id) pickup outside its zone")
+            }
+            precondition(stage.arenaMap.arenaWidth == stage.width, "\(stage.id) arena width mismatch")
+        }
+        for data in MonsterLibrary.all {
+            if let summon = data.summon { precondition(MonsterLibrary.monster(summon) != nil, "\(data.id) summons unknown \(summon)") }
+            let target = Fighter(data: CharacterLibrary.all[0], isPlayer: true)
+            target.reset(at: 200, facing: 1)
+            let monster = Monster(data: data, elite: false, at: CGPoint(x: 320, y: data.behavior == "flyer" ? 120 : 42))
+            monster.bounds = 26...454
+            for _ in 0..<720 { monster.update(1.0 / 60.0, target: target) }
+            precondition(!monster.isDead && monster.position.x >= 26 && monster.position.x <= 454, "\(data.id) left its bounds")
+            var guardHits = 0
+            while !monster.isDead && guardHits < 500 { _ = monster.takeHit(damage: 10, knockback: 0); monster.update(1.0 / 60.0, target: target); guardHits += 1 }
+            precondition(monster.isDead && monster.hp == 0, "\(data.id) cannot be killed")
         }
     }
     private func runAwakeningChecks() {
@@ -685,3 +712,4 @@ extension FightScene: TerrainDelegate {
         label.run(.sequence([.group([.moveBy(x: 0, y: 12, duration: 1), .sequence([.wait(forDuration: 0.6), .fadeOut(withDuration: 0.4)])]), .removeFromParent()]))
     }
 }
+extension FightScene: KeyboardControllable {}

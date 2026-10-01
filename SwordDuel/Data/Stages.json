@@ -1,0 +1,515 @@
+[
+  {
+    "id": "cloudpeak_trial",
+    "name": "Ải Vân Hải",
+    "summary": "5 khu · mây trôi, thác nước · boss Vân Ưng Yêu Vương",
+    "map": "cloudpeak",
+    "zones": [
+      {
+        "width": 480,
+        "kind": "safe",
+        "title": "Sơn Môn",
+        "waves": [
+          [
+            {
+              "type": "wolf",
+              "count": 2
+            }
+          ]
+        ]
+      },
+      {
+        "width": 560,
+        "kind": "combat",
+        "title": "Vân Kiều",
+        "waves": [
+          [
+            {
+              "type": "wolf",
+              "count": 2
+            },
+            {
+              "type": "archer",
+              "count": 1
+            }
+          ],
+          [
+            {
+              "type": "bat",
+              "count": 3
+            }
+          ]
+        ]
+      },
+      {
+        "width": 640,
+        "kind": "combat",
+        "title": "Bí Cảnh Mây",
+        "waves": [
+          [
+            {
+              "type": "toad",
+              "count": 3
+            }
+          ],
+          [
+            {
+              "type": "archer",
+              "count": 2
+            },
+            {
+              "type": "wolf",
+              "count": 1
+            }
+          ]
+        ],
+        "pickups": [
+          {
+            "kind": "stone",
+            "x": 160,
+            "y": 80
+          },
+          {
+            "kind": "peach",
+            "x": 480
+          }
+        ]
+      },
+      {
+        "width": 560,
+        "kind": "combat",
+        "title": "Thác Tiên",
+        "waves": [
+          [
+            {
+              "type": "brute",
+              "count": 1,
+              "elite": true
+            },
+            {
+              "type": "wolf",
+              "count": 2
+            }
+          ],
+          [
+            {
+              "type": "bat",
+              "count": 2
+            },
+            {
+              "type": "archer",
+              "count": 1
+            }
+          ]
+        ]
+      },
+      {
+        "width": 640,
+        "kind": "boss",
+        "title": "Đỉnh Vân Hải",
+        "waves": [
+          [
+            {
+              "type": "cloudking",
+              "count": 1
+            }
+          ]
+        ]
+      }
+    ],
+    "terrain": {
+      "platforms": [
+        {
+          "x": 1200,
+          "y": 72,
+          "w": 56,
+          "kind": "cloud",
+          "moveY": 10,
+          "period": 5
+        },
+        {
+          "x": 1400,
+          "y": 72,
+          "w": 64,
+          "kind": "cloud",
+          "moveX": 80,
+          "period": 9
+        },
+        {
+          "x": 2560,
+          "y": 72,
+          "w": 64,
+          "kind": "cloud",
+          "moveX": 100,
+          "period": 10
+        }
+      ],
+      "zones": [
+        {
+          "kind": "waterfall",
+          "x": 1900,
+          "w": 34,
+          "h": 228
+        }
+      ]
+    }
+  },
+  {
+    "id": "lavahell_trial",
+    "name": "Ải Hỏa Sơn",
+    "summary": "6 khu · hố dung nham, mạch phun, hang bí mật · boss Hỏa Ma Long",
+    "map": "lavahell",
+    "zones": [
+      {
+        "width": 480,
+        "kind": "safe",
+        "title": "Cửa Hỏa Sơn",
+        "waves": [
+          [
+            {
+              "type": "wolf",
+              "count": 2
+            }
+          ]
+        ]
+      },
+      {
+        "width": 480,
+        "kind": "combat",
+        "title": "Cầu Xích",
+        "waves": [
+          [
+            {
+              "type": "toad",
+              "count": 3
+            }
+          ],
+          [
+            {
+              "type": "archer",
+              "count": 2
+            }
+          ]
+        ]
+      },
+      {
+        "width": 560,
+        "kind": "combat",
+        "title": "Lò Luyện Ma",
+        "waves": [
+          [
+            {
+              "type": "brute",
+              "count": 1
+            },
+            {
+              "type": "wolf",
+              "count": 2
+            }
+          ],
+          [
+            {
+              "type": "bat",
+              "count": 3
+            }
+          ]
+        ]
+      },
+      {
+        "width": 320,
+        "kind": "safe",
+        "title": "Hang Bí Mật",
+        "pickups": [
+          {
+            "kind": "peach",
+            "x": 100
+          },
+          {
+            "kind": "stone",
+            "x": 160
+          },
+          {
+            "kind": "elixir",
+            "x": 220
+          }
+        ]
+      },
+      {
+        "width": 480,
+        "kind": "combat",
+        "title": "Hỏa Ngục Môn",
+        "waves": [
+          [
+            {
+              "type": "brute",
+              "count": 1,
+              "elite": true
+            },
+            {
+              "type": "archer",
+              "count": 2
+            }
+          ],
+          [
+            {
+              "type": "toad",
+              "count": 2
+            },
+            {
+              "type": "wolf",
+              "count": 2
+            }
+          ]
+        ]
+      },
+      {
+        "width": 560,
+        "kind": "boss",
+        "title": "Long Huyệt",
+        "waves": [
+          [
+            {
+              "type": "firedragon",
+              "count": 1
+            }
+          ]
+        ]
+      }
+    ],
+    "terrain": {
+      "platforms": [
+        {
+          "x": 715,
+          "y": 72,
+          "w": 96,
+          "kind": "chain",
+          "crumble": true
+        },
+        {
+          "x": 1260,
+          "y": 72,
+          "w": 104,
+          "kind": "chain",
+          "crumble": true
+        },
+        {
+          "x": 2100,
+          "y": 72,
+          "w": 104,
+          "kind": "chain",
+          "crumble": true
+        },
+        {
+          "x": 2610,
+          "y": 72,
+          "w": 96,
+          "kind": "chain",
+          "crumble": true
+        }
+      ],
+      "zones": [
+        {
+          "kind": "lava",
+          "x": 680,
+          "w": 70
+        },
+        {
+          "kind": "lava",
+          "x": 1220,
+          "w": 80
+        },
+        {
+          "kind": "lava",
+          "x": 2060,
+          "w": 80
+        },
+        {
+          "kind": "lava",
+          "x": 2580,
+          "w": 60
+        }
+      ],
+      "events": [
+        {
+          "kind": "geyser",
+          "start": 10,
+          "interval": 9,
+          "telegraph": 1.5
+        }
+      ]
+    }
+  },
+  {
+    "id": "underworld_trial",
+    "name": "Ải Âm Phủ",
+    "summary": "5 khu · hồn ma, bóng tối, đèn lồng · boss U Minh Quỷ Vương",
+    "map": "underworld",
+    "zones": [
+      {
+        "width": 480,
+        "kind": "safe",
+        "title": "Quỷ Môn Quan",
+        "waves": [
+          [
+            {
+              "type": "wolf",
+              "count": 1
+            },
+            {
+              "type": "archer",
+              "count": 1
+            }
+          ]
+        ]
+      },
+      {
+        "width": 560,
+        "kind": "combat",
+        "title": "Nghĩa Địa",
+        "waves": [
+          [
+            {
+              "type": "archer",
+              "count": 2
+            },
+            {
+              "type": "bat",
+              "count": 2
+            }
+          ],
+          [
+            {
+              "type": "wolf",
+              "count": 3
+            }
+          ]
+        ]
+      },
+      {
+        "width": 640,
+        "kind": "combat",
+        "title": "Hành Lang Đèn",
+        "waves": [
+          [
+            {
+              "type": "brute",
+              "count": 1
+            },
+            {
+              "type": "toad",
+              "count": 2
+            }
+          ],
+          [
+            {
+              "type": "bat",
+              "count": 3
+            },
+            {
+              "type": "archer",
+              "count": 1
+            }
+          ]
+        ],
+        "pickups": [
+          {
+            "kind": "peach",
+            "x": 320
+          }
+        ]
+      },
+      {
+        "width": 560,
+        "kind": "combat",
+        "title": "Vong Xuyên",
+        "waves": [
+          [
+            {
+              "type": "brute",
+              "count": 1,
+              "elite": true
+            },
+            {
+              "type": "brute",
+              "count": 1
+            }
+          ],
+          [
+            {
+              "type": "wolf",
+              "count": 2
+            },
+            {
+              "type": "archer",
+              "count": 2
+            }
+          ]
+        ]
+      },
+      {
+        "width": 640,
+        "kind": "boss",
+        "title": "Diêm La Điện",
+        "waves": [
+          [
+            {
+              "type": "ghostking",
+              "count": 1
+            }
+          ]
+        ]
+      }
+    ],
+    "terrain": {
+      "objects": [
+        {
+          "kind": "tombstone",
+          "x": 700
+        },
+        {
+          "kind": "tombstone",
+          "x": 1400
+        },
+        {
+          "kind": "tombstone",
+          "x": 2500
+        },
+        {
+          "kind": "lantern",
+          "x": 1300,
+          "y": 74
+        },
+        {
+          "kind": "lantern",
+          "x": 1900,
+          "y": 74
+        },
+        {
+          "kind": "lantern",
+          "x": 2460,
+          "y": 74
+        },
+        {
+          "kind": "lantern",
+          "x": 2760,
+          "y": 74
+        }
+      ],
+      "events": [
+        {
+          "kind": "souls",
+          "start": 8,
+          "interval": 10,
+          "telegraph": 1
+        },
+        {
+          "kind": "darkness",
+          "start": 20,
+          "interval": 25,
+          "telegraph": 1.5,
+          "duration": 7
+        }
+      ]
+    }
+  }
+]
